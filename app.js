@@ -336,6 +336,24 @@ class animation {
 //game logic class
 class gameLogic {
 
+    //sets number of enemies per battle
+    enemiesPerBattle(){
+
+        let enemiesThisBattle = 0;
+
+        if (battle===1){
+            enemiesThisBattle = 2;
+        } else  if (battle===2){
+            enemiesThisBattle = 3;
+        } else  if (battle>=3){
+            enemiesThisBattle = 4;
+        }
+
+        //returns number of enemies
+        return enemiesThisBattle;
+
+    }
+
     //is alive
     isAlive(character) {
 
@@ -398,5 +416,8 @@ const darkness = new character("darkness", 2, 9, 75, 0, 0);
 const megumin = new character("megumin", 100, 2, 10, 1, 0);
 const aqua = new character("aqua", 15, 4, 20, 10, 0);
 
-let test = new enemyArray;
-console.log(test.newEnemyArray(4));
+let battle = 1;
+
+let test = new enemyArray();
+let test2 = new gameLogic();
+console.log(test.newEnemyArray(test2.enemiesPerBattle()));
