@@ -1,5 +1,7 @@
 body {
     margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(205, 205, 205);
 }
 
 .headerWrapper {
@@ -38,8 +40,12 @@ border: solid black;
 
 .topContentWrapper {
     width: 100%;
-    height: 60vh;
+    height: 55vh;
     display: flex;
+    background-image: url("./images/backgrounds/battleback1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .leftContentWrapper {
@@ -125,33 +131,61 @@ border: solid black;
 
 .bottomContentWrapper {
     width: 100%;
-    height: 25vh;
+    height: 30vh;
     display: flex;
     justify-content: center;
-    border: solid black;
+    background-color: rgb(205, 205, 205);
 }
 
 .bottomContent {
     width: 75%;
     height: 100%;
     display: flex;
-    border: solid blue;
+    justify-content: center;
+    border: 6px double rgb(0, 0, 0);
+    border-radius: 15px;
+    background-color: rgb(96, 96, 96);
+    overflow: hidden;
+}
+
+.bottomPanelWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.bottomTopPanel {
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(39, 39, 39);
+    color: whitesmoke;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.bottomBottomPanel {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    color: whitesmoke;
 }
 
 .selectAction {
-    width: 33%;
+    width: 34%;
     height: 100%;
-    border: solid red;
+    border: 1px solid rgb(58, 58, 58);
 }
 
 .showCharacterHealth {
     width: 33%;
     height: 100%;
-    border: solid red;
+    border: 1px solid rgb(58, 58, 58);
 }
 
 .showEnemyHealth {
     width: 33%;
     height: 100%;
-    border: solid red;
+    border: 1px solid rgb(58, 58, 58);
 }
