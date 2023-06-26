@@ -23,7 +23,7 @@ border: solid black;
 
 .topContentWrapper {
     width: 100%;
-    height: 65vh;
+    height: 60vh;
     display: flex;
 }
 
@@ -34,7 +34,31 @@ border: solid black;
 }
 
 .leftContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.partyMemberOne, .partyMemberTwo, .partyMemberThree, .partyMemberFour {
+    width: 90%;
+    height: 75px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    border: solid black;
+}
+
+.kazuma, .darkness, .megumin, .aqua {
+    height: 65px;
+    width: 65px;
+}
+
+.punch {
+    height: 75px;
+    width: 75px;
 }
 
 .centerContentWrapper {
@@ -44,7 +68,20 @@ border: solid black;
 }
 
 .centerContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
+.attackBoxOne,.attackBoxTwo,.attackBoxThree,.attackBoxFour {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: solid blue;
 }
 
 .rightContentWrapper {
@@ -54,12 +91,26 @@ border: solid black;
 }
 
 .rightContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.enemyMemberOne, .enemyMemberTwo, .enemyMemberThree, .enemyMemberFour {
+    width: 90%;
+    height: 75px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    border: solid black;
 }
 
 .bottomContentWrapper {
     width: 100%;
-    height: 20vh;
+    height: 25vh;
     display: flex;
     justify-content: center;
     border: solid black;
@@ -68,17 +119,24 @@ border: solid black;
 .bottomContent {
     width: 75%;
     height: 100%;
+    display: flex;
     border: solid blue;
 }
 
 .selectAction {
-
+    width: 33%;
+    height: 100%;
+    border: solid red;
 }
 
 .showCharacterHealth {
-
+    width: 33%;
+    height: 100%;
+    border: solid red;
 }
 
 .showEnemyHealth {
-
+    width: 33%;
+    height: 100%;
+    border: solid red;
 }
