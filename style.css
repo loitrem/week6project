@@ -1,9 +1,20 @@
 body {
+    margin: 0;
+}
+
+.headerWrapper {
+width: 100%;
+height: 100px;
+border: solid black;
+}
+
+.header {
 
 }
 
 .mainContentWrapper {
-
+    width: 100%;
+    height: 80vh;
 }
 
 .mainContent {
@@ -11,15 +22,15 @@ body {
 }
 
 .topContentWrapper {
-
-}
-
-.topContent {
-
+    width: 100%;
+    height: 65vh;
+    display: flex;
 }
 
 .leftContentWrapper {
-
+    width: 40%;
+    height: 100%;
+    border: solid rgb(0, 255, 30);
 }
 
 .leftContent {
@@ -27,7 +38,9 @@ body {
 }
 
 .centerContentWrapper {
-
+    width: 20%;
+    height: 100%;
+    border: solid rgb(255, 0, 217);
 }
 
 .centerContent {
@@ -35,7 +48,9 @@ body {
 }
 
 .rightContentWrapper {
-
+    width: 40%;
+    height: 100%;
+    border: solid rgb(255, 128, 0);
 }
 
 .rightContent {
@@ -43,11 +58,17 @@ body {
 }
 
 .bottomContentWrapper {
-
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    border: solid black;
 }
 
 .bottomContent {
-
+    width: 75%;
+    height: 100%;
+    border: solid blue;
 }
 
 .selectAction {
@@ -59,5 +80,5 @@ body {
 }
 
 .showEnemyHealth {
-    
+
 }

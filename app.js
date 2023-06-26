@@ -8,7 +8,7 @@ class character {
 
     //upgrade character
     upgrade() {
-        
+
     }
 
     //getter
@@ -147,6 +147,11 @@ class gameLogic {
 
     //retreat
     retreat() {
+
+    }
+
+    //checks if game over
+    gameOverCheck(characterArray, enemyArray) {
 
     }
 
