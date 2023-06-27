@@ -94,7 +94,7 @@ border: solid black;
     border-right: 1px solid lightgray;
 }
 
-.howToPlay,.start,.options,.howToWin,.combat,.leveling {
+.howToPlay,.start,.options,.howToWin,.combat,.leveling,.gameplay {
     height: 50px;
     width: 200px;
     border: 5px double black;
@@ -106,7 +106,7 @@ border: solid black;
     color: whitesmoke;
 }
 
-.howToPlay:hover,.start:hover,.options:hover,.howToWin:hover,.combat:hover,.leveling:hover {
+.howToPlay:hover,.start:hover,.options:hover,.howToWin:hover,.combat:hover,.leveling:hover,.gameplay:hover {
     height: 50px;
     width: 200px;
     border: 5px double black;
@@ -125,6 +125,14 @@ border: solid black;
 .menuRight {
     width: 60%;
     height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.menuRightText {
+    font-size: 18px;
+    font-weight: bold;
+    color: whitesmoke;
 }
 
 .leftContentWrapper {

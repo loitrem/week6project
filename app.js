@@ -333,6 +333,42 @@ class animation {
 
 }
 
+//menu class
+class menu {
+
+
+    // default text to show
+    default() {
+
+    }
+
+    // text to show when how to play is pushed
+    howToPlay () {
+
+    }
+
+    // text to show when options is pushed
+    options() {
+
+    }
+
+    // text to show when combat is pushed
+    combat() {
+
+    }
+
+    // text to show when leveling up is pushed
+    leveling () {
+
+    }
+
+    // text to show when how to win is pushed
+    howToWin () {
+
+    }
+
+}
+
 //game logic class
 class gameLogic {
 
@@ -371,6 +407,13 @@ class gameLogic {
 
     //start game
     startGame (){
+
+        //checks if game is started and makes sure game is not over
+        if (gameOver==false && gameStart === false){
+
+
+
+        }
 
     }
 
@@ -415,8 +458,18 @@ const kazuma = new character("kazuma", 10, 5, 20, 1, 0);
 const darkness = new character("darkness", 2, 9, 75, 0, 0);
 const megumin = new character("megumin", 100, 2, 10, 1, 0);
 const aqua = new character("aqua", 15, 4, 20, 10, 0);
+let menuRight = document.querySelector('.menuRight');
+let gameplayBtn = document.querySelector('.gameplay');
+let combat = document.querySelector('.combat');
+let leveling = document.querySelector('.leveling');
+let howToWin = document.querySelector('.howToWin');
 
 let battle = 1;
+let gameOver = false;
+let gameStart = false;
+let winner = "";
+let stage = "";
+let score = 0;
 
 let test = new enemyArray();
 let test2 = new gameLogic();
