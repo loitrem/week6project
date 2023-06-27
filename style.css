@@ -17,18 +17,6 @@ border: solid black;
     background-color: rgb(24, 24, 24);
 }
 
-.headerImg {
-    height: 100px;
-}
-
-.headerText {
-    width: 80%;
-    text-align: center;
-    font-size: 42px;
-    font-weight: bold;
-    color: rgb(182, 46, 139);
-}
-
 .mainContentWrapper {
     width: 100%;
     height: 80vh;
@@ -51,14 +39,6 @@ border: solid black;
     border-top: 3px solid rgb(0, 0, 0);
     border-bottom: 3px solid rgb(0, 0, 0);
 }
-
-/* .mainMenuWrapper {
-    width: 80%;
-    height: 80%;
-    border: 8px double rgb(188, 188, 188);
-    border-radius: 35px;
-    background-color: rgb(39, 39, 39);
-} */
 
 .mainMenuWrapper {
     width: 85%;
@@ -150,6 +130,22 @@ border: solid black;
 
 .show {
     visibility:visible;
+}
+
+.pathHide {
+    visibility: hidden;
+}
+
+.path {
+    visibility:visible;
+}
+
+.hideParty {
+    /* display: none; */
+    position: fixed;
+    display: block;
+    left: 40px;
+    top: 250px;
 }
 
 .menuRight {
@@ -284,35 +280,89 @@ border: solid black;
     align-items: start;
 }
 
-.leftMenu{
-    width: 325px;
-    display: flex;
-    justify-content:space-evenly;
-    align-items: center;
+.hideParty {
+    display: none;
+    position: fixed;
+    left: 40px;
+    top: 250px;
 }
 
-.leftMenuClickX {
-    height: 45px;
-    width: 45px;
+.showParty {
+    position: fixed;
+    display: block;
+    left: 40px;
+    top: 250px;
 }
 
-.leftMenuClick {
-    height: 45px;
-    width: 45px;
+.hideEnemy {
+    display: none;
+    position: fixed;
+    right: 40px;
+    top: 250px;
 }
 
-.leftMenuClick:hover {
-    height: 50px;
-    width: 50px;
+.showEnemy {
+    position: fixed;
+    display: block;
+    right: 40px;
+    top: 250px;
 }
 
-.leftMenuDotted {
-    height: 145px;
-    width: 200px;
-    rotate: 35deg;
+.hideAttack {
+    display: none;
+    position: fixed;
+    right: 40px;
+    top: 250px;
+}
+
+.showAttack {
+    position: fixed;
+    display: block;
+    right: 40px;
+    top: 250px;
 }
 
 @media only screen and (min-width:1790px) {
+
+    .headerImg {
+        height: 100px;
+    }
+    
+    .headerText {
+        width: 80%;
+        text-align: center;
+        font-size: 42px;
+        font-weight: bold;
+        color: rgb(182, 46, 139);
+    }
+
+    .leftMenu{
+        width: 325px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .leftMenuClickX {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick:hover {
+        height: 50px;
+        width: 50px;
+    }
+    
+    .leftMenuDotted {
+        height: 145px;
+        width: 200px;
+        rotate: 35deg;
+    }
 
     .centerMenu{
         width: 100%;
@@ -331,9 +381,68 @@ border: solid black;
         width: 250px;
         rotate: 35deg;
     } 
+
+    .rightMenu{
+        width: 300px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .rightMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .rightMenuDotted {
+        height: 145px;
+        width: 150px;
+        rotate: 45deg;
+    }
+
 }
 
 @media only screen and (min-width:600px) and (max-width: 1789px) {
+
+    .headerImg {
+        height: 100px;
+    }
+    
+    .headerText {
+        width: 80%;
+        text-align: center;
+        font-size: 42px;
+        font-weight: bold;
+        color: rgb(182, 46, 139);
+    }
+
+    .leftMenu{
+        width: 325px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .leftMenuClickX {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick:hover {
+        height: 50px;
+        width: 50px;
+    }
+    
+    .leftMenuDotted {
+        height: 145px;
+        width: 200px;
+        rotate: 35deg;
+    }
 
     .centerMenu{
         width: 100%;
@@ -353,9 +462,67 @@ border: solid black;
         rotate: 35deg;
     }
 
+    .rightMenu{
+        width: 275px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .rightMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .rightMenuDotted {
+        height: 145px;
+        width: 125px;
+        rotate: 55deg;
+    }
+
 }
 
 @media only screen and (min-width:1430px) and (max-width: 1600px) {
+
+    .headerImg {
+        height: 100px;
+    }
+    
+    .headerText {
+        width: 80%;
+        text-align: center;
+        font-size: 42px;
+        font-weight: bold;
+        color: rgb(182, 46, 139);
+    }
+
+    .leftMenu{
+        width: 325px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .leftMenuClickX {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick:hover {
+        height: 50px;
+        width: 50px;
+    }
+    
+    .leftMenuDotted {
+        height: 145px;
+        width: 200px;
+        rotate: 35deg;
+    }
 
     .centerMenu{
         width: 100%;
@@ -375,9 +542,97 @@ border: solid black;
         rotate: 45deg;
     }
 
+    .rightMenu{
+        width: 250px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .rightMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .rightMenuDotted {
+        height: 145px;
+        width: 100px;
+        rotate: 55deg;
+    }
+
+    .hideParty {
+        /* display: none; */
+        position: fixed;
+        display: block;
+        left: 40px;
+        top: 250px;
+    }
+    
+    .showParty {
+        position: fixed;
+        display: block;
+        left: 40px;
+        top: 250px;
+    }
+    
+    .hideEnemy {
+        /* display: none; */
+        position: fixed;
+        display: block;
+        right: 40px;
+        top: 250px;
+    }
+    
+    .showEnemy {
+        position: fixed;
+        display: block;
+        right: 40px;
+        top: 250px;
+    }
+
 }
 
 @media only screen and (min-width:1330px) and (max-width: 1430px) {
+
+    .headerImg {
+        height: 100px;
+    }
+    
+    .headerText {
+        width: 80%;
+        text-align: center;
+        font-size: 42px;
+        font-weight: bold;
+        color: rgb(182, 46, 139);
+    }
+
+    .leftMenu{
+        width: 175px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .leftMenuClickX {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick:hover {
+        height: 50px;
+        width: 50px;
+    }
+    
+    .leftMenuDotted {
+        height: 145px;
+        width: 50px;
+        rotate: 65deg;
+    }
 
     .centerMenu{
         width: 100%;
@@ -397,9 +652,67 @@ border: solid black;
         rotate: 55deg;
     }
 
+    .rightMenu{
+        width: 225px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .rightMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .rightMenuDotted {
+        height: 145px;
+        width: 75px;
+        rotate: 65deg;
+    }
+
 }
 
 @media only screen and (max-width: 1330px) {
+
+    .headerImg {
+        height: 90px;
+    }
+    
+    .headerText {
+        width: 80%;
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        color: rgb(182, 46, 139);
+    }
+
+    .leftMenu{
+        width: 175px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .leftMenuClickX {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .leftMenuClick:hover {
+        height: 50px;
+        width: 50px;
+    }
+    
+    .leftMenuDotted {
+        height: 145px;
+        width: 50px;
+        rotate: 65deg;
+    }
 
     .centerMenu{
         width: 100%;
@@ -414,39 +727,46 @@ border: solid black;
     }
 
     .centerMenuDotted {
-        height: 145px;
+        height: 115px;
         width: 30%;
+        rotate: 65deg;
+    }
+
+    .rightMenu{
+        width: 200px;
+        display: flex;
+        justify-content:space-evenly;
+        align-items: center;
+    }
+    
+    .rightMenuClick {
+        height: 45px;
+        width: 45px;
+    }
+    
+    .rightMenuDotted {
+        height: 145px;
+        width: 50px;
         rotate: 65deg;
     }
 
 }
 
-.rightMenu{
-    width: 325px;
-    display: flex;
-    justify-content:space-evenly;
-    align-items: center;
-}
-
-.rightMenuClick {
-    height: 45px;
-    width: 45px;
-}
-
-.rightMenuDotted {
-    height: 145px;
-    width: 200px;
-    rotate: 35deg;
-}
-
-
-.enemyMemberOne, .enemyMemberTwo, .enemyMemberThree, .enemyMemberFour {
+.enemyMember {
     width: 90%;
     height: 75px;
     display: flex;
     justify-content: right;
     align-items: center;
     border: solid black;
+}
+
+.blackBat,.blackSpider,.blueSpider,.demonBat,.grayBat,.graySpider,.purpleSpider,.skeleton,.zombie,.whiteSpider {
+    width: 90%;
+    height: 75px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
 }
 
 .bottomContentWrapper {

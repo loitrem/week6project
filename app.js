@@ -340,14 +340,16 @@ class menu {
     // main menu
     mainMenuHide() {
 
+        //set variables
         let mainMenu = document.querySelector('.mainMenuWrapper');
         let mainMenuImg = document.querySelector('.menuIconImg');
-        let bottomContentHide = document.querySelector('.bottomContent');
 
+        //hide the main game nav menu and menu icon
         mainMenu.classList.toggle('mainMenuHide');  
         mainMenuImg.classList.toggle('menuIconHide');
-        // bottomContentHide.classList.toggle('mainMenuHide');
+    
 
+        //hide all elements with .show
         let showPlay = document.querySelectorAll('.show');
         for (let i = 0; i<showPlay.length; i++){
             showPlay[i].classList.remove('show');
@@ -426,26 +428,31 @@ class gameLogic {
         //checks if game is started and makes sure game is not over
         if (gameOver==false && gameStart === false){
 
-            gameStart = true;
-
+            //set variables
             let mainMenu = document.querySelector('.mainMenuWrapper');
             let mainMenuImg = document.querySelector('.menuIconImg');
             let bottomContentHide = document.querySelector('.bottomContent');
             let leftMenuClick = document.querySelector('.leftMenuClickX');
     
+            //hide the main game nav menu and menu icon
             mainMenu.classList.toggle('mainMenuHide');  
             mainMenuImg.classList.toggle('menuIconHide');
             bottomContentHide.classList.toggle('infoBarHide');
     
+             //hide all elements with .show
             let showPlay = document.querySelectorAll('.show');
             for (let i = 0; i<showPlay.length; i++){
                 showPlay[i].classList.remove('show');
             }
 
+            //change the first world to the yellow icon from the red x 
+            //and set it to hand pointer on mouseover
             leftMenuClick.setAttribute('src', './images/path/yellow.png');
-            leftMenuClick.setAttribute('class', 'leftMenuClick');
+            leftMenuClick.setAttribute('class', 'leftMenuClick path');
             leftMenuClick.style.cursor = "pointer";
-            leftMenuClick.addEventListener('click', );
+
+            //set gameStart to true
+            gameStart = true;
         }
     }
 
@@ -454,21 +461,29 @@ class gameLogic {
 
         if (gameStart) {
 
+            //set game over and game start to false
             gameOver = false;
             gameStart = false;
 
+            //set variables
             let mainMenuImg = document.querySelector('.menuIconImg');
             let bottomContentHide = document.querySelector('.bottomContent');
             let leftMenuClick = document.querySelector('.leftMenuClick');
+
+            //sets the background to world select
+            document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;
     
+            //hides info bar and menu icon
             mainMenuImg.classList.add('menuIconHide');
             bottomContentHide.classList.add('infoBarHide');
 
+            //hides all elements with .show
             let showPlay = document.querySelectorAll('.show');
                 for (let i = 0; i<showPlay.length; i++){
                     showPlay[i].classList.remove('show');
                 }
 
+                //sets first world icon to red x and mouse to default
                 leftMenuClick.setAttribute('src', './images/path/x.png');
                 leftMenuClick.setAttribute('class', 'leftMenuClickX');
                 leftMenuClick.style.cursor = "default";
@@ -483,6 +498,45 @@ class gameLogic {
     //display world
     displayWorld (name) {
 
+        //set variables
+        let background = document.querySelector('.topContentWrapper');
+        let path = document.querySelectorAll('.path');
+        let party = document.querySelector('.hideParty');
+        let enemies = document.querySelector('.hideEnemy');
+        let enemyWrapper = document.querySelector('.enemyWrapper');
+
+        let array = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
+
+        //hides all elements of world path
+        for (let i = 0; i<path.length; i++){
+            path[i].classList.remove('path');
+            path[i].classList.add('pathHide');
+        }
+
+        party.classList.toggle('showParty');
+        enemies.classList.toggle('showEnemy');
+
+        //sets background to this worlds background
+        background.style.backgroundImage = `url('./images/backgrounds/${name}.jpg')`;  
+
+        //adds enemies dynamically
+        console.log("array length " + array.length);
+        console.log(array);
+
+        for (let i = 0; i<array.length; i++){
+            let enemyMemberDiv = document.createElement('div');
+            let enemyAttackImg = document.createElement('img');
+            let enemyMemberImg = document.createElement('img');
+            enemyWrapper.appendChild(enemyMemberDiv);
+            enemyMemberDiv.setAttribute('class', 'enemyMember');
+            console.log("round " + i);
+            enemyMemberDiv.appendChild(enemyAttackImg);
+            enemyAttackImg.setAttribute('class', 'hideAttack');
+
+            enemyMemberDiv.appendChild(enemyMemberImg);
+            enemyMemberImg.setAttribute('class', array[i].type);
+            enemyMemberImg.setAttribute('src', `./images/enemies/${array[i].type}.png`);
+            }
     }
 
     //fight - per character
@@ -518,6 +572,9 @@ let leveling = document.querySelector('.leveling');
 let howToWin = document.querySelector('.howToWin');
 let newMenu = new menu();
 let game = new gameLogic();
+let newEnemyArray = new enemyArray();
+
+document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
 let battle = 1;
 let gameOver = false;
@@ -525,6 +582,3 @@ let gameStart = false;
 let winner = "";
 let stage = "";
 let score = 0;
-let test = new enemyArray();
-let test2 = new gameLogic();
-console.log(test.newEnemyArray(test2.enemiesPerBattle()));
