@@ -33,7 +33,7 @@
                 <div class="topContentWrapper">
                 
                     <!-- main menu wrapper -->
-                    <div class="mainMenuWrapper">
+                    <div id="mainMenuOverlay" class="mainMenuWrapper">
 
                         <!-- main menu -->
                         <div class="mainMenu">
@@ -42,16 +42,17 @@
                             <div class="menuLeft">
 
                                 <div class="menuLeftMain">
-                                    <button class="howToPlay" onclick="howTopPlay()">How to play</button>
-                                    <button class="start">Play</button>
+                                    <button class="howToPlay" onclick="newMenu.howToPlay()">How to play</button>
+                                    <button class="start" onclick="game.startGame()">Play</button>
                                     <button class="options">Options</button>
+                                    <button class="quit" onclick="game.resetGame()">Quit</button>
                                 </div>
 
-                                <div class="menuLeftSubmenu hide">
-                                    <button class="gameplay hide">Gameplay</button>
-                                    <button class="combat hide">Combat</button>
-                                    <button class="leveling hide">Leveling Up</button>
-                                    <button class="howToWin hide">How to win</button>
+                                <div class="menuLeftSubmenu hideMenu">
+                                    <button class="gameplay hideMenu">Gameplay</button>
+                                    <button class="combat hideMenu">Combat</button>
+                                    <button class="leveling hideMenu">Leveling Up</button>
+                                    <button class="howToWin hideMenu">How to win</button>
                                 </div>
 
                                 
@@ -65,14 +66,72 @@
                                     Welcome to Konosuba Quest Adventure. Press play to start a new game.
                                 </div>
 
+                                <div class="menuRightRight">
+                                    <img src="./images/header/x.png" alt="" class="close" onclick="newMenu.mainMenuHide()">
+                                </div>
+
                             </div>
 
                         <!-- end main menu -->
                         </div>
 
-
-
                     <!-- end main menu wrapper -->
+                    </div>
+
+                    <!-- left content wrapper-->
+                    <div class="leftContentWrapper">
+
+                        <!-- left content -->
+                        <div class="leftContent">
+
+                            <div class="menuIcon">
+                                <img src="images/header/menu.png" alt="" class="menuIconImg menuIconHide" onclick="newMenu.mainMenuHide()">
+                            </div>
+
+                            <div class="leftMenu">
+                                <img src="./images/path/x.png" alt="" class="leftMenuClickX">
+                                <img src="./images/path/dotted1.png" alt="" class="leftMenuDotted">
+                            </div>
+
+                        <!-- end left content -->
+                        </div>
+
+                    <!-- end left content wrapper -->
+                    </div>
+
+                    <!-- center content wrapper-->
+                    <div class="centerContentWrapper">
+
+                        <!-- center content -->
+                        <div class="centerContent">
+
+                            
+                            <div class="centerMenu">
+                                <img src="./images/path/x.png" alt="" class="centerMenuClick">
+                                <img src="./images/path/dotted1.png" alt="" class="centerMenuDotted">
+                            </div>
+                            
+                        <!-- end center content -->
+                        </div>
+
+                    <!-- end center content wrapper -->
+                    </div>
+
+                    <!-- right content wrapper-->
+                    <div class="rightContentWrapper">
+
+                        <!-- right content -->
+                        <div class="rightContent">
+                            
+                            <div class="rightMenu">
+                                <img src="./images/path/dotted1.png" alt="" class="rightMenuDotted">
+                                <img src="./images/path/x.png" alt="" class="rightMenuClick">
+                            </div>
+
+                        <!-- end right content -->
+                        </div>
+
+                    <!-- end right content wrapper -->
                     </div>
 
                 <!-- end top content wrapper -->
@@ -82,7 +141,7 @@
                 <div class="bottomContentWrapper">
 
                     <!-- bottom content -->
-                    <div class="bottomContent">
+                    <div class="bottomContent infoBarHide">
 
                         <!-- bottom panel wrapper -->
                         <div class="bottomPanelWrapper">

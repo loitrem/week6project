@@ -52,12 +52,36 @@ border: solid black;
     border-bottom: 3px solid rgb(0, 0, 0);
 }
 
-.mainMenuWrapper {
+/* .mainMenuWrapper {
     width: 80%;
     height: 80%;
     border: 8px double rgb(188, 188, 188);
     border-radius: 35px;
     background-color: rgb(39, 39, 39);
+} */
+
+.mainMenuWrapper {
+    width: 85%;
+    height: 50%;
+    border: 8px double rgb(188, 188, 188);
+    border-radius: 35px;
+    background-color: rgb(39, 39, 39);
+    position: fixed;
+    display: block;
+    top: 135px;
+    z-index: 2;
+}
+
+.mainMenuHide {
+    visibility: hidden;
+}
+
+.menuIconHide {
+    visibility: hidden;
+}
+
+.infoBarHide {
+    visibility: hidden;
 }
 
 .mainMenu{
@@ -94,9 +118,9 @@ border: solid black;
     border-right: 1px solid lightgray;
 }
 
-.howToPlay,.start,.options,.howToWin,.combat,.leveling,.gameplay {
+.howToPlay,.start,.options,.howToWin,.combat,.leveling,.gameplay,.quit {
     height: 50px;
-    width: 200px;
+    width: 150px;
     border: 5px double black;
     border-radius: 10px;
     background-color: rgb(59, 111, 207);
@@ -104,11 +128,12 @@ border: solid black;
     font-size: 18px;
     font-weight: bold;
     color: whitesmoke;
+    cursor: pointer;
 }
 
-.howToPlay:hover,.start:hover,.options:hover,.howToWin:hover,.combat:hover,.leveling:hover,.gameplay:hover {
+.howToPlay:hover,.start:hover,.options:hover,.howToWin:hover,.combat:hover,.leveling:hover,.gameplay:hover,.quit:hover {
     height: 50px;
-    width: 200px;
+    width: 150px;
     border: 5px double black;
     border-radius: 10px;
     background-color: rgb(25, 50, 98);
@@ -116,16 +141,22 @@ border: solid black;
     font-size: 18px;
     font-weight: bold;
     color: whitesmoke;
+    cursor: pointer;
 }
 
-.hide {
+.hideMenu {
     visibility: hidden;
+}
+
+.show {
+    visibility:visible;
 }
 
 .menuRight {
     width: 60%;
     height: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -133,12 +164,36 @@ border: solid black;
     font-size: 18px;
     font-weight: bold;
     color: whitesmoke;
+    padding-left: 35px;
+}
+
+.menuRightRight {
+    min-width: 25px;
+    height: 100%;
+    padding-top: 15px;
+    padding-right: 15px;
+}
+
+.close {
+    height: 20px;
+    width: 20px;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.close:hover {
+    height: 22px;
+    width: 22px;
+    border: 2px solid white;
+    border-radius: 20px;
+    cursor: pointer;
 }
 
 .leftContentWrapper {
     width: 40%;
     height: 100%;
-    border: solid rgb(0, 255, 30);
+    display: flex;
 }
 
 .leftContent {
@@ -148,6 +203,30 @@ border: solid black;
     flex-direction: column;
     justify-content: center;
     align-items: end;
+}
+
+.menuIcon {
+    height: 55px;
+    width: 55px;
+    position: absolute;
+    left: 15px;
+    top: 115px;
+}
+
+.menuIconImg {
+    height: 55px;
+    width: 55px;
+    border: 5px solid black;
+    background-color: rgba(255, 255, 255, .5);
+    cursor: pointer;
+}
+
+.menuIconImg:hover {
+    height: 55px;
+    width: 55px;
+    border: 5px solid black;
+    background-color: rgba(255, 255, 255, 1);
+    cursor: pointer;
 }
 
 .partyMemberOne, .partyMemberTwo, .partyMemberThree, .partyMemberFour {
@@ -172,7 +251,6 @@ border: solid black;
 .centerContentWrapper {
     width: 20%;
     height: 100%;
-    border: solid rgb(255, 0, 217);
 }
 
 .centerContent {
@@ -189,13 +267,12 @@ border: solid black;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: solid blue;
+
 }
 
 .rightContentWrapper {
     width: 40%;
     height: 100%;
-    border: solid rgb(255, 128, 0);
 }
 
 .rightContent {
@@ -214,9 +291,19 @@ border: solid black;
     align-items: center;
 }
 
+.leftMenuClickX {
+    height: 45px;
+    width: 45px;
+}
+
 .leftMenuClick {
     height: 45px;
     width: 45px;
+}
+
+.leftMenuClick:hover {
+    height: 50px;
+    width: 50px;
 }
 
 .leftMenuDotted {

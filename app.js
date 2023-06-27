@@ -337,14 +337,29 @@ class animation {
 class menu {
 
 
-    // default text to show
-    default() {
+    // main menu
+    mainMenuHide() {
 
+        let mainMenu = document.querySelector('.mainMenuWrapper');
+        let mainMenuImg = document.querySelector('.menuIconImg');
+        let bottomContentHide = document.querySelector('.bottomContent');
+
+        mainMenu.classList.toggle('mainMenuHide');  
+        mainMenuImg.classList.toggle('menuIconHide');
+        // bottomContentHide.classList.toggle('mainMenuHide');
+
+        let showPlay = document.querySelectorAll('.show');
+        for (let i = 0; i<showPlay.length; i++){
+            showPlay[i].classList.remove('show');
+        }
     }
 
     // text to show when how to play is pushed
     howToPlay () {
-
+        let showPlay = document.querySelectorAll('.hideMenu');
+        for (let i = 0; i<showPlay.length; i++){
+            showPlay[i].classList.toggle('show');
+        }
     }
 
     // text to show when options is pushed
@@ -411,15 +426,53 @@ class gameLogic {
         //checks if game is started and makes sure game is not over
         if (gameOver==false && gameStart === false){
 
+            gameStart = true;
 
+            let mainMenu = document.querySelector('.mainMenuWrapper');
+            let mainMenuImg = document.querySelector('.menuIconImg');
+            let bottomContentHide = document.querySelector('.bottomContent');
+            let leftMenuClick = document.querySelector('.leftMenuClickX');
+    
+            mainMenu.classList.toggle('mainMenuHide');  
+            mainMenuImg.classList.toggle('menuIconHide');
+            bottomContentHide.classList.toggle('infoBarHide');
+    
+            let showPlay = document.querySelectorAll('.show');
+            for (let i = 0; i<showPlay.length; i++){
+                showPlay[i].classList.remove('show');
+            }
 
+            leftMenuClick.setAttribute('src', './images/path/yellow.png');
+            leftMenuClick.setAttribute('class', 'leftMenuClick');
+            leftMenuClick.style.cursor = "pointer";
+            leftMenuClick.addEventListener('click', );
         }
-
     }
 
     //reset game
     resetGame () {
 
+        if (gameStart) {
+
+            gameOver = false;
+            gameStart = false;
+
+            let mainMenuImg = document.querySelector('.menuIconImg');
+            let bottomContentHide = document.querySelector('.bottomContent');
+            let leftMenuClick = document.querySelector('.leftMenuClick');
+    
+            mainMenuImg.classList.add('menuIconHide');
+            bottomContentHide.classList.add('infoBarHide');
+
+            let showPlay = document.querySelectorAll('.show');
+                for (let i = 0; i<showPlay.length; i++){
+                    showPlay[i].classList.remove('show');
+                }
+
+                leftMenuClick.setAttribute('src', './images/path/x.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClickX');
+                leftMenuClick.style.cursor = "default";
+        }
     }
 
     //next round
@@ -463,6 +516,8 @@ let gameplayBtn = document.querySelector('.gameplay');
 let combat = document.querySelector('.combat');
 let leveling = document.querySelector('.leveling');
 let howToWin = document.querySelector('.howToWin');
+let newMenu = new menu();
+let game = new gameLogic();
 
 let battle = 1;
 let gameOver = false;
@@ -470,7 +525,6 @@ let gameStart = false;
 let winner = "";
 let stage = "";
 let score = 0;
-
 let test = new enemyArray();
 let test2 = new gameLogic();
 console.log(test.newEnemyArray(test2.enemiesPerBattle()));
