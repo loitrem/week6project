@@ -346,23 +346,23 @@ class menu {
     
      }
 
-    //show main menu
-    // mainMenu(){
-    //     let showMainMenu = document.querySelector('.menuLeftSubmenu');
-    //     let mainMenuButtons = document.querySelectorAll('.hideMenu');
-    //     let menuClassArray = ['gameplay','combat','leveling'];
-    //     let a = 0;
+    // show main menu
+    mainMenu(){
+        let showMainMenu = document.querySelector('.menuLeftSubmenu');
+        let mainMenuButtons = document.querySelectorAll('.hideMenu');
+        let menuClassArray = ['gameplay','combat','leveling'];
+        let a = 0;
 
-    //     for (let i = 1; i<mainMenuButtons.length; i++){
+        for (let i = 1; i<mainMenuButtons.length; i++){
 
-    //         mainMenuButtons[i].setAttribute('class', menuClassArray[a]);
-    //         mainMenuButtons[i].innerHTML = this.ucFirst(menuClassArray[a]);
+            mainMenuButtons[i].setAttribute('class', menuClassArray[a]);
+            mainMenuButtons[i].innerHTML = this.ucFirst(menuClassArray[a]);
 
-    //         console.log(mainMenuButtons[i]);
+            console.log(mainMenuButtons[i]);
 
-    //         a++;
-    //     }
-    // }
+            a++;
+        }
+    }
 
     //submenu hide
     subMenuHide() {
@@ -380,6 +380,25 @@ class menu {
         let showPlay = document.querySelector('.show');
 
             showPlay.classList.remove('show');
+    }
+
+    // main menu hide
+    mainMenuHide() {
+
+        //set variables
+        let mainMenu = document.querySelector('.mainMenuWrapper');
+        let mainMenuImg = document.querySelector('.menuIconImg');
+
+        //hide the main game nav menu and menu icon
+        mainMenu.classList.toggle('mainMenuHide');  
+        mainMenuImg.classList.toggle('menuIconHide');
+    
+
+        //hide all elements with .show
+        let showPlay = document.querySelectorAll('.show');
+        for (let i = 0; i<showPlay.length; i++){
+            showPlay[i].classList.remove('show');
+        }
     }
 
     // text to show when how to play is pushed
