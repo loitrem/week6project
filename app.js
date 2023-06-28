@@ -567,6 +567,8 @@ class gameLogic {
             defender.hp = 0;
         }
 
+        console.log("Attack Function");
+
         return defender;
     }
 
@@ -683,6 +685,7 @@ class gameLogic {
         let enemyHp = document.querySelector('.showEnemyHealth');
         let characterHp = document.querySelector('.showCharacterHealth');
         let battleBarInfo = document.querySelector('.battleInfoBar');
+        let selectAction = document.querySelector('.selectAction');
         
         if (this.enemyAttackSelect()===undefined){
             battleBarInfo.innerHTML = "Please click on enemy to attack"
@@ -749,6 +752,17 @@ class gameLogic {
                 characterMemberP.setAttribute('id', `${attackOrder[i].name}`);
                 characterMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
             }
+
+            selectAction.replaceChildren();
+            
+            if (attackOrder[currentAttacker].name==="kazuma"){
+            
+                let selectActionButton = document.createElement('button');
+                selectAction.appendChild(selectActionButton);
+                selectActionButton.setAttribute('class', 'attackBtn');
+                selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
+                selectActionButton.innerHTML="Attackkazuma";
+            }
     }
 
     enemyAttackSelect (id) {
@@ -757,36 +771,97 @@ class gameLogic {
         attackNumber = id;
 
         if (id!=undefined){
-            battleBarInfo.innerHTML = `Attacking ${newMenu.ucFirst(arrayEnemy[id].name)}`;
+            battleBarInfo.innerHTML = `Attacking ${newMenu.ucFirst(attackOrder[id].name)}`;
         }
 
     }
 
     //fight - per character
     oneCharacterAttack () {
+console.log(currentAttacker);
+
+        if (currentAttacker===attackOrder.length){
+            currentAttacker = 0;
+        } else {
+        currentAttacker++;
+        }
 
         //set variables
         let enemyHp = document.querySelector('.showEnemyHealth');
         let characterHp = document.querySelector('.showCharacterHealth');
         let battleBarInfo = document.querySelector('.battleInfoBar');
-
-        if (currentAttacker===attackOrder.length){
-            currentAttacker = 0;
-        }
-
-        arrayEnemy[attackNumber] = this.attack(attackOrder[currentAttacker],arrayEnemy[attackNumber]); 
+        let selectAction = document.querySelector('.selectAction');
         
         for (let i = 0; i<arrayEnemy.length; i++){
             let enemyStatus = document.getElementById(`${arrayEnemy[i].name}${i}`);
             enemyStatus.innerHTML = `${newMenu.ucFirst(arrayEnemy[i].name)} | HP: ${arrayEnemy[i].hp}`;
         }
 
-        battleBarInfo.innerHTML = `${newMenu.ucFirst(attackOrder[currentAttacker].name)} Attacked ${arrayEnemy[attackNumber].name} for ${attackOrder[currentAttacker].attack}`;
-
-        characterHp.innerHTML = attackOrder[currentAttacker].hp;
+        selectAction.replaceChildren();
         
-        currentAttacker++;
+        console.log(attackOrder[currentAttacker].name);
+        if (attackOrder[currentAttacker].name==="kazuma"){
+            
+            let selectActionButton = document.createElement('button');
+            selectAction.appendChild(selectActionButton);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
+            selectActionButton.innerHTML="Attackkazuma";
+            arrayEnemy[attackNumber] = this.attack(attackOrder[currentAttacker],arrayEnemy[attackNumber]); 
+        } else if (attackOrder[currentAttacker].name==="darkness"){
+            
+            let selectActionButton = document.createElement('button');
+            selectAction.appendChild(selectActionButton);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
+            selectActionButton.innerHTML="Attackdarkness";
+            arrayEnemy[attackNumber] = this.attack(attackOrder[currentAttacker],arrayEnemy[attackNumber]); 
+        } else if (attackOrder[currentAttacker].name==="megumin"){
+            
+            let selectActionButton = document.createElement('button');
+            let selectActionDesc = document.createElement('p');
+            selectAction.appendChild(selectActionButton);
+            selectAction.appendChild(selectActionDesc);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
+            selectActionButton.innerHTML="Attackmegumin";
+            selectActionDesc.innerHTML="Will kill all enemies on screen. Can only be used once per world.";
+            arrayEnemy[attackNumber] = this.attack(attackOrder[currentAttacker],arrayEnemy[attackNumber]); 
+        } else if (attackOrder[currentAttacker].name==="aqua"){
+            
+            let selectActionButton = document.createElement('button');
+            let selectActionHeal = document.createElement('button');
+            selectAction.appendChild(selectActionButton);
+            selectAction.appendChild(selectActionHeal);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
+            selectActionHeal.setAttribute('class', 'attackBtn');
+            selectActionHeal.setAttribute('onclick', 'game.oneCharacterHeal()');
+            selectActionButton.innerHTML="Attackaqua";
+            selectActionHeal.innerHTML="Heal";
+            arrayEnemy[attackNumber] = this.attack(attackOrder[currentAttacker],arrayEnemy[attackNumber]); 
+        } else {
+            for (let i = 0; i<arrayEnemy.length; i++){
+                console.log("currentAttacker: " + currentAttacker);
+                console.log("attackOrder length: " + attackOrder.length);
+                let defender = this.attack(attackOrder[currentAttacker], attackOrder[1]); 
+                console.log(arrayEnemy);
+                console.log( battleBarInfo.innerHTML = `${newMenu.ucFirst(attackOrder[currentAttacker].name)} Attacked ${newMenu.ucFirst(defender.name)} for ${attackOrder[currentAttacker].attack}`);
+                battleBarInfo.innerHTML = `${newMenu.ucFirst(attackOrder[currentAttacker].name)} Attacked ${newMenu.ucFirst(defender.name)} for ${attackOrder[currentAttacker].attack}`;
+                currentAttacker++;
+                console.log("currentAttacker: " + currentAttacker);
+            }
 
+            let selectActionButton = document.createElement('button');
+            selectAction.appendChild(selectActionButton);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
+            selectActionButton.innerHTML="Continue";
+        
+        }
+
+        battleBarInfo.innerHTML = `${newMenu.ucFirst(attackOrder[currentAttacker-1].name)} Attacked ${newMenu.ucFirst(arrayEnemy[attackNumber].name)} for ${attackOrder[currentAttacker-1].attack}`;
+        console.log(currentAttacker);
     }
 
     //are there enemies left after each attack
