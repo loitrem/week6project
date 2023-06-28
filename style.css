@@ -830,11 +830,15 @@ border: solid black;
     width: 33%;
     height: 100%;
     border: 1px solid rgb(58, 58, 58);
+    padding-left: 10px;
+    font-weight: bold;
 }
 
 .showEnemyHealth {
     width: 33%;
     height: 100%;
     border: 1px solid rgb(58, 58, 58);
+    padding-left: 10px;
+    font-weight: bold;
 }
 

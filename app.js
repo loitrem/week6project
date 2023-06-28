@@ -56,8 +56,8 @@ class character {
 class enemy {
 
     //constructor
-    constructor(type, attack,attackMax, attackMin, defense, defenseMax, defenseMin, hp, hpMax, hpMin, mp, mpMax, mpMin, xp, xpMax, xpMin){
-        this.type = type;
+    constructor(name, attack,attackMax, attackMin, defense, defenseMax, defenseMin, hp, hpMax, hpMin, mp, mpMax, mpMin, xp, xpMax, xpMin){
+        this.name = name;
         this.attack = attack;
         this.attackMax = attackMax;
         this.attackMin = attackMin;
@@ -80,7 +80,7 @@ class enemy {
     
         //create new object
         let newEnemy = {
-            type: this.type,
+            name: this.name,
             attack: this.attack,
             attackMax: this.attackMax,
             attackMin: this.attackMin,
@@ -145,7 +145,7 @@ class enemyArray {
 
         //set max and min for enemy for random number generation
         if (name==="blackBat"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 4;
             tempEnemy.attackMin = 1;
             tempEnemy.defenseMax = 2;
@@ -157,7 +157,7 @@ class enemyArray {
             tempEnemy.xpMax = 11;
             tempEnemy.xpMin = 2;
         } else if (name==="blackSpider"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 4;
             tempEnemy.attackMin = 1;
             tempEnemy.defenseMax = 2;
@@ -169,7 +169,7 @@ class enemyArray {
             tempEnemy.xpMax = 11;
             tempEnemy.xpMin = 2;
         } else if (name==="grayBat"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 5;
             tempEnemy.attackMin = 2;
             tempEnemy.defenseMax = 3;
@@ -181,7 +181,7 @@ class enemyArray {
             tempEnemy.xpMax = 12;
             tempEnemy.xpMin = 4;
         } else if (name==="graySpider"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 5;
             tempEnemy.attackMin = 2;
             tempEnemy.defenseMax = 3;
@@ -193,7 +193,7 @@ class enemyArray {
             tempEnemy.xpMax = 12;
             tempEnemy.xpMin = 5;
         } else if (name==="skeleton"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 5;
             tempEnemy.attackMin = 2;
             tempEnemy.defenseMax = 2;
@@ -205,7 +205,7 @@ class enemyArray {
             tempEnemy.xpMax = 14;
             tempEnemy.xpMin = 5;
         } else if (name==="zombie"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 5;
             tempEnemy.attackMin = 2;
             tempEnemy.defenseMax = 2;
@@ -217,7 +217,7 @@ class enemyArray {
             tempEnemy.xpMax = 14;
             tempEnemy.xpMin = 6;
         } else if (name==="whiteSpider"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 7;
             tempEnemy.attackMin = 4;
             tempEnemy.defenseMax = 5;
@@ -229,7 +229,7 @@ class enemyArray {
             tempEnemy.xpMax = 15;
             tempEnemy.xpMin = 8;
         } else if (name==="blueSpider"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 8;
             tempEnemy.attackMin = 5;
             tempEnemy.defenseMax = 5;
@@ -241,7 +241,7 @@ class enemyArray {
             tempEnemy.xpMax = 18;
             tempEnemy.xpMin = 12;
         } else if (name==="greenSpider"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 11;
             tempEnemy.attackMin = 6;
             tempEnemy.defenseMax = 6;
@@ -253,7 +253,7 @@ class enemyArray {
             tempEnemy.xpMax = 22;
             tempEnemy.xpMin = 14;
         } else if (name==="demonBat"){
-            tempEnemy.type = name;
+            tempEnemy.name = name;
             tempEnemy.attackMax = 15;
             tempEnemy.attackMin = 10;
             tempEnemy.defenseMax = 7;
@@ -561,6 +561,13 @@ class gameLogic {
     //character attack
     attack (attacker, defender) {
 
+        defender.hp -= attacker.attack;
+
+        if (defender.hp<=0){
+            defender.hp = 0;
+        }
+
+        return defender;
     }
 
     //start game
@@ -605,7 +612,7 @@ class gameLogic {
             //set game over and game start to false
             gameOver = false;
             gameStart = false;
-            arrayEnemyNum = [];
+            arrayEnemy = [];
 
             //set variables
             let mainMenuImg = document.querySelector('.menuIconImg');
@@ -618,7 +625,13 @@ class gameLogic {
             let rightMenuDotted = document.querySelector('.rightMenuDotted');
             let partyWrapper = document.querySelector('.partyWrapper');
             let enemyWrapper = document.querySelector('.enemyWrapper');
+            let enemyHp = document.querySelector('.showEnemyHealth');
+            let characterHp = document.querySelector('.showCharacterHealth');
+            let battleBarInfo = document.querySelector('.battleInfoBar');
 
+            enemyHp.innerHTML = "";
+            characterHp.innerHTML = "";
+            battleBarInfo.innerHTML = "BATTLE INFORMATION";
             //sets the background to world select
             document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;
     
@@ -667,9 +680,27 @@ class gameLogic {
         let path = document.querySelectorAll('.path');
         let partyWrapper = document.querySelector('.partyWrapper');
         let enemyWrapper = document.querySelector('.enemyWrapper');
+        let enemyHp = document.querySelector('.showEnemyHealth');
+        let characterHp = document.querySelector('.showCharacterHealth');
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+        
+        if (this.enemyAttackSelect()===undefined){
+            battleBarInfo.innerHTML = "Please click on enemy to attack"
+        } else {
+            battleBarInfo.innerHTML = "BATTLE INFORMATION";
+        }
 
-        arrayEnemyNum = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
-        console.log(arrayEnemyNum);
+        console.log("enemyAttackSelect() = " + this.enemyAttackSelect());
+        
+        arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
+        
+        //create and add all characters to array
+        attackOrder = [kazuma, darkness, megumin, aqua];
+
+        //add enemies to attack order array
+        for (let i = 0;i<arrayEnemy.length; i++){
+            attackOrder.push(arrayEnemy[i]);
+        }
 
         //hides all elements of world path
         for (let i = 0; i<path.length; i++){
@@ -684,14 +715,15 @@ class gameLogic {
         background.style.backgroundImage = `url('./images/backgrounds/${name}.jpg')`;  
 
         //adds enemies dynamically
-        console.log("array length " + arrayEnemyNum.length);
-
         enemyWrapper.replaceChildren();
+        enemyHp.replaceChildren();
 
-        for (let i = 0; i<arrayEnemyNum.length; i++){
+        for (let i = 0; i<arrayEnemy.length; i++){
             let enemyMemberDiv = document.createElement('div');
             let enemyAttackImg = document.createElement('img');
             let enemyMemberImg = document.createElement('img');
+            let enemyMemberP = document.createElement('p');
+    
             enemyWrapper.appendChild(enemyMemberDiv);
             enemyMemberDiv.setAttribute('class', 'enemyMember');
 
@@ -699,13 +731,61 @@ class gameLogic {
             enemyAttackImg.setAttribute('class', 'hideAttack');
 
             enemyMemberDiv.appendChild(enemyMemberImg);
-            enemyMemberImg.setAttribute('class', arrayEnemyNum[i].type);
-            enemyMemberImg.setAttribute('src', `./images/enemies/${arrayEnemyNum[i].type}.png`);
+            enemyMemberImg.setAttribute('class', arrayEnemy[i].name);
+            enemyMemberImg.setAttribute('src', `./images/enemies/${arrayEnemy[i].name}.png`);
+            enemyMemberImg.setAttribute('id', i)
+            enemyMemberImg.setAttribute('onclick', `game.enemyAttackSelect(${i})`);
+            document.getElementById(i).style.cursor = 'pointer';
+
+            enemyHp.appendChild(enemyMemberP);
+            enemyMemberP.setAttribute('id', `${arrayEnemy[i].name}${i}`);
+            enemyMemberP.innerHTML = `${newMenu.ucFirst(arrayEnemy[i].name)} | HP: ${arrayEnemy[i].hp}`;
+
             }
+
+            for (let i = 0; i<4; i++){
+                let characterMemberP = document.createElement('p');
+                characterHp.appendChild(characterMemberP);
+                characterMemberP.setAttribute('id', `${attackOrder[i].name}`);
+                characterMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+            }
+    }
+
+    enemyAttackSelect (id) {
+
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+        attackNumber = id;
+
+        if (id!=undefined){
+            battleBarInfo.innerHTML = `Attacking ${newMenu.ucFirst(arrayEnemy[id].name)}`;
+        }
+
     }
 
     //fight - per character
     oneCharacterAttack () {
+
+        //set variables
+        let enemyHp = document.querySelector('.showEnemyHealth');
+        let characterHp = document.querySelector('.showCharacterHealth');
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+
+        if (currentAttacker===attackOrder.length){
+            currentAttacker = 0;
+        }
+
+        arrayEnemy[attackNumber] = this.attack(attackOrder[currentAttacker],arrayEnemy[attackNumber]); 
+        
+        for (let i = 0; i<arrayEnemy.length; i++){
+            let enemyStatus = document.getElementById(`${arrayEnemy[i].name}${i}`);
+            enemyStatus.innerHTML = `${newMenu.ucFirst(arrayEnemy[i].name)} | HP: ${arrayEnemy[i].hp}`;
+        }
+
+        battleBarInfo.innerHTML = `${newMenu.ucFirst(attackOrder[currentAttacker].name)} Attacked ${arrayEnemy[attackNumber].name} for ${attackOrder[currentAttacker].attack}`;
+
+        characterHp.innerHTML = attackOrder[currentAttacker].hp;
+        
+        currentAttacker++;
 
     }
 
@@ -761,6 +841,9 @@ let score = 0;
 let howToPlayShow = false;
 let optionsShow = false;
 let muteOption = false;
-let arrayEnemyNum = [];
+let arrayEnemy = [];
+let attackOrder = [];
+let attackNumber;
+let currentAttacker = 0;
 
 
