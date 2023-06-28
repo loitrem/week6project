@@ -573,6 +573,15 @@ let howToWin = document.querySelector('.howToWin');
 let newMenu = new menu();
 let game = new gameLogic();
 let newEnemyArray = new enemyArray();
+let musicParent = document.querySelector('.mainMenu');
+let openingMusic = document.createElement('audio');
+musicParent.appendChild(openingMusic);
+openingMusic.setAttribute('type', 'audio/mpeg');
+openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
+openingMusic.autoplay = true;
+openingMusic.volume = .2;
+openingMusic.loop = true;
+openingMusic.load();
 
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
