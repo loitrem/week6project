@@ -149,11 +149,10 @@ border: solid black;
 }
 
 .hideParty {
-    /* display: none; */
+    display: none;
     position: fixed;
-    display: block;
     left: 40px;
-    top: 250px;
+    top: 225px;
 }
 
 .menuRight {
@@ -239,17 +238,16 @@ border: solid black;
 }
 
 .partyMemberOne, .partyMemberTwo, .partyMemberThree, .partyMemberFour {
-    width: 90%;
-    height: 75px;
+    width: 75px;
+    height:100px;
     display: flex;
     justify-content: left;
     align-items: center;
-    border: solid black;
 }
 
 .kazuma, .darkness, .megumin, .aqua {
-    height: 65px;
-    width: 65px;
+    height: 75px;
+    width: 75px;
 }
 
 .punch {
@@ -297,14 +295,14 @@ border: solid black;
     display: none;
     position: fixed;
     left: 40px;
-    top: 250px;
+    top: 225px;
 }
 
 .showParty {
     position: fixed;
     display: block;
     left: 40px;
-    top: 250px;
+    top: 225px;
 }
 
 .hideEnemy {
@@ -574,24 +572,22 @@ border: solid black;
     }
 
     .hideParty {
-        /* display: none; */
+        display: none;
         position: fixed;
-        display: block;
         left: 40px;
-        top: 250px;
+        top: 225px;
     }
     
     .showParty {
         position: fixed;
         display: block;
         left: 40px;
-        top: 250px;
+        top: 225px;
     }
     
     .hideEnemy {
-        /* display: none; */
+        display: none;
         position: fixed;
-        display: block;
         right: 40px;
         top: 250px;
     }
@@ -766,17 +762,16 @@ border: solid black;
 }
 
 .enemyMember {
-    width: 90%;
-    height: 75px;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: right;
     align-items: center;
-    border: solid black;
 }
 
 .blackBat,.blackSpider,.blueSpider,.demonBat,.grayBat,.graySpider,.purpleSpider,.skeleton,.zombie,.whiteSpider {
-    width: 90%;
-    height: 75px;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: right;
     align-items: center;
