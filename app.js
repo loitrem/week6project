@@ -336,9 +336,36 @@ class animation {
 //menu class
 class menu {
 
+    //capatalize first letter of word
+    ucFirst(x) {
 
-    // main menu
-    mainMenuHide() {
+        let firstChar = x.charAt(0);
+        let remaining = x.substring(1);
+        
+        return firstChar.toUpperCase() + remaining;
+    
+     }
+
+    //show main menu
+    // mainMenu(){
+    //     let showMainMenu = document.querySelector('.menuLeftSubmenu');
+    //     let mainMenuButtons = document.querySelectorAll('.hideMenu');
+    //     let menuClassArray = ['gameplay','combat','leveling'];
+    //     let a = 0;
+
+    //     for (let i = 1; i<mainMenuButtons.length; i++){
+
+    //         mainMenuButtons[i].setAttribute('class', menuClassArray[a]);
+    //         mainMenuButtons[i].innerHTML = this.ucFirst(menuClassArray[a]);
+
+    //         console.log(mainMenuButtons[i]);
+
+    //         a++;
+    //     }
+    // }
+
+    //submenu hide
+    subMenuHide() {
 
         //set variables
         let mainMenu = document.querySelector('.mainMenuWrapper');
@@ -350,24 +377,122 @@ class menu {
     
 
         //hide all elements with .show
-        let showPlay = document.querySelectorAll('.show');
-        for (let i = 0; i<showPlay.length; i++){
-            showPlay[i].classList.remove('show');
-        }
+        let showPlay = document.querySelector('.show');
+
+            showPlay.classList.remove('show');
     }
 
     // text to show when how to play is pushed
     howToPlay () {
-        let showPlay = document.querySelectorAll('.hideMenu');
-        for (let i = 0; i<showPlay.length; i++){
-            showPlay[i].classList.toggle('show');
+        let showMainMenu = document.querySelector('.menuLeftSubmenu');
+        let menuClassArray = ['gameplay','combat','leveling'];
+
+        showMainMenu.replaceChildren();
+        
+        if (optionsShow===false&&howToPlayShow===false){ 
+            howToPlayShow = true;
+
+            for (let i = 0; i<menuClassArray.length; i++){
+
+                let newBtn = document.createElement('button');
+
+                showMainMenu.appendChild(newBtn);
+                newBtn.setAttribute('class', menuClassArray[i]);
+                newBtn.innerHTML = this.ucFirst(menuClassArray[i]);                
+            }
+            showMainMenu.classList.toggle('hideMenu');
+            
+        }
+        else if (optionsShow===true){ 
+            howToPlayShow = true;
+            optionsShow = false;
+            for (let i = 0; i<menuClassArray.length; i++){
+
+                let newBtn = document.createElement('button');
+
+                showMainMenu.appendChild(newBtn);
+                newBtn.setAttribute('class', menuClassArray[i]);
+                newBtn.innerHTML = this.ucFirst(menuClassArray[i]);                
+            }
+            
+        } else {
+            showMainMenu.classList.toggle('hideMenu');
+            howToPlayShow = false;
         }
     }
 
-    // text to show when options is pushed
+    // show options menu
     options() {
 
+        let showOptions = document.querySelector('.menuLeftSubmenu');
+        let menuClassArray = ['music'];
+        let menuTextArray = ['Music On/Off']
+
+        showOptions.replaceChildren();
+
+        if (optionsShow===false&&howToPlayShow===false){ 
+            optionsShow = true;
+
+                showOptions.classList.toggle('hideMenu');
+
+            for (let i = 0; i<menuClassArray.length; i++){
+                let newBtn = document.createElement('button');
+
+                showOptions.appendChild(newBtn);
+                newBtn.setAttribute('class', menuClassArray[i]);
+                newBtn.innerHTML = this.ucFirst(menuTextArray[i]);
+                newBtn.setAttribute('onclick', `newMenu.${menuClassArray[i]}()`);
+            }
+            
+        } else if (howToPlayShow===true){ 
+            optionsShow = true;
+            howToPlayShow = false;
+
+            for (let i = 0; i<menuClassArray.length; i++){
+                let newBtn = document.createElement('button');
+
+                showOptions.appendChild(newBtn);
+                newBtn.setAttribute('class', menuClassArray[i]);
+                newBtn.innerHTML = this.ucFirst(menuTextArray[i]);
+
+                
+            }
+            
+        } else {
+            showOptions.classList.toggle('hideMenu'); 
+            optionsShow = false;
+        }
     }
+
+    music() {
+
+        let musicBtn = document.querySelector('music');
+        console.log(musicBtn);
+
+                if (openingMusic.muted===false){
+                    muteOption = true;
+                } else {
+                    muteOption = false;
+                }
+        console.log(muteOption);
+        openingMusic.muted = muteOption;
+    }
+
+    //  // hide options menu
+    //  hideOptions() {
+
+    //     //set variables
+    //     let menuLeftSubmenu = document.querySelector('.menuLeftSubmenu');
+    //     let newBtn = document.createElement('button');
+    //     let gamePlay = document.querySelector('.gameplay');
+        
+    //     menuLeftSubmenu.classList.toggle('hideMenu');
+    //     gamePlay.setAttribute('class', 'options showOptions');
+    //     gamePlay.classList.toggle('showOptions');
+
+    //     gamePlay.innerHTML = "Music On/Off";
+
+    // }
 
     // text to show when combat is pushed
     combat() {
@@ -573,15 +698,17 @@ let howToWin = document.querySelector('.howToWin');
 let newMenu = new menu();
 let game = new gameLogic();
 let newEnemyArray = new enemyArray();
+
 let musicParent = document.querySelector('.mainMenu');
 let openingMusic = document.createElement('audio');
 musicParent.appendChild(openingMusic);
 openingMusic.setAttribute('type', 'audio/mpeg');
 openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
 openingMusic.autoplay = true;
-openingMusic.volume = .2;
 openingMusic.loop = true;
+openingMusic.volume = .1;
 openingMusic.load();
+openingMusic.muted = false;
 
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
@@ -591,3 +718,8 @@ let gameStart = false;
 let winner = "";
 let stage = "";
 let score = 0;
+let howToPlayShow = false;
+let optionsShow = false;
+let muteOption = false;
+
+

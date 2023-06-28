@@ -98,7 +98,7 @@ border: solid black;
     border-right: 1px solid lightgray;
 }
 
-.howToPlay,.start,.options,.howToWin,.combat,.leveling,.gameplay,.quit {
+.howToPlay,.start,.options,.howToWin,.combat,.leveling,.gameplay,.quit,.music {
     height: 50px;
     width: 150px;
     border: 5px double black;
@@ -111,7 +111,7 @@ border: solid black;
     cursor: pointer;
 }
 
-.howToPlay:hover,.start:hover,.options:hover,.howToWin:hover,.combat:hover,.leveling:hover,.gameplay:hover,.quit:hover {
+.howToPlay:hover,.start:hover,.options:hover,.howToWin:hover,.combat:hover,.leveling:hover,.gameplay:hover,.quit:hover,.music:hover {
     height: 50px;
     width: 150px;
     border: 5px double black;
@@ -122,6 +122,14 @@ border: solid black;
     font-weight: bold;
     color: whitesmoke;
     cursor: pointer;
+}
+
+.hideOptions {
+    visibility: hidden;
+}
+
+.showOptions {
+    visibility: visible;
 }
 
 .hideMenu {
