@@ -645,12 +645,124 @@ class gameLogic {
         }
     }
 
+    nextWorld(){
+            //reset game
+
+        if (gameStart) {
+
+            //set game over and game start to false
+            gameOver = false;
+            gameStart = false;
+            arrayEnemy = [];
+
+            //set variables
+            let mainMenuImg = document.querySelector('.menuIconImg');
+            let bottomContentHide = document.querySelector('.bottomContent');
+            let leftMenuClick = document.querySelector('.leftMenuClick');
+            let leftMenuDotted = document.querySelector('.leftMenuDotted');
+            let centerMenuClick = document.querySelector('.centerMenuClick');
+            let centerMenuDotted = document.querySelector('.centerMenuDotted');
+            let rightMenuClick = document.querySelector('.rightMenuClick');
+            let rightMenuDotted = document.querySelector('.rightMenuDotted');
+            let partyWrapper = document.querySelector('.partyWrapper');
+            let enemyWrapper = document.querySelector('.enemyWrapper');
+            let enemyHp = document.querySelector('.showEnemyHealth');
+            let characterHp = document.querySelector('.showCharacterHealth');
+            let battleBarInfo = document.querySelector('.battleInfoBar');
+
+            enemyHp.innerHTML = "";
+            characterHp.innerHTML = "";
+            battleBarInfo.innerHTML = "BATTLE INFORMATION";
+            //sets the background to world select
+            document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;
+    
+            //hides info bar and menu icon
+            mainMenuImg.classList.add('menuIconHide');
+            bottomContentHide.classList.add('infoBarHide');
+
+            //hides all elements with .show
+            let showPlay = document.querySelectorAll('.show');
+                for (let i = 0; i<showPlay.length; i++){
+                    showPlay[i].classList.remove('show');
+                }
+
+            if (world===1){
+                //sets first world icon to red x and mouse to default
+                leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                leftMenuClick.style.cursor = "pointer";
+
+                centerMenuClick.setAttribute('src', './images/path/x.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClickX path');
+                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.style.cursor = "default";
+
+                rightMenuClick.setAttribute('src', './images/path/x.png');
+                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                rightMenuClick.style.cursor = "default";
+            } else if (world===2){
+                //sets first world icon to red x and mouse to default
+                leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                leftMenuClick.style.cursor = "pointer";
+
+                centerMenuClick.setAttribute('src', './images/path/yellow.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClick path');
+                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.style.cursor = "pointer";
+
+                rightMenuClick.setAttribute('src', './images/path/x.png');
+                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                rightMenuClick.style.cursor = "default";
+            } else if (world>=3){
+
+                //sets first world icon to red x and mouse to default
+                leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                leftMenuClick.style.cursor = "pointer";
+
+                centerMenuClick.setAttribute('src', './images/path/yellow.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClick path');
+                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.style.cursor = "pointer";
+
+                rightMenuClick.setAttribute('src', './images/path/yellow.png');
+                rightMenuClick.setAttribute('class', 'rightMenuClick path');
+                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                rightMenuClick.style.cursor = "pointer";
+            }
+
+            //hides party/enemy wrapper
+            partyWrapper.setAttribute('class', 'partyWrapper hideParty');
+            enemyWrapper.setAttribute('class', 'enemyWrapper hideEnemy');
+        }
+        world++;
+    }
+    
+
     //next round
     nextRound () {
-
+       if (round===1){
+            gameStart = true;
+            world = 2;
+            game.nextWorld();
+            game.gameStart();
+            console.log("============================================================================");
+            console.log("why no work");
+            console.log("============================================================================");
+        }
+        console.log("============================================================================");
+        console.log("round = " + round);
+        console.log("============================================================================");
         battle++;
         round++;
 
+        
         //set variables
         let enemyWrapper = document.querySelector('.enemyWrapper');
         let enemyHp = document.querySelector('.showEnemyHealth');
@@ -751,7 +863,7 @@ class gameLogic {
         enemyWrapper.setAttribute('class', 'enemyWrapper showEnemy');
 
         //sets background to this worlds background
-        background.style.backgroundImage = `url('./images/backgrounds/${name}.jpg')`;  
+        background.style.backgroundImage = `url('./images/backgrounds/${name}.png')`;  
 
         //adds enemies dynamically
         enemyWrapper.replaceChildren();
@@ -1079,6 +1191,7 @@ let clickedEnemy;
 let enemyNum = 0;
 let tempArrayLength = 0;
 let attackCount = 0;
+let world = 1;
 
 
 const scoreLeft = () => {

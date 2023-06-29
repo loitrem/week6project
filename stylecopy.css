@@ -380,6 +380,16 @@ border: solid black;
         width: 45px;
     }
 
+    .centerMenuClickX {
+        height: 45px;
+        width: 45px;
+    }
+
+    .centerMenuClick:hover {
+        height: 50px;
+        width: 50px;
+    }
+
     .centerMenuDotted {
         height: 145px;
         width: 250px;
@@ -397,6 +407,12 @@ border: solid black;
         height: 45px;
         width: 45px;
     }
+
+    .rightMenuClickX {
+        height: 45px;
+        width: 45px;
+    }
+
     
     .rightMenuDotted {
         height: 145px;
