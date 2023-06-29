@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="stylecopy.css">
+    </head>
+    <!-- start header -->
+    <header class="headerWrapper">
+
+        <!-- inner header -->
+        <div class="header">
+            <img src="./images/header/header.png" alt="" class="headerImg">
+            <div class="headerText">Konosuba Quest Adventure</div>            
+        </div>
+
+    <!-- end header wrapper -->
+    </header>
+    <body>
+
+        <!-- main content wrapper -->
+        <div class="mainContentWrapper">
+
+            <!-- main content -->
+            <div class="mainContent">
+
+                <!-- top content wrapper -->
+                <div class="topContentWrapper">
+                
+                    <!-- main menu wrapper -->
+                    <div id="mainMenuOverlay" class="mainMenuWrapper">
+
+                        <!-- main menu -->
+                        <div class="mainMenu">
+
+                            <!-- menu left -->
+                            <div class="menuLeft">
+
+                                <div class="menuLeftMain">
+                                    <button class="howToPlay" onclick="newMenu.howToPlay()">How to play</button>
+                                    <button class="start" onclick="game.startGame()">Play</button>
+                                    <button class="options" onclick="newMenu.options()">Options</button>
+                                    <button class="quit" onclick="game.resetGame()">Quit</button>
+                                </div>
+
+                                <div class="menuLeftSubmenu hideMenu">
+                                    <button class="gameplay">Gameplay</button>
+                                    <button class="combat">Combat</button>
+                                    <button class="leveling">Leveling Up</button>
+                                </div>
+
+                            </div>
+
+                            <!-- menu right -->
+                            <div class="menuRight">
+
+                                <div class="menuRightText">
+                                    Welcome to Konosuba Quest Adventure. Press play to start a new game.
+                                </div>
+
+                                <div class="menuRightRight">
+                                    <img src="./images/header/x.png" alt="" class="close" onclick="newMenu.mainMenuHide()">
+                                </div>
+
+                            </div>
+
+                        <!-- end main menu -->
+                        </div>
+
+                    <!-- end main menu wrapper -->
+                    </div>
+
+                    <!-- left content wrapper-->
+                    <div class="leftContentWrapper">
+
+                        <!-- left content -->
+                        <div class="leftContent">
+
+                            <div class="menuIcon">
+                                <img src="images/header/menu.png" alt="" class="menuIconImg menuIconHide" onclick="newMenu.mainMenuHide()">
+                            </div>
+
+                            <div class="leftMenu">
+                                <img src="./images/path/x.png" alt="" class="leftMenuClickX path" onclick="game.displayWorld('field')">
+                                <img src="./images/path/dotted1.png" alt="" class="leftMenuDotted path">
+                            </div>
+
+                            <!-- party wrapper -->
+                            <div class="partyWrapper hideParty">
+
+                                <!-- party member one -->
+                                <div class="partyMemberOne">
+                                    <img src="./images/characters/kazuma.png" alt="" class="kazuma">
+                                    <img src="./images/attacks/punch.gif" alt="" class="punch hideAttack">
+                                </div>
+
+                                <!-- party member two -->
+                                <div class="partyMemberTwo">
+                                    <img src="./images/characters/darkness.png" alt="" class="darkness">
+                                    <img src="./images/attacks/punch.gif" alt="" class="punch hideAttack">
+                                </div>
+
+                                <!-- party member three -->
+                                <div class="partyMemberThree">
+                                    <img src="./images/characters/megumin.png" alt="" class="megumin">
+                                    <img src="./images/attacks/punch.gif" alt="" class="punch hideAttack">
+                                </div>
+
+                                <!-- party member four -->
+                                <div class="partyMemberFour">
+                                    <img src="./images/characters/aqua.png" alt="" class="aqua">
+                                    <img src="./images/attacks/punch.gif" alt="" class="punch hideAttack">
+                                </div>
+
+                            <!-- end party wrapper -->
+                            </div>
+                            
+                        <!-- end left content -->
+                        </div>
+
+                    <!-- end left content wrapper -->
+                    </div>
+
+                    <!-- center content wrapper-->
+                    <div class="centerContentWrapper">
+
+                        <!-- center content -->
+                        <div class="centerContent">
+
+                            
+                            <div class="centerMenu">
+                                <img src="./images/path/x.png" alt="" class="centerMenuClick path" onclick="game.displayWorld('sand')">
+                                <img src="./images/path/dotted1.png" alt="" class="centerMenuDotted path">
+                            </div>
+
+                        <!-- end center content -->
+                        </div>
+
+                    <!-- end center content wrapper -->
+                    </div>
+
+                    <!-- right content wrapper-->
+                    <div class="rightContentWrapper">
+
+                        <!-- right content -->
+                        <div class="rightContent">
+                            
+                            <div class="rightMenu">
+                                <img src="./images/path/dotted1.png" alt="" class="rightMenuDotted path" onclick="game.displayWorld('ice')">
+                                <img src="./images/path/x.png" alt="" class="rightMenuClick path">
+                            </div>
+
+                            <!-- enemy wrapper -->
+                            <div class="enemyWrapper hideEnemy">
+                            
+                            <!-- end enemy wrapper -->
+                            </div>
+                            
+                        <!-- end right content -->
+                        </div>
+
+                    <!-- end right content wrapper -->
+                    </div>
+
+                <!-- end top content wrapper -->
+                </div>
+
+                <!-- bottom content wrapper -->
+                <div class="bottomContentWrapper">
+
+                    <!-- bottom content -->
+                    <div class="bottomContent infoBarHide">
+
+                        <!-- bottom panel wrapper -->
+                        <div class="bottomPanelWrapper">
+                        
+                            <!-- bottom top panel -->
+                            <div class="bottomTopPanel">
+                                
+                                <!-- battle info bar -->
+                                <div class="battleInfoBar">
+                                    BATTLE INFORMATION
+                                </div> 
+
+                            </div>
+                            
+
+                            <!-- bottom bottom panel -->
+                            <div class="bottomBottomPanel">
+
+                                <!-- select action -->
+                                <div class="selectAction">
+
+                                <!-- end select action -->
+                                </div>
+
+                                <!-- show character health -->
+                                <div class="showCharacterHealth">
+
+                                <!-- end show character health -->
+                                </div>
+
+                                <!-- show enemy health -->
+                                <div class="showEnemyHealth">
+
+                                <!-- end show enemy health -->
+                                </div>
+
+                            <!-- end bottom bottom panel -->
+                            </div>
+                            
+                        <!-- end bottom panel wrapper -->
+                        </div>
+                        
+
+                    <!-- end bottom content -->
+                    </div>
+
+                <!-- end bottom content wrapper -->
+                </div>
+
+            <!-- end main content -->
+            </div>
+
+        <!-- end main content wrapper -->
+        </div>
+
+        <script src="appcopy.js" async defer></script>
+    </body>
+</html>

@@ -648,6 +648,67 @@ class gameLogic {
     //next round
     nextRound () {
 
+        battle++;
+        round++;
+
+        //set variables
+        let background = document.querySelector('.topContentWrapper');
+        let path = document.querySelectorAll('.path');
+        let partyWrapper = document.querySelector('.partyWrapper');
+        let enemyWrapper = document.querySelector('.enemyWrapper');
+        let enemyHp = document.querySelector('.showEnemyHealth');
+        let characterHp = document.querySelector('.showCharacterHealth');
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+        let selectAction = document.querySelector('.selectAction');
+
+        //determines number of enemies per battle
+        arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
+
+        //create and add all characters to array
+        attackOrder = [kazuma, darkness, megumin, aqua];
+
+        //add enemies to attack order array
+        for (let i = 0;i<arrayEnemy.length; i++){
+            attackOrder.push(arrayEnemy[i]);
+        }
+
+        //adds enemies dynamically
+        enemyWrapper.replaceChildren();
+        enemyHp.replaceChildren();
+
+        for (let i = 4; i<attackOrder.length; i++){
+            let enemyMemberDiv = document.createElement('div');
+            let enemyAttackImg = document.createElement('img');
+            let enemyMemberImg = document.createElement('img');
+            let enemyMemberP = document.createElement('p');
+    
+            enemyWrapper.appendChild(enemyMemberDiv);
+            enemyMemberDiv.setAttribute('class', 'enemyMember');
+
+            enemyMemberDiv.appendChild(enemyAttackImg);
+            enemyAttackImg.setAttribute('class', 'hideAttack');
+        
+            enemyMemberDiv.appendChild(enemyMemberImg);
+            enemyMemberImg.setAttribute('class', attackOrder[i].name);
+            enemyMemberImg.setAttribute('src', `./images/enemies/${attackOrder[i].name}.png`);
+            enemyMemberImg.setAttribute('id', i)
+            enemyMemberImg.setAttribute('onclick', `game.targetSelect(${i})`);
+            document.getElementById(i).style.cursor = 'pointer';
+
+            //adds enemy stats to bottom right
+            enemyHp.appendChild(enemyMemberP);
+            enemyMemberP.setAttribute('id', `${attackOrder[i].name}${i}`);
+            enemyMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+        }
+
+        //adds character stats to bottom middle
+        for (let i = 0; i<4; i++){
+            let characterMemberP = document.createElement('p');
+            characterHp.appendChild(characterMemberP);
+            characterMemberP.setAttribute('id', `${attackOrder[i].name}`);
+            characterMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+        }
+
     }
 
     //display world
@@ -751,8 +812,11 @@ class gameLogic {
     targetSelect (id) {
 
         let battleBarInfo = document.querySelector('.battleInfoBar');
-        currentDefender = id;
-        console.log("currentDefender = " + currentDefender);
+        if (id){
+            clickedEnemy = id; 
+        }
+        
+        console.log("currentDefender = " + clickedEnemy);
         
         if (id!=undefined){
             battleBarInfo.innerHTML = `Attacking ${newMenu.ucFirst(attackOrder[id].name)}`;
@@ -771,8 +835,34 @@ class gameLogic {
     //next turn
     nextTurn(){
 
-        this.characterOptions(attackOrder[counter].name);
+        //set variables
+        let background = document.querySelector('.topContentWrapper');
+        let path = document.querySelectorAll('.path');
+        let partyWrapper = document.querySelector('.partyWrapper');
+        let enemyWrapper = document.querySelector('.enemyWrapper');
+        let enemyHp = document.querySelector('.showEnemyHealth');
+        let characterHp = document.querySelector('.showCharacterHealth');
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+        let selectAction = document.querySelector('.selectAction');
+        let enemyMemberDiv = document.createElement('div');
+        let enemyAttackImg = document.createElement('img');
+        let enemyMemberImg = document.createElement('img');
+        let enemyMemberP = document.createElement('p');
 
+        this.characterOptions(attackOrder[counter].name);
+        console.log("***************************************");
+        console.log(currentDefender);
+        console.log("***************************************");
+
+        console.log(arrayEnemy);
+
+        // //adds character stats to bottom middle
+        // for (let i = 0; i<4; i++){
+        //     let characterMemberP = document.createElement('p');
+        //     characterHp.appendChild(characterMemberP);
+        //     characterMemberP.setAttribute('id', `${attackOrder[i].name}`);
+        //     characterMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+        // }
 
     }
 
@@ -793,12 +883,56 @@ class gameLogic {
 
     //character attack
     characterAttack (num) {
+
+        //set variables
+        let background = document.querySelector('.topContentWrapper');
+        let path = document.querySelectorAll('.path');
+        let partyWrapper = document.querySelector('.partyWrapper');
+        let enemyWrapper = document.querySelector('.enemyWrapper');
+        let enemyHp = document.querySelector('.showEnemyHealth');
+        let characterHp = document.querySelector('.showCharacterHealth');
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+        let selectAction = document.querySelector('.selectAction');
+        let enemyMemberDiv = document.createElement('div');
+        let enemyAttackImg = document.createElement('img');
+        let enemyMemberImg = document.createElement('img');
+        let enemyMemberP = document.createElement('p');
+
+        currentDefender = attackOrder[clickedEnemy];
         currentDefender.hp -= attackOrder[num].attack;
+        if (currentDefender.hp<=0){
+            currentDefender.hp = 0;
+            let divRotate = document.getElementById(clickedEnemy);
+            divRotate.style.transform = 'rotate(180deg)';
+
+            let deadTarget = document.getElementById(clickedEnemy);
+            deadTarget.style.cursor = "default";
+            deadTarget.setAttribute('onclick', '');
+
+            arrayEnemy.pop(clickedEnemy);
+
+            //updates enemy stats to bottom right
+            enemyHp.appendChild(enemyMemberP);
+
+            if (currentDefender){
+                let updateScore = document.getElementById(`${currentDefender.name}${clickedEnemy}`);
+                updateScore.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+            }
+
+            //empty clicked enemy
+            clickedEnemy = '';
+
+            //if all enemies dead go to next round
+            if(arrayEnemy.length===0){               
+                this.nextRound();
+                console.log("next round");
+            }
+        }
     }
 
     //enemy attack
     enemyAttack (attacker, defender) {
-        
+
     }
 
     //checks if hp is 0 if so remove from arrray
@@ -911,6 +1045,7 @@ let openingMusic = document.createElement('audio');
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
 let battle = 1;
+let round = 1;
 let gameOver = false;
 let gameStart = false;
 let winner = "";
@@ -924,4 +1059,12 @@ let attackOrder = [];
 let currentDefender;
 let currentAttacker = 0;
 let counter = 0;
+let clickedEnemy;
+
+const scoreLeft = () => {
+
+    let score = document.querySelector('showParty');
+    let num = num + 10
+
+}
 
