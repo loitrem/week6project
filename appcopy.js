@@ -661,22 +661,19 @@ class gameLogic {
         let battleBarInfo = document.querySelector('.battleInfoBar');
         let selectAction = document.querySelector('.selectAction');
 
+        battleBarInfo.innerHTML = "New Round";
+
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
 
-        //create and add all characters to array
-        attackOrder = [kazuma, darkness, megumin, aqua];
-
-        //add enemies to attack order array
-        for (let i = 0;i<arrayEnemy.length; i++){
-            attackOrder.push(arrayEnemy[i]);
-        }
+        //add all characters to array
+        characterOrder = [kazuma, darkness, megumin, aqua];
 
         //adds enemies dynamically
         enemyWrapper.replaceChildren();
         enemyHp.replaceChildren();
 
-        for (let i = 4; i<attackOrder.length; i++){
+        for (let i = 0; i<characterOrder.length; i++){
             let enemyMemberDiv = document.createElement('div');
             let enemyAttackImg = document.createElement('img');
             let enemyMemberImg = document.createElement('img');
@@ -689,8 +686,8 @@ class gameLogic {
             enemyAttackImg.setAttribute('class', 'hideAttack');
         
             enemyMemberDiv.appendChild(enemyMemberImg);
-            enemyMemberImg.setAttribute('class', attackOrder[i].name);
-            enemyMemberImg.setAttribute('src', `./images/enemies/${attackOrder[i].name}.png`);
+            enemyMemberImg.setAttribute('class', characterOrder[i].name);
+            enemyMemberImg.setAttribute('src', `./images/enemies/${characterOrder[i].name}.png`);
             enemyMemberImg.setAttribute('id', i)
             enemyMemberImg.setAttribute('onclick', `game.targetSelect(${i})`);
             document.getElementById(i).style.cursor = 'pointer';
@@ -701,16 +698,16 @@ class gameLogic {
 
             //adds enemy stats to bottom right
             enemyHp.appendChild(enemyMemberP);
-            enemyMemberP.setAttribute('id', `${attackOrder[i].name}${i}`);
-            enemyMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+            enemyMemberP.setAttribute('id', `${characterOrder[i].name}${i}`);
+            enemyMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
         }
 
         //adds character stats to bottom middle
         for (let i = 0; i<4; i++){
             let characterMemberP = document.createElement('p');
             characterHp.appendChild(characterMemberP);
-            characterMemberP.setAttribute('id', `${attackOrder[i].name}`);
-            characterMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+            characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+            characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
         }
 
     }
@@ -738,13 +735,8 @@ class gameLogic {
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
         
-        //create and add all characters to array
-        attackOrder = [kazuma, darkness, megumin, aqua];
-
-        //add enemies to attack order array
-        for (let i = 0;i<arrayEnemy.length; i++){
-            attackOrder.push(arrayEnemy[i]);
-        }
+        //add all characters to array
+        characterOrder = [kazuma, darkness, megumin, aqua];
 
         //hides all elements of world path
         for (let i = 0; i<path.length; i++){
@@ -762,7 +754,7 @@ class gameLogic {
         enemyWrapper.replaceChildren();
         enemyHp.replaceChildren();
 
-        for (let i = 4; i<attackOrder.length; i++){
+        for (let i = 0; i<arrayEnemy.length; i++){
             let enemyMemberDiv = document.createElement('div');
             let enemyAttackImg = document.createElement('img');
             let enemyMemberImg = document.createElement('img');
@@ -775,81 +767,50 @@ class gameLogic {
             enemyAttackImg.setAttribute('class', 'hideAttack');
         
             enemyMemberDiv.appendChild(enemyMemberImg);
-            enemyMemberImg.setAttribute('class', attackOrder[i].name);
-            enemyMemberImg.setAttribute('src', `./images/enemies/${attackOrder[i].name}.png`);
+            enemyMemberImg.setAttribute('class', arrayEnemy[i].name);
+            enemyMemberImg.setAttribute('src', `./images/enemies/${arrayEnemy[i].name}.png`);
             enemyMemberImg.setAttribute('id', i)
             enemyMemberImg.setAttribute('onclick', `game.targetSelect(${i})`);
             document.getElementById(i).style.cursor = 'pointer';
 
             //adds enemy stats to bottom right
             enemyHp.appendChild(enemyMemberP);
-            enemyMemberP.setAttribute('id', `${attackOrder[i].name}${i}`);
-            enemyMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+            enemyMemberP.setAttribute('id', `${arrayEnemy[i].name}${i}`);
+            enemyMemberP.innerHTML = `${newMenu.ucFirst(arrayEnemy[i].name)} | HP: ${arrayEnemy[i].hp}`;
         }
 
         //adds character stats to bottom middle
-        for (let i = 0; i<4; i++){
+        for (let i = 0; i<characterOrder.length; i++){
             let characterMemberP = document.createElement('p');
             characterHp.appendChild(characterMemberP);
-            characterMemberP.setAttribute('id', `${attackOrder[i].name}`);
-            characterMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+            characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+            characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
         }
-
         this.nextTurn();
-        
-        //begin battle button
-        // let selectActionButton = document.createElement('button');
-        // selectAction.appendChild(selectActionButton);
-        // selectActionButton.setAttribute('class', 'attackBtn');
-        // selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
-        // selectActionButton.innerHTML="Attackkazuma";
-        // console.log("****************************************************");
-        //     console.log(currentDefender);
-        // if (currentDefender){
-        //     console.log("true");
-        //     attackOrder[currentDefender] = this.attack(attackOrder[currentAttacker],attackOrder[currentDefender]);            
-        // }
-        // currentAttacker++;
     }
 
     //saves the enemy that was clicked on to currentDefender
     targetSelect (id) {
 
         let battleBarInfo = document.querySelector('.battleInfoBar');
-        if (id){
+        if (id&&this.isAlive(arrayEnemy[id])){
             clickedEnemy = id; 
+            console.log("+++++++++++++++++++++++++++++++++");
+            console.log(arrayEnemy);
+            console.log(arrayEnemy[id]);
+            console.log(game.isAlive(arrayEnemy[id]));
         }
-        
-        console.log("currentDefender = " + clickedEnemy);
+
         
         if (id!=undefined){
-            battleBarInfo.innerHTML = `Attacking ${newMenu.ucFirst(attackOrder[id].name)}`;
+            battleBarInfo.innerHTML = `Attacking ${newMenu.ucFirst(arrayEnemy[id].name)}`;
         }
     }
 
-    //whos turn (turn is number)
-    // whosTurn(turn){
-    //     if (this.isAlive(attackOrder[turn]&&attackOrder[turn]<=attackOrder.length)){
-    //         return attackOrder[turn];
-    //     } else {
-    //         return attackOrder[turn+1];
-    //     }   
-    // }
-
-    //next turn
     nextTurn(){
 
-        this.characterOptions(attackOrder[counter].name);
-        console.log("**************************************");
-        console.log(attackOrder[counter].name);
+        this.characterOptions(characterOrder[counter].name);
 
-        // //adds character stats to bottom middle
-        // for (let i = 0; i<4; i++){
-        //     let characterMemberP = document.createElement('p');
-        //     characterHp.appendChild(characterMemberP);
-        //     characterMemberP.setAttribute('id', `${attackOrder[i].name}`);
-        //     characterMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
-        // }
     }
 
     //is alive
@@ -870,23 +831,13 @@ class gameLogic {
     //character attack
     characterAttack (num) {
 
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+
         if (num!=99){
-            //set variables
-            let background = document.querySelector('.topContentWrapper');
-            let path = document.querySelectorAll('.path');
-            let partyWrapper = document.querySelector('.partyWrapper');
-            let enemyWrapper = document.querySelector('.enemyWrapper');
-            let enemyHp = document.querySelector('.showEnemyHealth');
-            let characterHp = document.querySelector('.showCharacterHealth');
-            let battleBarInfo = document.querySelector('.battleInfoBar');
-            let selectAction = document.querySelector('.selectAction');
-            let enemyMemberDiv = document.createElement('div');
-            let enemyAttackImg = document.createElement('img');
-            let enemyMemberImg = document.createElement('img');
-            let enemyMemberP = document.createElement('p');
             
-            currentDefender = attackOrder[clickedEnemy];
-            currentDefender.hp -= attackOrder[num].attack;
+            currentDefender = arrayEnemy[clickedEnemy];
+            currentDefender.hp -= characterOrder[num].attack;
+            console.log("num = " + num);
 
             if (currentDefender.hp<=0){
                 currentDefender.hp = 0;
@@ -923,41 +874,69 @@ class gameLogic {
         if (num===99){
             num = 2;
         }
+
         num +=1;
-        if (num>3){
-            num = 0;
+
+        if (num>3){            
+            this.enemyAttack();
+
         }
 
-        this.characterOptions(attackOrder[num].name);
-        console.log(attackOrder[num].name);
+        this.characterOptions(characterOrder[num].name);
     }
 
     //enemy attack
-    enemyAttack (attacker, defender) {
+    enemyAttack () {
 
-    }
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+        let loopCount = 0;
+        let enemyNum;
 
-    //checks if hp is 0 if so remove from arrray
-    isDead(array, num){
-        if (array[num].hp===0){
-            array.pop(num);
-        }
-    }
+        //loop through current arrayEnemy
+        let loop = setInterval(function(){
 
-    //characters turn
-    characterTurn (enemyId) {
-    
+            let attackWho = Math.floor(Math.floor(Math.random()*(101-1)+1));
+            console.log(currentAttacker);
+            console.log("****************************************************");
+            console.log(characterOrder);
+            if (characterOrder[loopCount].hp>0){
+                currentAttacker = characterOrder[loopCount+4];
+                console.log(currentAttacker);
+            } else {
 
-    }
+            }
 
-    //enemies turn
-    enemyTurn(){
+            //which character will get hit
+            if (attackWho>0&&attackWho<=20){
+                currentDefender = characterOrder[0];
+            } else if (attackWho>20&&attackWho<=70){
+                currentDefender = characterOrder[1];
+            } else if (attackWho>70&&attackWho<=85){
+                currentDefender = characterOrder[2];
+            } else if (attackWho>85&&attackWho<=100){
+                currentDefender = characterOrder[3];
+            }
 
-    }
+            let updateScoreCharacter = document.getElementById(`${currentDefender.name}`);
 
-    //are there enemies left after each attack
-    enemiesLeft() {
+            //displays which enemy is attacking which character on battle bar      
+            console.log( battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(arrayEnemy[loopCount].name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)}`);
+            battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(arrayEnemy[loopCount].name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)}`;
+        
+            //displays how much the attacker hit the defender for and does the math for that
+            currentDefender.hp -= arrayEnemy[loopCount].attack;
 
+            battleBarInfo.innerHTML = `${newMenu.ucFirst(arrayEnemy[loopCount].name)} Attacked ${newMenu.ucFirst(currentDefender.name)} for ${arrayEnemy[loopCount].attack}`;
+            updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+        
+            loopCount++;
+
+            if (loopCount===arrayEnemy.length){
+                console.log("******* done ***********");
+                clearInterval(loop);
+                game.characterOptions("kazuma"); 
+            }
+        }, 3000);       
     }
 
     //retreat
@@ -1062,11 +1041,12 @@ let howToPlayShow = false;
 let optionsShow = false;
 let muteOption = false;
 let arrayEnemy = [];
-let attackOrder = [];
+let characterOrder = [];
 let currentDefender;
 let currentAttacker = 0;
 let counter = 0;
 let clickedEnemy;
+
 
 const scoreLeft = () => {
 
