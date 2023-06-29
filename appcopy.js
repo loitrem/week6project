@@ -652,24 +652,21 @@ class gameLogic {
         round++;
 
         //set variables
-        let background = document.querySelector('.topContentWrapper');
-        let path = document.querySelectorAll('.path');
-        let partyWrapper = document.querySelector('.partyWrapper');
         let enemyWrapper = document.querySelector('.enemyWrapper');
         let enemyHp = document.querySelector('.showEnemyHealth');
         let characterHp = document.querySelector('.showCharacterHealth');
         let battleBarInfo = document.querySelector('.battleInfoBar');
-        let selectAction = document.querySelector('.selectAction');
+    
 
         battleBarInfo.innerHTML = "New Round";
 
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
 
-        kazuma = kazuma.setCharacter("kazuma", 5, 5, 20, 1, 0);
-        darkness = darkness.setCharacter("darkness", 5, 5, 20, 1, 0);
-        megumin = megumin.setCharacter("megumin", 5, 5, 20, 1, 0);
-        aqua = aqua.setCharacter("aqua", 5, 5, 20, 1, 0);
+        kazuma.hp = 5;
+        darkness.hp = 75;
+        megumin.hp = 10;
+        aqua.hp = 20;
 
         game.characterOptions("kazuma");
 
@@ -968,7 +965,7 @@ class gameLogic {
                 
                 updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
             }
-        }, 3000);  
+        }, 1500);  
         attackCount++;     
     }
 
