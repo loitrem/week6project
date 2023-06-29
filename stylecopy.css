@@ -148,13 +148,6 @@ border: solid black;
     visibility:visible;
 }
 
-.hideParty {
-    display: none;
-    position: fixed;
-    left: 40px;
-    top: 225px;
-}
-
 .menuRight {
     width: 60%;
     height: 100%;
@@ -309,14 +302,14 @@ border: solid black;
     display: none;
     position: fixed;
     right: 40px;
-    top: 250px;
+    top: 200px;
 }
 
 .showEnemy {
     position: fixed;
     display: block;
     right: 40px;
-    top: 250px;
+    top: 200px;
 }
 
 .hideAttack {
@@ -584,21 +577,6 @@ border: solid black;
         left: 40px;
         top: 225px;
     }
-    
-    .hideEnemy {
-        display: none;
-        position: fixed;
-        right: 40px;
-        top: 250px;
-    }
-    
-    .showEnemy {
-        position: fixed;
-        display: block;
-        right: 40px;
-        top: 250px;
-    }
-
 }
 
 @media only screen and (min-width:1330px) and (max-width: 1430px) {
