@@ -849,10 +849,13 @@ class gameLogic {
                 //empty clicked enemy
                 clickedEnemy = '';
 
-                //if all enemies dead go to next round
-                if(arrayEnemy.length===0){               
-                    this.nextRound();
-                    console.log("next round");
+                //checks if all enemies are dead
+                let deadResult = game.enemyAllDead(arrayEnemy);
+                console.log("dead result = " + deadResult);
+                if (deadResult===true){
+                    game.nextRound();
+                } else if (deadResult===false){
+                    game.characterOptions("kazuma"); 
                 }
             } else {
                 if (currentDefender){
@@ -897,6 +900,11 @@ class gameLogic {
         let battleBarInfo = document.querySelector('.battleInfoBar');
 
         tempArrayLength = arrayEnemy.length;
+
+        if (attackCount===1){
+            enemyNum = 0;
+            attackCount = 0;
+        }
 
         //loop through current arrayEnemy
         let loop = setInterval(function(){
@@ -960,7 +968,8 @@ class gameLogic {
                 
                 updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
             }
-        }, 3000);       
+        }, 3000);  
+        attackCount++;     
     }
 
     //retreat
@@ -1072,6 +1081,7 @@ let counter = 0;
 let clickedEnemy;
 let enemyNum = 0;
 let tempArrayLength = 0;
+let attackCount = 0;
 
 
 const scoreLeft = () => {
