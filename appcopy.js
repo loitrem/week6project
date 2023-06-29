@@ -56,7 +56,7 @@ class character {
 class enemy {
 
     //constructor
-    constructor(name, attack,attackMax, attackMin, defense, defenseMax, defenseMin, hp, hpMax, hpMin, mp, mpMax, mpMin, xp, xpMax, xpMin){
+    constructor(name, attack,attackMax, attackMin, defense, defenseMax, defenseMin, hp, hpMax, hpMin, mp, mpMax, mpMin, xp, xpMax, xpMin, alive){
         this.name = name;
         this.attack = attack;
         this.attackMax = attackMax;
@@ -73,6 +73,7 @@ class enemy {
         this.xp = xp;
         this.xpMax = xpMax;
         this.xpMin = xpMin;
+        this.alive = alive;
     }
 
     //getter
@@ -95,7 +96,8 @@ class enemy {
             mpMin: this.mpMin,
             xp: this.xp,
             xpMax: this.xpMax,
-            xpMin: this.xpMin
+            xpMin: this.xpMin,
+            alive: this.alive
         }
 
         //return the object
@@ -156,6 +158,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 11;
             tempEnemy.xpMin = 2;
+            tempEnemy.alive = true;
         } else if (name==="blackSpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 4;
@@ -168,6 +171,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 11;
             tempEnemy.xpMin = 2;
+            tempEnemy.alive = true;
         } else if (name==="grayBat"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 5;
@@ -180,6 +184,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 12;
             tempEnemy.xpMin = 4;
+            tempEnemy.alive = true;
         } else if (name==="graySpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 5;
@@ -192,6 +197,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 12;
             tempEnemy.xpMin = 5;
+            tempEnemy.alive = true;
         } else if (name==="skeleton"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 5;
@@ -204,6 +210,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 14;
             tempEnemy.xpMin = 5;
+            tempEnemy.alive = true;
         } else if (name==="zombie"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 5;
@@ -216,6 +223,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 14;
             tempEnemy.xpMin = 6;
+            tempEnemy.alive = true;
         } else if (name==="whiteSpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 7;
@@ -228,6 +236,7 @@ class enemyArray {
             tempEnemy.mpMin = 1;
             tempEnemy.xpMax = 15;
             tempEnemy.xpMin = 8;
+            tempEnemy.alive = true;
         } else if (name==="blueSpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 8;
@@ -240,6 +249,7 @@ class enemyArray {
             tempEnemy.mpMin = 1;
             tempEnemy.xpMax = 18;
             tempEnemy.xpMin = 12;
+            tempEnemy.alive = true;
         } else if (name==="greenSpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 11;
@@ -252,6 +262,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 22;
             tempEnemy.xpMin = 14;
+            tempEnemy.alive = true;
         } else if (name==="demonBat"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 15;
@@ -264,6 +275,7 @@ class enemyArray {
             tempEnemy.mpMin = 1;
             tempEnemy.xpMax = 40;
             tempEnemy.xpMin = 25;
+            tempEnemy.alive = true;
         }
 
         //return range array
@@ -747,9 +759,10 @@ class gameLogic {
 
     //next round
     nextRound () {
-       if (round===1){
+       if (round===3){
             gameStart = true;
             world = 2;
+            battle =1;
             game.nextWorld();
             game.gameStart();
             console.log("============================================================================");
@@ -761,14 +774,12 @@ class gameLogic {
         console.log("============================================================================");
         battle++;
         round++;
-
         
         //set variables
         let enemyWrapper = document.querySelector('.enemyWrapper');
         let enemyHp = document.querySelector('.showEnemyHealth');
         let characterHp = document.querySelector('.showCharacterHealth');
         let battleBarInfo = document.querySelector('.battleInfoBar');
-    
 
         battleBarInfo.innerHTML = "New Round";
 
@@ -780,7 +791,7 @@ class gameLogic {
         megumin.hp = 10;
         aqua.hp = 20;
 
-        game.characterOptions("kazuma");
+       
 
         //add all characters to array
         characterOrder = [kazuma, darkness, megumin, aqua];
@@ -901,7 +912,7 @@ class gameLogic {
             characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
             characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
         }
-        this.nextTurn();
+        game.nextTurn();
     }
 
     //saves the enemy that was clicked on to currentDefender
@@ -922,9 +933,7 @@ class gameLogic {
     }
 
     nextTurn(){
-
-        this.characterOptions(characterOrder[counter].name);
-
+     game.characterOptions(characterOrder[counter].name); 
     }
 
     //does attack hit
@@ -943,6 +952,7 @@ class gameLogic {
 
             if (currentDefender.hp<=0){
                 currentDefender.hp = 0;
+                arrayEnemy[clickedEnemy].alive = false;
                 let divRotate = document.getElementById(clickedEnemy);
                 divRotate.style.transform = 'rotate(180deg)';
 
@@ -962,6 +972,7 @@ class gameLogic {
                 let deadResult = game.enemyAllDead(arrayEnemy);
                 console.log("dead result = " + deadResult);
                 if (deadResult===true){
+                    restartAttackOrder = true;
                     game.nextRound();
                 } else if (deadResult===false){
                     game.characterOptions("kazuma"); 
@@ -981,26 +992,46 @@ class gameLogic {
         num +=1;
 
         if (num>3){            
-            this.enemyAttack();
-
+            this.enemyAttack(); 
         }
 
-        this.characterOptions(characterOrder[num].name);
+        if (restartAttackOrder===true){
+            game.characterOptions("kazuma"); 
+            console.log('POTATO!!');
+            restartAttackOrder=false;
+        } else {
+            game.characterOptions(characterOrder[num].name);
+        }
+        
     }
 
     enemyAllDead(array){
 
-        let dead = false;
+        let deadArray = [];
 
+        //created new array of alive or dead
         for (let i = 0; i<array.length; i++) {
-
-            if (array[i].hp>0){
-                dead = false;
-            } else {
-                dead = true;
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            console.log(array[i].alive);
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            if (array[i].alive){
+                deadArray.push("alive");
+            } else if (array[i].alive===false){
+                deadArray.push("dead");
             }
         }
-        return dead;
+
+        let allDead = true;
+        //goes through created array to veryify if everyone is dead or not
+        for (let i = 0; i< deadArray.length; i++){
+            if(deadArray[i]==="alive"){
+                allDead = false;
+            }
+        }
+        console.log("++++++++++++++++++++++++++++++++ttrt36t433++++++++++++++++++++++++++++++++++++");
+        console.log(deadArray);
+        console.log("++++++++++++++++++++++++++++++6664356356++++++++++++++++++++++++++++++++++++++");
+        return allDead;
     }
 
     //enemy attack
@@ -1101,29 +1132,41 @@ class gameLogic {
         if (name==="kazuma"){
             
             let selectActionButton = document.createElement('button');
+            let selectName = document.createElement('p');
+            selectAction.appendChild(selectName);
+            selectName.innerHTML = "Kazuma";
+
             selectAction.appendChild(selectActionButton);
             selectActionButton.setAttribute('class', 'attackBtn');
             selectActionButton.setAttribute('onclick', 'game.characterAttack(0)');
-            selectActionButton.innerHTML="Attackkazuma";
+            selectActionButton.innerHTML="Attack";
 
         } else if (name==="darkness"){
             
             let selectActionButton = document.createElement('button');
+            let selectName = document.createElement('p');
+            selectAction.appendChild(selectName);
+            selectName.innerHTML = "Darkness";
+
             selectAction.appendChild(selectActionButton);
             selectActionButton.setAttribute('class', 'attackBtn');
             selectActionButton.setAttribute('onclick', 'game.characterAttack(1)');
-            selectActionButton.innerHTML="Attackdarkness";
+            selectActionButton.innerHTML="Attack";
 
         } else if (name==="megumin"){
 
             let selectActionButton = document.createElement('button');
             let btn2 = document.createElement('button');
             let selectActionDesc = document.createElement('p');
+            let selectName = document.createElement('p');
+            selectAction.appendChild(selectName);
+            selectName.innerHTML = "Megumin";
+
             selectAction.appendChild(selectActionButton);
             selectAction.appendChild(selectActionDesc);
             selectActionButton.setAttribute('class', 'attackBtn');
             selectActionButton.setAttribute('onclick', 'game.characterAttack(2)');
-            selectActionButton.innerHTML="Attackmegumin";
+            selectActionButton.innerHTML="EXPLOSION!";
             selectActionDesc.innerHTML="Will kill all enemies on screen. Can only be used once per world.";
             selectAction.appendChild(btn2);
             btn2.setAttribute('class', 'attackBtn');
@@ -1134,13 +1177,17 @@ class gameLogic {
             
             let selectActionButton = document.createElement('button');
             let selectActionHeal = document.createElement('button');
+            let selectName = document.createElement('p');
+            selectAction.appendChild(selectName);
+            selectName.innerHTML = "Aqua";
+
             selectAction.appendChild(selectActionButton);
             selectAction.appendChild(selectActionHeal);
             selectActionButton.setAttribute('class', 'attackBtn');
             selectActionButton.setAttribute('onclick', 'game.characterAttack(3)');
             selectActionHeal.setAttribute('class', 'attackBtn');
             selectActionHeal.setAttribute('onclick', 'game.oneCharacterHeal()');
-            selectActionButton.innerHTML="Attackaqua";
+            selectActionButton.innerHTML="Attack";
             selectActionHeal.innerHTML="Heal";
         }
     }
@@ -1192,6 +1239,7 @@ let enemyNum = 0;
 let tempArrayLength = 0;
 let attackCount = 0;
 let world = 1;
+let restartAttackOrder = false;
 
 
 const scoreLeft = () => {

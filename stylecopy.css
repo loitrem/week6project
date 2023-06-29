@@ -820,6 +820,8 @@ border: solid black;
     border: 1px solid rgb(58, 58, 58);
     display: flex;
     flex-direction: column;
+    font-weight: bold;
+    padding-left: 10px;
 }
 
 .showCharacterHealth {
