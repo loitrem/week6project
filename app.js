@@ -56,7 +56,7 @@ class character {
 class enemy {
 
     //constructor
-    constructor(name, attack,attackMax, attackMin, defense, defenseMax, defenseMin, hp, hpMax, hpMin, mp, mpMax, mpMin, xp, xpMax, xpMin){
+    constructor(name, attack,attackMax, attackMin, defense, defenseMax, defenseMin, hp, hpMax, hpMin, mp, mpMax, mpMin, xp, xpMax, xpMin, alive){
         this.name = name;
         this.attack = attack;
         this.attackMax = attackMax;
@@ -73,6 +73,7 @@ class enemy {
         this.xp = xp;
         this.xpMax = xpMax;
         this.xpMin = xpMin;
+        this.alive = alive;
     }
 
     //getter
@@ -95,7 +96,8 @@ class enemy {
             mpMin: this.mpMin,
             xp: this.xp,
             xpMax: this.xpMax,
-            xpMin: this.xpMin
+            xpMin: this.xpMin,
+            alive: this.alive
         }
 
         //return the object
@@ -156,6 +158,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 11;
             tempEnemy.xpMin = 2;
+            tempEnemy.alive = true;
         } else if (name==="blackSpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 4;
@@ -168,6 +171,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 11;
             tempEnemy.xpMin = 2;
+            tempEnemy.alive = true;
         } else if (name==="grayBat"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 5;
@@ -180,6 +184,7 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 12;
             tempEnemy.xpMin = 4;
+            tempEnemy.alive = true;
         } else if (name==="graySpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 5;
@@ -192,42 +197,46 @@ class enemyArray {
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 12;
             tempEnemy.xpMin = 5;
+            tempEnemy.alive = true;
         } else if (name==="skeleton"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 5;
             tempEnemy.attackMin = 2;
             tempEnemy.defenseMax = 2;
             tempEnemy.defenseMin = 1;
-            tempEnemy.hpMax = 10;
+            tempEnemy.hpMax = 11;
             tempEnemy.hpMin = 7;
             tempEnemy.mpMax = 0;
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 14;
             tempEnemy.xpMin = 5;
+            tempEnemy.alive = true;
         } else if (name==="zombie"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 5;
             tempEnemy.attackMin = 2;
             tempEnemy.defenseMax = 2;
             tempEnemy.defenseMin = 1;
-            tempEnemy.hpMax = 10;
+            tempEnemy.hpMax = 11;
             tempEnemy.hpMin = 7;
             tempEnemy.mpMax = 0;
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 14;
             tempEnemy.xpMin = 6;
+            tempEnemy.alive = true;
         } else if (name==="whiteSpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 7;
             tempEnemy.attackMin = 4;
             tempEnemy.defenseMax = 5;
             tempEnemy.defenseMin = 3;
-            tempEnemy.hpMax = 10;
-            tempEnemy.hpMin = 7;
+            tempEnemy.hpMax = 16;
+            tempEnemy.hpMin = 10;
             tempEnemy.mpMax = 2;
             tempEnemy.mpMin = 1;
             tempEnemy.xpMax = 15;
             tempEnemy.xpMin = 8;
+            tempEnemy.alive = true;
         } else if (name==="blueSpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 8;
@@ -240,18 +249,20 @@ class enemyArray {
             tempEnemy.mpMin = 1;
             tempEnemy.xpMax = 18;
             tempEnemy.xpMin = 12;
+            tempEnemy.alive = true;
         } else if (name==="greenSpider"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 11;
             tempEnemy.attackMin = 6;
             tempEnemy.defenseMax = 6;
             tempEnemy.defenseMin = 4;
-            tempEnemy.hpMax = 8;
-            tempEnemy.hpMin = 5;
+            tempEnemy.hpMax = 15;
+            tempEnemy.hpMin = 10;
             tempEnemy.mpMax = 0;
             tempEnemy.mpMin = 0;
             tempEnemy.xpMax = 22;
             tempEnemy.xpMin = 14;
+            tempEnemy.alive = true;
         } else if (name==="demonBat"){
             tempEnemy.name = name;
             tempEnemy.attackMax = 15;
@@ -264,6 +275,7 @@ class enemyArray {
             tempEnemy.mpMin = 1;
             tempEnemy.xpMax = 40;
             tempEnemy.xpMin = 25;
+            tempEnemy.alive = true;
         }
 
         //return range array
@@ -548,32 +560,6 @@ class gameLogic {
 
     }
 
-    //is alive
-    isAlive(character) {
-        if (character.hp>0){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    //does attack hit
-    doesItHit (attacker, defender) {
-
-    }
-
-    //character attack
-    attack (attacker, defender) {
-
-        defender.hp -= attacker.attack;
-
-        if (defender.hp<=0){
-            defender.hp = 0;
-        }
-
-        return defender;
-    }
-
     //start game
     startGame (){
 
@@ -671,8 +657,188 @@ class gameLogic {
         }
     }
 
+    //unlock next world
+    nextWorld(){
+        
+        if (world>3){
+            gameOver = true;
+            gameStart = false;
+        }
+
+        if (gameStart) {
+
+            //set game over and game start to false
+            gameOver = false;
+            gameStart = false;
+            arrayEnemy = [];
+
+            //set variables
+            let bottomContentHide = document.querySelector('.bottomContent');
+            let leftMenuClick = document.querySelector('.leftMenuClick');
+            let leftMenuDotted = document.querySelector('.leftMenuDotted');
+            let centerMenuClick = document.querySelector('.centerMenuClick');
+            let centerMenuDotted = document.querySelector('.centerMenuDotted');
+            let rightMenuClick = document.querySelector('.rightMenuClick');
+            let rightMenuDotted = document.querySelector('.rightMenuDotted');
+            let partyWrapper = document.querySelector('.partyWrapper');
+            let enemyWrapper = document.querySelector('.enemyWrapper');
+            let enemyHp = document.querySelector('.showEnemyHealth');
+            let characterHp = document.querySelector('.showCharacterHealth');
+            let battleBarInfo = document.querySelector('.battleInfoBar');
+            let mainMenuImg = document.querySelector('.menuIconImg');
+            let mainMenu = document.querySelector('.mainMenuWrapper');
+
+            enemyHp.innerHTML = "";
+            characterHp.innerHTML = "";
+            battleBarInfo.innerHTML = "BATTLE INFORMATION";
+            //sets the background to world select
+            document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;
+    
+            //hides info bar and menu icon
+            mainMenu.classList.add('mainMenuHide');
+            mainMenuImg.classList.remove('menuIconHide');
+            bottomContentHide.classList.add('infoBarHide');
+
+            //hides all elements with .show
+            let showPlay = document.querySelectorAll('.show');
+                for (let i = 0; i<showPlay.length; i++){
+                    showPlay[i].classList.remove('show');
+                }
+
+            if (world===1){
+                //sets first world icon to red x and mouse to default
+                leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                leftMenuClick.style.cursor = "pointer";
+
+                centerMenuClick.setAttribute('src', './images/path/x.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClickX path');
+                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.style.cursor = "default";
+
+                rightMenuClick.setAttribute('src', './images/path/x.png');
+                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                rightMenuClick.style.cursor = "default";
+            } else if (world===2){
+                //sets first world icon to red x and mouse to default
+                leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                leftMenuClick.style.cursor = "pointer";
+
+                centerMenuClick.setAttribute('src', './images/path/yellow.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClick path');
+                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.style.cursor = "pointer";
+
+                rightMenuClick.setAttribute('src', './images/path/x.png');
+                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                rightMenuClick.style.cursor = "default";
+            } else if (world>=3){
+
+                //sets first world icon to red x and mouse to default
+                leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                leftMenuClick.style.cursor = "pointer";
+
+                centerMenuClick.setAttribute('src', './images/path/yellow.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClick path');
+                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.style.cursor = "pointer";
+
+                rightMenuClick.setAttribute('src', './images/path/yellow.png');
+                rightMenuClick.setAttribute('class', 'rightMenuClick path');
+                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                rightMenuClick.style.cursor = "pointer";
+            }
+
+            //hides party/enemy wrapper
+            partyWrapper.setAttribute('class', 'partyWrapper hideParty');
+            enemyWrapper.setAttribute('class', 'enemyWrapper hideEnemy');
+        }
+        world++;
+    }
+    
     //next round
     nextRound () {
+        if (round===1){
+            gameStart = true;
+            world = 2;
+            battle =1;
+            game.nextWorld();
+            console.log("============================================================================");
+            console.log("why no work");
+            console.log("============================================================================");
+        }
+        console.log("============================================================================");
+        console.log("round = " + round);
+        console.log("============================================================================");
+        battle++;
+        round++;
+        
+        //set variables
+        let enemyWrapper = document.querySelector('.enemyWrapper');
+        let enemyHp = document.querySelector('.showEnemyHealth');
+        let characterHp = document.querySelector('.showCharacterHealth');
+        let battleBarInfo = document.querySelector('.battleInfoBar');
+
+        battleBarInfo.innerHTML = "New Round";
+
+        //determines number of enemies per battle
+        arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
+
+        kazuma.hp = 20;
+        darkness.hp = 75;
+        megumin.hp = 10;
+        aqua.hp = 20;
+
+        //add all characters to array
+        characterOrder = [kazuma, darkness, megumin, aqua];
+
+        //adds enemies dynamically
+        enemyWrapper.replaceChildren();
+        enemyHp.replaceChildren();
+
+        for (let i = 0; i<arrayEnemy.length; i++){
+            let enemyMemberDiv = document.createElement('div');
+            let enemyAttackImg = document.createElement('img');
+            let enemyMemberImg = document.createElement('img');
+            let enemyMemberP = document.createElement('p');
+    
+            enemyWrapper.appendChild(enemyMemberDiv);
+            enemyMemberDiv.setAttribute('class', 'enemyMember');
+
+            enemyMemberDiv.appendChild(enemyAttackImg);
+            enemyAttackImg.setAttribute('class', 'hideAttack');
+        
+            enemyMemberDiv.appendChild(enemyMemberImg);
+            enemyMemberImg.setAttribute('class', arrayEnemy[i].name);
+            enemyMemberImg.setAttribute('src', `./images/enemies/${arrayEnemy[i].name}.png`);
+            enemyMemberImg.setAttribute('id', i)
+            enemyMemberImg.setAttribute('onclick', `game.targetSelect(${i})`);
+            document.getElementById(i).style.cursor = 'pointer';
+
+            //clear stat boxes
+            characterHp.replaceChildren();
+
+
+            //adds enemy stats to bottom right
+            enemyHp.appendChild(enemyMemberP);
+            enemyMemberP.setAttribute('id', `${arrayEnemy[i].name}${i}`);
+            enemyMemberP.innerHTML = `${newMenu.ucFirst(arrayEnemy[i].name)} | HP: ${arrayEnemy[i].hp}`;
+        }
+
+        //adds character stats to bottom middle
+        for (let i = 0; i<4; i++){
+            let characterMemberP = document.createElement('p');
+            characterHp.appendChild(characterMemberP);
+            characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+            characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
+        }
 
     }
 
@@ -687,10 +853,11 @@ class gameLogic {
         let enemyHp = document.querySelector('.showEnemyHealth');
         let characterHp = document.querySelector('.showCharacterHealth');
         let battleBarInfo = document.querySelector('.battleInfoBar');
-        let selectAction = document.querySelector('.selectAction');
-        
+        let bottomContentHide = document.querySelector('.bottomContent');
+
+        bottomContentHide.classList.remove('infoBarHide');
         //saves which enemy was clicked on
-        if (this.enemyAttackSelect()===undefined){
+        if (this.targetSelect()===undefined){
             battleBarInfo.innerHTML = "Please click on enemy to attack"
         } else {
             battleBarInfo.innerHTML = "BATTLE INFORMATION";
@@ -699,13 +866,13 @@ class gameLogic {
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
         
-        //create and add all characters to array
-        attackOrder = [kazuma, darkness, megumin, aqua];
+        kazuma.hp = 20;
+        darkness.hp = 75;
+        megumin.hp = 10;
+        aqua.hp = 20;
 
-        //add enemies to attack order array
-        for (let i = 0;i<arrayEnemy.length; i++){
-            attackOrder.push(arrayEnemy[i]);
-        }
+        //add all characters to array
+        characterOrder = [kazuma, darkness, megumin, aqua];
 
         //hides all elements of world path
         for (let i = 0; i<path.length; i++){
@@ -717,13 +884,13 @@ class gameLogic {
         enemyWrapper.setAttribute('class', 'enemyWrapper showEnemy');
 
         //sets background to this worlds background
-        background.style.backgroundImage = `url('./images/backgrounds/${name}.jpg')`;  
+        background.style.backgroundImage = `url('./images/backgrounds/${name}.png')`;  
 
         //adds enemies dynamically
         enemyWrapper.replaceChildren();
         enemyHp.replaceChildren();
 
-        for (let i = 4; i<attackOrder.length; i++){
+        for (let i = 0; i<arrayEnemy.length; i++){
             let enemyMemberDiv = document.createElement('div');
             let enemyAttackImg = document.createElement('img');
             let enemyMemberImg = document.createElement('img');
@@ -736,164 +903,223 @@ class gameLogic {
             enemyAttackImg.setAttribute('class', 'hideAttack');
         
             enemyMemberDiv.appendChild(enemyMemberImg);
-            enemyMemberImg.setAttribute('class', attackOrder[i].name);
-            enemyMemberImg.setAttribute('src', `./images/enemies/${attackOrder[i].name}.png`);
-            enemyMemberImg.setAttribute('id', attackOrder[i].name + i)
-            enemyMemberImg.setAttribute('onclick', `game.enemyAttackSelect(${i})`);
+            enemyMemberImg.setAttribute('class', arrayEnemy[i].name);
+            enemyMemberImg.setAttribute('src', `./images/enemies/${arrayEnemy[i].name}.png`);
+            enemyMemberImg.setAttribute('id', i)
+            enemyMemberImg.setAttribute('onclick', `game.targetSelect(${i})`);
             document.getElementById(i).style.cursor = 'pointer';
 
             //adds enemy stats to bottom right
             enemyHp.appendChild(enemyMemberP);
-            enemyMemberP.setAttribute('id', `${attackOrder[i].name}${i}`);
-            enemyMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+            enemyMemberP.setAttribute('id', `${arrayEnemy[i].name}${i}`);
+            enemyMemberP.innerHTML = `${newMenu.ucFirst(arrayEnemy[i].name)} | HP: ${arrayEnemy[i].hp}`;
         }
 
         //adds character stats to bottom middle
-        for (let i = 0; i<4; i++){
+        for (let i = 0; i<characterOrder.length; i++){
             let characterMemberP = document.createElement('p');
             characterHp.appendChild(characterMemberP);
-            characterMemberP.setAttribute('id', `${attackOrder[i].name}`);
-            characterMemberP.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+            characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+            characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
         }
-
-        selectAction.replaceChildren();
-        
-        //begin battle button
-        let selectActionButton = document.createElement('button');
-        selectAction.appendChild(selectActionButton);
-        selectActionButton.setAttribute('class', 'attackBtn');
-        selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
-        selectActionButton.innerHTML="Attackkazuma";
-        // console.log("****************************************************");
-        //     console.log(currentDefender);
-        // if (currentDefender){
-        //     console.log("true");
-        //     attackOrder[currentDefender] = this.attack(attackOrder[currentAttacker],attackOrder[currentDefender]);            
-        // }
-        // currentAttacker++;
+        game.nextTurn();
     }
 
     //saves the enemy that was clicked on to currentDefender
-    enemyAttackSelect (id) {
+    targetSelect (id) {
 
         let battleBarInfo = document.querySelector('.battleInfoBar');
-        currentDefender = id;
-        console.log("currentDefender = " + currentDefender);
-        
+        if (id>=0){
+            clickedEnemy = id; 
+            console.log("+++++++++++++++++++++++++++++++++");
+            console.log(arrayEnemy);
+            console.log(id);
+            console.log(arrayEnemy[id]);
+        }
 
         if (id!=undefined){
-            battleBarInfo.innerHTML = `Attacking ${newMenu.ucFirst(attackOrder[id].name)}`;
+            battleBarInfo.innerHTML = `Attacking ${newMenu.ucFirst(arrayEnemy[clickedEnemy].name)}`;
         }
     }
 
-    //fight - per character
-    oneCharacterAttack () {
-        console.log("current attacker and then name");
-        console.log(currentAttacker);
-        console.log(attackOrder[currentAttacker].name);
+    nextTurn(){
+     game.characterOptions(characterOrder[counter].name); 
+    }
 
-        //set variables
-        let enemyHp = document.querySelector('.showEnemyHealth');
-        let characterHp = document.querySelector('.showCharacterHealth');
+    //does attack hit
+    doesItHit (attacker, defender) {
+
+    }
+
+    //character attack
+    characterAttack (num) {
+
+        if (num!=99){
+            
+            currentDefender = arrayEnemy[clickedEnemy];
+            currentDefender.hp -= characterOrder[num].attack;
+            console.log("num = " + num);
+
+            if (currentDefender.hp<=0){
+                currentDefender.hp = 0;
+                arrayEnemy[clickedEnemy].alive = false;
+                let divRotate = document.getElementById(clickedEnemy);
+                divRotate.style.transform = 'rotate(180deg)';
+
+                let deadTarget = document.getElementById(clickedEnemy);
+                deadTarget.style.cursor = "default";
+                deadTarget.setAttribute('onclick', '');
+
+                if (currentDefender){
+                    let updateScore = document.getElementById(`${currentDefender.name}${clickedEnemy}`);
+                    updateScore.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+                }
+
+                //empty clicked enemy
+                clickedEnemy = '';
+
+                //checks if all enemies are dead
+                let deadResult = game.enemyAllDead(arrayEnemy);
+                console.log("dead result = " + deadResult);
+                if (deadResult===true){
+                    restartAttackOrder = true;
+                    game.nextRound();
+                } else if (deadResult===false){
+                    game.characterOptions("kazuma"); 
+                }
+            } else {
+                if (currentDefender){
+                    let updateScore = document.getElementById(`${currentDefender.name}${clickedEnemy}`);
+                    updateScore.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+                }
+            }
+        }
+
+        if (num===99){
+            num = 2;
+        }
+
+        num +=1;
+
+        if (num>3){            
+            this.enemyAttack(); 
+        }
+
+        if (restartAttackOrder===true){
+            game.characterOptions("kazuma"); 
+            console.log('POTATO!!');
+            restartAttackOrder=false;
+        } else {
+            game.characterOptions(characterOrder[num].name);
+        }
+        
+    }
+
+    enemyAllDead(array){
+
+        let deadArray = [];
+
+        //created new array of alive or dead
+        for (let i = 0; i<array.length; i++) {
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            console.log(array[i].alive);
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+            if (array[i].alive){
+                deadArray.push("alive");
+            } else if (array[i].alive===false){
+                deadArray.push("dead");
+            }
+        }
+
+        let allDead = true;
+        //goes through created array to veryify if everyone is dead or not
+        for (let i = 0; i< deadArray.length; i++){
+            if(deadArray[i]==="alive"){
+                allDead = false;
+            }
+        }
+        console.log("++++++++++++++++++++++++++++++++ttrt36t433++++++++++++++++++++++++++++++++++++");
+        console.log(deadArray);
+        console.log("++++++++++++++++++++++++++++++6664356356++++++++++++++++++++++++++++++++++++++");
+        return allDead;
+    }
+
+    //enemy attack
+    enemyAttack () {
+
         let battleBarInfo = document.querySelector('.battleInfoBar');
-        let selectAction = document.querySelector('.selectAction');
 
-        //outputs updated enemy stats
-        for (let i = 4; i<attackOrder.length; i++){
-            let enemyStatus = document.getElementById(`${attackOrder[i].name}${i}`);
-            enemyStatus.innerHTML = `${newMenu.ucFirst(attackOrder[i].name)} | HP: ${attackOrder[i].hp}`;
+        tempArrayLength = arrayEnemy.length;
+
+        if (attackCount===1){
+            enemyNum = 0;
+            attackCount = 0;
         }
 
-        //remove all children
-        selectAction.replaceChildren();
-        
-        //add attack options per character
-        if (attackOrder[currentAttacker].name==="kazuma"){
-            
-            let selectActionButton = document.createElement('button');
-            selectAction.appendChild(selectActionButton);
-            selectActionButton.setAttribute('class', 'attackBtn');
-            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
-            selectActionButton.innerHTML="Attackkazuma";
-            if (this.isAlive(attackOrder[currentDefender])){
-            attackOrder[currentDefender] = this.attack(attackOrder[currentAttacker],attackOrder[currentDefender]); 
-            }
-        } else if (attackOrder[currentAttacker].name==="darkness"){
-            
-            let selectActionButton = document.createElement('button');
-            selectAction.appendChild(selectActionButton);
-            selectActionButton.setAttribute('class', 'attackBtn');
-            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
-            selectActionButton.innerHTML="Attackdarkness";
-            if (this.isAlive(attackOrder[currentDefender])){
-                attackOrder[currentDefender] = this.attack(attackOrder[currentAttacker],attackOrder[currentDefender]); 
-                }
-        } else if (attackOrder[currentAttacker].name==="megumin"){
+        //loop through current arrayEnemy
+        let loop = setInterval(function(){
 
-            let selectActionButton = document.createElement('button');
-            let selectActionDesc = document.createElement('p');
-            selectAction.appendChild(selectActionButton);
-            selectAction.appendChild(selectActionDesc);
-            selectActionButton.setAttribute('class', 'attackBtn');
-            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
-            selectActionButton.innerHTML="Attackmegumin";
-            selectActionDesc.innerHTML="Will kill all enemies on screen. Can only be used once per world.";
-            if (this.isAlive(attackOrder[currentDefender])){
-                attackOrder[currentDefender] = this.attack(attackOrder[currentAttacker],attackOrder[currentDefender]); 
-                }
-        } else if (attackOrder[currentAttacker].name==="aqua"){
-            
-            let selectActionButton = document.createElement('button');
-            let selectActionHeal = document.createElement('button');
-            selectAction.appendChild(selectActionButton);
-            selectAction.appendChild(selectActionHeal);
-            selectActionButton.setAttribute('class', 'attackBtn');
-            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
-            selectActionHeal.setAttribute('class', 'attackBtn');
-            selectActionHeal.setAttribute('onclick', 'game.oneCharacterHeal()');
-            selectActionButton.innerHTML="Attackaqua";
-            selectActionHeal.innerHTML="Heal";
-            if (this.isAlive(attackOrder[currentDefender])){
-                attackOrder[currentDefender] = this.attack(attackOrder[currentAttacker],attackOrder[currentDefender]); 
-                }
-        } else {
+            let attackWho = Math.floor(Math.floor(Math.random()*(101-1)+1));
+            console.log("****************************************************");
+            console.log(arrayEnemy.length);
+            console.log(arrayEnemy[enemyNum]);
+            console.log("enemy num = " + enemyNum);
 
-            // goes through enemies turn
-            for (let i = 4; i<attackOrder.length; i++){
-            
-                if (this.isAlive(attackOrder[1])){
-                    currentDefender = this.attack(attackOrder[currentAttacker], attackOrder[1]); 
-                }
-                console.log("current Attacker");
-                console.log(attackOrder[currentAttacker].attack);
-            console.log("current defender");
-            console.log(currentDefender);
-                battleBarInfo.innerHTML = `${newMenu.ucFirst(attackOrder[currentAttacker-1].name)} Attacked ${newMenu.ucFirst(currentDefender.name)} for ${attackOrder[currentAttacker-1].attack}`;
-                currentAttacker++;
+            //which character will get hit
+            if (attackWho>0&&attackWho<=20){
+                currentDefender = characterOrder[0];
+            } else if (attackWho>20&&attackWho<=70){
+                currentDefender = characterOrder[1];
+            } else if (attackWho>70&&attackWho<=85){
+                currentDefender = characterOrder[2];
+            } else if (attackWho>85&&attackWho<=100){
+                currentDefender = characterOrder[3];
             }
 
+            if (enemyNum===arrayEnemy.length){
+                console.log("******* done *********654654654**");
+                clearInterval(loop);
 
-            let selectActionButton = document.createElement('button');
-            selectAction.appendChild(selectActionButton);
-            selectActionButton.setAttribute('class', 'attackBtn');
-            selectActionButton.setAttribute('onclick', 'game.oneCharacterAttack()');
-            selectActionButton.innerHTML="Continue";
-        
-        }
+                //checks if all enemies are dead
+                let deadResult = game.enemyAllDead(arrayEnemy);
+                console.log("dead result = " + deadResult);
+                if (deadResult===true){
+                    game.nextRound();
+                } else if (deadResult===false){
+                    game.characterOptions("kazuma"); 
+                }
 
-        // battleBarInfo.innerHTML = `${newMenu.ucFirst(attackOrder[currentAttacker-1].name)} Attacked ${newMenu.ucFirst(attackOrder[currentDefender].name)} for ${attackOrder[currentAttacker-1].attack}`;
-      
+                
+            } 
+            
+            // if first element in array is deal remove it from array
+            if (arrayEnemy[enemyNum].hp<=0){
+                console.log("MADE IT IN");
+                // arrayEnemy.splice(enemyNum,1);
+                console.log("****************************************************");
+                console.log(arrayEnemy.length);
+                console.log(arrayEnemy);
+                enemyNum++;
+            } else if (arrayEnemy[enemyNum].hp>0&&arrayEnemy.length>=1){
 
-        if (currentAttacker===attackOrder.length){
-            currentAttacker = 0;
-        } else {
-        currentAttacker++;
-        }
-    }
+                console.log("MADE IT IN TWO");
+                console.log("****************************************************");
+                console.log(currentAttacker);
+                currentAttacker = arrayEnemy[enemyNum];
+                currentDefender.hp -= currentAttacker.attack;
+                enemyNum++;
+                console.log(currentDefender);
 
-    //are there enemies left after each attack
-    enemiesLeft() {
+                //displays which enemy is attacking which character on battle bar
+                let updateScoreCharacter = document.getElementById(`${currentDefender.name}`);
 
+                console.log( battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)}`);
+                battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`;
+                
+                updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+            }
+        }, 1500);  
+        attackCount++;     
     }
 
     //retreat
@@ -906,12 +1132,81 @@ class gameLogic {
 
     }
 
+    //sets character options 
+    characterOptions(name){
+        
+        let selectAction = document.querySelector('.selectAction');
+        selectAction.replaceChildren();
+
+        //add attack options per character
+        if (name==="kazuma"){
+            
+            let selectActionButton = document.createElement('button');
+            let selectName = document.createElement('p');
+            selectAction.appendChild(selectName);
+            selectName.innerHTML = "Kazuma";
+
+            selectAction.appendChild(selectActionButton);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.characterAttack(0)');
+            selectActionButton.innerHTML="Attack";
+
+        } else if (name==="darkness"){
+            
+            let selectActionButton = document.createElement('button');
+            let selectName = document.createElement('p');
+            selectAction.appendChild(selectName);
+            selectName.innerHTML = "Darkness";
+
+            selectAction.appendChild(selectActionButton);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.characterAttack(1)');
+            selectActionButton.innerHTML="Attack";
+
+        } else if (name==="megumin"){
+
+            let selectActionButton = document.createElement('button');
+            let btn2 = document.createElement('button');
+            let selectActionDesc = document.createElement('p');
+            let selectName = document.createElement('p');
+            selectAction.appendChild(selectName);
+            selectName.innerHTML = "Megumin";
+
+            selectAction.appendChild(selectActionButton);
+            selectAction.appendChild(selectActionDesc);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.characterAttack(2)');
+            selectActionButton.innerHTML="EXPLOSION!";
+            selectActionDesc.innerHTML="Will kill all enemies on screen. Can only be used once per world.";
+            selectAction.appendChild(btn2);
+            btn2.setAttribute('class', 'attackBtn');
+            btn2.setAttribute('onclick', 'game.characterAttack(99)');
+            btn2.innerHTML="Skip";
+
+        } else if (name==="aqua"){
+            
+            let selectActionButton = document.createElement('button');
+            let selectActionHeal = document.createElement('button');
+            let selectName = document.createElement('p');
+            selectAction.appendChild(selectName);
+            selectName.innerHTML = "Aqua";
+
+            selectAction.appendChild(selectActionButton);
+            selectAction.appendChild(selectActionHeal);
+            selectActionButton.setAttribute('class', 'attackBtn');
+            selectActionButton.setAttribute('onclick', 'game.characterAttack(3)');
+            selectActionHeal.setAttribute('class', 'attackBtn');
+            selectActionHeal.setAttribute('onclick', 'game.oneCharacterHeal()');
+            selectActionButton.innerHTML="Attack";
+            selectActionHeal.innerHTML="Heal";
+        }
+    }
 }
 
-const kazuma = new character("kazuma", 10, 5, 20, 1, 0);
-const darkness = new character("darkness", 2, 9, 75, 0, 0);
-const megumin = new character("megumin", 100, 2, 10, 1, 0);
-const aqua = new character("aqua", 15, 4, 20, 10, 0);
+let kazuma = new character("kazuma", 5, 5, 20, 1, 0);
+let darkness = new character("darkness", 1, 9, 75, 0, 0);
+let megumin = new character("megumin", 100, 2, 10, 1, 0);
+let aqua = new character("aqua", 3, 4, 20, 10, 0);
 let menuRight = document.querySelector('.menuRight');
 let gameplayBtn = document.querySelector('.gameplay');
 let combat = document.querySelector('.combat');
@@ -935,6 +1230,7 @@ let openingMusic = document.createElement('audio');
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
 let battle = 1;
+let round = 1;
 let gameOver = false;
 let gameStart = false;
 let winner = "";
@@ -944,8 +1240,22 @@ let howToPlayShow = false;
 let optionsShow = false;
 let muteOption = false;
 let arrayEnemy = [];
-let attackOrder = [];
+let characterOrder = [];
 let currentDefender;
 let currentAttacker = 0;
+let counter = 0;
+let clickedEnemy;
+let enemyNum = 0;
+let tempArrayLength = 0;
+let attackCount = 0;
+let world = 1;
+let restartAttackOrder = false;
 
+
+const scoreLeft = () => {
+
+    let score = document.querySelector('showParty');
+    let num = num + 10
+
+}
 
