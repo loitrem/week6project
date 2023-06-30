@@ -660,10 +660,14 @@ class gameLogic {
     //unlock next world
     nextWorld(){
         
-        if (world>3){
-            gameOver = true;
-            gameStart = false;
-        }
+        console.log("===346346534254=========================================================================");
+        console.log("world = ", world);
+        console.log("======656456456456======================================================================");
+
+        // if (world>3){
+        //     gameOver = true;
+        //     gameStart = false;
+        // }
 
         if (gameStart) {
 
@@ -671,13 +675,17 @@ class gameLogic {
             gameOver = false;
             gameStart = false;
             arrayEnemy = [];
+            
 
             //set variables
             let bottomContentHide = document.querySelector('.bottomContent');
             let leftMenuClick = document.querySelector('.leftMenuClick');
+            let leftMenuClickX = document.querySelector('.leftMenuClickX');
             let leftMenuDotted = document.querySelector('.leftMenuDotted');
+            let centerMenuClickX = document.querySelector('.centerMenuClickX');
             let centerMenuClick = document.querySelector('.centerMenuClick');
             let centerMenuDotted = document.querySelector('.centerMenuDotted');
+            let rightMenuClickX = document.querySelector('.rightMenuClickX');
             let rightMenuClick = document.querySelector('.rightMenuClick');
             let rightMenuDotted = document.querySelector('.rightMenuDotted');
             let partyWrapper = document.querySelector('.partyWrapper');
@@ -707,21 +715,30 @@ class gameLogic {
 
             if (world===1){
                 //sets first world icon to red x and mouse to default
+                leftMenuClickX.setAttribute('src', './images/path/yellow.png');
+                leftMenuClickX.setAttribute('class', 'leftMenuClick path');
+                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                leftMenuClick.style.cursor = "pointer";
+
+            } else if (world===2){
+                //sets first world icon to red x and mouse to default
                 leftMenuClick.setAttribute('src', './images/path/yellow.png');
                 leftMenuClick.setAttribute('class', 'leftMenuClick path');
                 leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
                 leftMenuClick.style.cursor = "pointer";
 
-                centerMenuClick.setAttribute('src', './images/path/x.png');
-                centerMenuClick.setAttribute('class', 'centerMenuClickX path');
+                centerMenuClickX.setAttribute('src', './images/path/yellow.png');
+                centerMenuClickX.setAttribute('class', 'centerMenuClick path');
+                centerMenuClickX.setAttribute('onclick', "game.displayWorld('sand')");
                 centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
-                centerMenuClick.style.cursor = "default";
+                centerMenuClickX.style.cursor = "pointer";
 
-                rightMenuClick.setAttribute('src', './images/path/x.png');
-                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+                rightMenuClickX.setAttribute('src', './images/path/x.png');
+                rightMenuClickX.setAttribute('class', 'rightMenuClickX path');
                 rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                rightMenuClick.style.cursor = "default";
-            } else if (world===2){
+                rightMenuClickX.style.cursor = "default";
+
+            } else if (world===3){
                 //sets first world icon to red x and mouse to default
                 leftMenuClick.setAttribute('src', './images/path/yellow.png');
                 leftMenuClick.setAttribute('class', 'leftMenuClick path');
@@ -733,12 +750,12 @@ class gameLogic {
                 centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
                 centerMenuClick.style.cursor = "pointer";
 
-                rightMenuClick.setAttribute('src', './images/path/x.png');
-                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+                rightMenuClickX.setAttribute('src', './images/path/yellow.png');
+                rightMenuClickX.setAttribute('class', 'rightMenuClick path');
+                rightMenuClickX.setAttribute('onclick', "game.displayWorld('ice')");
                 rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                rightMenuClick.style.cursor = "default";
-            } else if (world>=3){
-
+                rightMenuClickX.style.cursor = "pointer";
+            } else if (world>=4){
                 //sets first world icon to red x and mouse to default
                 leftMenuClick.setAttribute('src', './images/path/yellow.png');
                 leftMenuClick.setAttribute('class', 'leftMenuClick path');
@@ -752,33 +769,44 @@ class gameLogic {
 
                 rightMenuClick.setAttribute('src', './images/path/yellow.png');
                 rightMenuClick.setAttribute('class', 'rightMenuClick path');
+                rightMenuClick.setAttribute('onclick', "game.displayWorld('ice')");
                 rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                rightMenuClick.style.cursor = "pointer";
+                rightMenuClickX.style.cursor = "pointer";
             }
 
             //hides party/enemy wrapper
             partyWrapper.setAttribute('class', 'partyWrapper hideParty');
             enemyWrapper.setAttribute('class', 'enemyWrapper hideEnemy');
         }
-        world++;
     }
     
     //next round
     nextRound () {
+        console.log("============================================================================");
+        console.log("round before if and round++ = " + round);
+        console.log("============================================================================");
+
+        round++;
+
+        console.log("============================================================================");
+        console.log("round MEW? = " + round);
+        console.log("============================================================================");
+       
+
         if (round===1){
             gameStart = true;
-            world = 2;
             battle =1;
+            round = 0;
+            world++;
             game.nextWorld();
             console.log("============================================================================");
-            console.log("why no work");
+            console.log("world = ", world);
             console.log("============================================================================");
         }
         console.log("============================================================================");
         console.log("round = " + round);
         console.log("============================================================================");
         battle++;
-        round++;
         
         //set variables
         let enemyWrapper = document.querySelector('.enemyWrapper');
@@ -914,6 +942,8 @@ class gameLogic {
             enemyMemberP.setAttribute('id', `${arrayEnemy[i].name}${i}`);
             enemyMemberP.innerHTML = `${newMenu.ucFirst(arrayEnemy[i].name)} | HP: ${arrayEnemy[i].hp}`;
         }
+
+        characterHp.replaceChildren();
 
         //adds character stats to bottom middle
         for (let i = 0; i<characterOrder.length; i++){
@@ -1230,7 +1260,7 @@ let openingMusic = document.createElement('audio');
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
 let battle = 1;
-let round = 1;
+let round = 0;
 let gameOver = false;
 let gameStart = false;
 let winner = "";

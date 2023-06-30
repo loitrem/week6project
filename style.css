@@ -343,21 +343,6 @@ border: solid black;
         align-items: center;
     }
     
-    .leftMenuClickX {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick:hover {
-        height: 50px;
-        width: 50px;
-    }
-    
     .leftMenuDotted {
         height: 145px;
         width: 200px;
@@ -369,21 +354,6 @@ border: solid black;
         display: flex;
         justify-content:space-evenly;
         align-items: center;
-    }
-
-    .centerMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-
-    .centerMenuClickX {
-        height: 45px;
-        width: 45px;
-    }
-
-    .centerMenuClick:hover {
-        height: 50px;
-        width: 50px;
     }
 
     .centerMenuDotted {
@@ -398,17 +368,6 @@ border: solid black;
         justify-content:space-evenly;
         align-items: center;
     }
-    
-    .rightMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-
-    .rightMenuClickX {
-        height: 45px;
-        width: 45px;
-    }
-
     
     .rightMenuDotted {
         height: 145px;
@@ -439,21 +398,6 @@ border: solid black;
         align-items: center;
     }
     
-    .leftMenuClickX {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick:hover {
-        height: 50px;
-        width: 50px;
-    }
-    
     .leftMenuDotted {
         height: 145px;
         width: 200px;
@@ -467,11 +411,6 @@ border: solid black;
         align-items: center;
     }
 
-    .centerMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-
     .centerMenuDotted {
         height: 145px;
         width: 200px;
@@ -483,11 +422,6 @@ border: solid black;
         display: flex;
         justify-content:space-evenly;
         align-items: center;
-    }
-    
-    .rightMenuClick {
-        height: 45px;
-        width: 45px;
     }
     
     .rightMenuDotted {
@@ -519,21 +453,6 @@ border: solid black;
         align-items: center;
     }
     
-    .leftMenuClickX {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick:hover {
-        height: 50px;
-        width: 50px;
-    }
-    
     .leftMenuDotted {
         height: 145px;
         width: 200px;
@@ -547,11 +466,6 @@ border: solid black;
         align-items: center;
     }
 
-    .centerMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-
     .centerMenuDotted {
         height: 145px;
         width: 150px;
@@ -563,11 +477,6 @@ border: solid black;
         display: flex;
         justify-content:space-evenly;
         align-items: center;
-    }
-    
-    .rightMenuClick {
-        height: 45px;
-        width: 45px;
     }
     
     .rightMenuDotted {
@@ -612,21 +521,6 @@ border: solid black;
         align-items: center;
     }
     
-    .leftMenuClickX {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick:hover {
-        height: 50px;
-        width: 50px;
-    }
-    
     .leftMenuDotted {
         height: 145px;
         width: 50px;
@@ -640,11 +534,6 @@ border: solid black;
         align-items: center;
     }
 
-    .centerMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-
     .centerMenuDotted {
         height: 145px;
         width: 100px;
@@ -656,11 +545,6 @@ border: solid black;
         display: flex;
         justify-content:space-evenly;
         align-items: center;
-    }
-    
-    .rightMenuClick {
-        height: 45px;
-        width: 45px;
     }
     
     .rightMenuDotted {
@@ -692,21 +576,6 @@ border: solid black;
         align-items: center;
     }
     
-    .leftMenuClickX {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .leftMenuClick:hover {
-        height: 50px;
-        width: 50px;
-    }
-    
     .leftMenuDotted {
         height: 145px;
         width: 50px;
@@ -720,11 +589,6 @@ border: solid black;
         align-items: center;
     }
 
-    .centerMenuClick {
-        height: 45px;
-        width: 45px;
-    }
-
     .centerMenuDotted {
         height: 115px;
         width: 30%;
@@ -736,11 +600,6 @@ border: solid black;
         display: flex;
         justify-content:space-evenly;
         align-items: center;
-    }
-    
-    .rightMenuClick {
-        height: 45px;
-        width: 45px;
     }
     
     .rightMenuDotted {
@@ -841,4 +700,49 @@ border: solid black;
     width: 100px;
     margin-top: 20px;
     margin-left: 20px;
+}
+
+.leftMenuClickX {
+    height: 45px;
+    width: 45px;
+}
+
+.leftMenuClick {
+    height: 45px;
+    width: 45px;
+}
+
+.leftMenuClick:hover {
+    height: 50px;
+    width: 50px;
+}
+
+.centerMenuClick {
+    height: 45px;
+    width: 45px;
+}
+
+.centerMenuClickX {
+    height: 45px;
+    width: 45px;
+}
+
+.centerMenuClick:hover {
+    height: 50px;
+    width: 50px;
+}
+
+.rightMenuClick {
+    height: 45px;
+    width: 45px;
+}
+
+.rightMenuClick:hover {
+    height: 50px;
+    width: 50px;
+}
+
+.rightMenuClickX {
+    height: 45px;
+    width: 45px;
 }
