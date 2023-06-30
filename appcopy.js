@@ -657,8 +657,13 @@ class gameLogic {
         }
     }
 
+    //unlock next world
     nextWorld(){
-            //reset game
+        
+        if (world>3){
+            gameOver = true;
+            gameStart = false;
+        }
 
         if (gameStart) {
 
@@ -668,7 +673,6 @@ class gameLogic {
             arrayEnemy = [];
 
             //set variables
-            let mainMenuImg = document.querySelector('.menuIconImg');
             let bottomContentHide = document.querySelector('.bottomContent');
             let leftMenuClick = document.querySelector('.leftMenuClick');
             let leftMenuDotted = document.querySelector('.leftMenuDotted');
@@ -681,6 +685,8 @@ class gameLogic {
             let enemyHp = document.querySelector('.showEnemyHealth');
             let characterHp = document.querySelector('.showCharacterHealth');
             let battleBarInfo = document.querySelector('.battleInfoBar');
+            let mainMenuImg = document.querySelector('.menuIconImg');
+            let mainMenu = document.querySelector('.mainMenuWrapper');
 
             enemyHp.innerHTML = "";
             characterHp.innerHTML = "";
@@ -689,7 +695,8 @@ class gameLogic {
             document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;
     
             //hides info bar and menu icon
-            mainMenuImg.classList.add('menuIconHide');
+            mainMenu.classList.add('mainMenuHide');
+            mainMenuImg.classList.remove('menuIconHide');
             bottomContentHide.classList.add('infoBarHide');
 
             //hides all elements with .show
@@ -756,15 +763,14 @@ class gameLogic {
         world++;
     }
     
-
     //next round
     nextRound () {
-       if (round===3){
+        if (round===1){
             gameStart = true;
             world = 2;
             battle =1;
             game.nextWorld();
-            game.gameStart();
+            game.startGame();
             console.log("============================================================================");
             console.log("why no work");
             console.log("============================================================================");
@@ -786,12 +792,10 @@ class gameLogic {
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
 
-        kazuma.hp = 5;
+        kazuma.hp = 20;
         darkness.hp = 75;
         megumin.hp = 10;
         aqua.hp = 20;
-
-       
 
         //add all characters to array
         characterOrder = [kazuma, darkness, megumin, aqua];
@@ -850,7 +854,9 @@ class gameLogic {
         let enemyHp = document.querySelector('.showEnemyHealth');
         let characterHp = document.querySelector('.showCharacterHealth');
         let battleBarInfo = document.querySelector('.battleInfoBar');
-        
+        let bottomContentHide = document.querySelector('.bottomContent');
+
+        bottomContentHide.classList.remove('infoBarHide');
         //saves which enemy was clicked on
         if (this.targetSelect()===undefined){
             battleBarInfo.innerHTML = "Please click on enemy to attack"
@@ -861,6 +867,11 @@ class gameLogic {
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
         
+        kazuma.hp = 20;
+        darkness.hp = 75;
+        megumin.hp = 10;
+        aqua.hp = 20;
+
         //add all characters to array
         characterOrder = [kazuma, darkness, megumin, aqua];
 
