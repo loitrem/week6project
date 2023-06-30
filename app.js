@@ -624,6 +624,9 @@ class gameLogic {
             let battleBarInfo = document.querySelector('.battleInfoBar');
             let mainMenuImg = document.querySelector('.menuIconImg');
             let mainMenu = document.querySelector('.mainMenuWrapper');
+            let gameOverWrapper = document.querySelector('.gameOverWrapper');
+
+            gameOverWrapper.setAttribute('class', 'gameOverWrapper gameOverHide');
 
             enemyHp.innerHTML = "";
             characterHp.innerHTML = "";
@@ -716,6 +719,8 @@ class gameLogic {
             partyWrapper.setAttribute('class', 'partyWrapper hideParty');
             enemyWrapper.setAttribute('class', 'enemyWrapper hideEnemy'); 
 
+            mainMenu.setAttribute('class', 'mainMenuWrapper');
+
             world = 1;
             round = 1;
             battle = 1;
@@ -757,6 +762,7 @@ class gameLogic {
             let battleBarInfo = document.querySelector('.battleInfoBar');
             let mainMenuImg = document.querySelector('.menuIconImg');
             let mainMenu = document.querySelector('.mainMenuWrapper');
+            let gameOverWrapper = document.querySelector('.gameOverWrapper');
 
             enemyHp.innerHTML = "";
             characterHp.innerHTML = "";
@@ -783,7 +789,7 @@ class gameLogic {
                 leftMenuClick.style.cursor = "pointer";
 
             } else if (world===2){
-             
+            
                 leftMenuClick.setAttribute('src', './images/path/yellow.png');
                 leftMenuClick.setAttribute('class', 'leftMenuClick path');
                 leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
@@ -818,22 +824,24 @@ class gameLogic {
                 rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
                 rightMenuClickX.style.cursor = "pointer";
             } else if (world>=4){
+
+                gameOverWrapper.setAttribute('class', 'gameOverWrapper');
            
-                leftMenuClick.setAttribute('src', './images/path/yellow.png');
-                leftMenuClick.setAttribute('class', 'leftMenuClick path');
-                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
-                leftMenuClick.style.cursor = "pointer";
+                // leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                // leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                // leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                // leftMenuClick.style.cursor = "pointer";
 
-                centerMenuClick.setAttribute('src', './images/path/yellow.png');
-                centerMenuClick.setAttribute('class', 'centerMenuClick path');
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
-                centerMenuClick.style.cursor = "pointer";
+                // centerMenuClick.setAttribute('src', './images/path/yellow.png');
+                // centerMenuClick.setAttribute('class', 'centerMenuClick path');
+                // centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                // centerMenuClick.style.cursor = "pointer";
 
-                rightMenuClick.setAttribute('src', './images/path/yellow.png');
-                rightMenuClick.setAttribute('class', 'rightMenuClick path');
-                rightMenuClick.setAttribute('onclick', "game.displayWorld('ice')");
-                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                rightMenuClick.style.cursor = "pointer";
+                // rightMenuClick.setAttribute('src', './images/path/yellow.png');
+                // rightMenuClick.setAttribute('class', 'rightMenuClick path');
+                // rightMenuClick.setAttribute('onclick', "game.displayWorld('ice')");
+                // rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                // rightMenuClick.style.cursor = "pointer";
             }
 
             //hides party/enemy wrapper
@@ -854,7 +862,7 @@ class gameLogic {
         console.log("round MEW? = " + round);
         console.log("============================================================================");
 
-        if (round===3){
+        if (round===1){
             gameStart = true;
             battle =1;
             round = 0;
@@ -1451,14 +1459,14 @@ let newEnemyArray = new enemyArray();
 
 let musicParent = document.querySelector('.mainMenu');
 let openingMusic = document.createElement('audio');
-// musicParent.appendChild(openingMusic);
-// openingMusic.setAttribute('type', 'audio/mpeg');
-// openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
-// openingMusic.autoplay = true;
-// openingMusic.loop = true;
-// openingMusic.volume = .1;
-// openingMusic.load();
-// openingMusic.muted = false;
+musicParent.appendChild(openingMusic);
+openingMusic.setAttribute('type', 'audio/mpeg');
+openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
+openingMusic.autoplay = true;
+openingMusic.loop = true;
+openingMusic.volume = .1;
+openingMusic.load();
+openingMusic.muted = false;
 
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
