@@ -208,8 +208,9 @@ border-bottom: solid rgb(182, 46, 139);
     color: whitesmoke;
     padding-left: 35px;
     display: flex;
-    justify-content: left;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
 }
 
 .menuRightRight {

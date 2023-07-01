@@ -427,6 +427,7 @@ class menu {
 
                 showMainMenu.appendChild(newBtn);
                 newBtn.setAttribute('class', menuClassArray[i]);
+                newBtn.setAttribute('onclick', `newMenu.${menuClassArray[i]}()`);
                 newBtn.innerHTML = this.ucFirst(menuClassArray[i]);                
             }
             showMainMenu.classList.toggle('hideMenu');
@@ -450,12 +451,25 @@ class menu {
         }
     }
 
+    gameplay(){
+
+        newMenu.defaultMenuText();
+
+        let menuRightText = document.querySelector('.menuRightText');
+
+        menuRightText.innerHTML = "<p>After clicking play there will be 3 worlds you can enter.</p><p>" + 
+                                    "World 2 and 3 will be locked until you beat the previous world.</p><p>" + 
+                                    "Once you beat all the worlds you beat the game</p>";
+    }
+
     // show options menu
     options() {
 
         let showOptions = document.querySelector('.menuLeftSubmenu');
         let menuClassArray = ['music'];
         let menuTextArray = ['Music On/Off']
+
+        newMenu.defaultMenuText();
 
         showOptions.replaceChildren();
 
@@ -506,35 +520,34 @@ class menu {
         openingMusic.muted = muteOption;
     }
 
-    //  // hide options menu
-    //  hideOptions() {
+     // hide options menu
+    defaultMenuText() {
 
-    //     //set variables
-    //     let menuLeftSubmenu = document.querySelector('.menuLeftSubmenu');
-    //     let newBtn = document.createElement('button');
-    //     let gamePlay = document.querySelector('.gameplay');
-        
-    //     menuLeftSubmenu.classList.toggle('hideMenu');
-    //     gamePlay.setAttribute('class', 'options showOptions');
-    //     gamePlay.classList.toggle('showOptions');
+        //set variables
+        let menuRightText = document.querySelector('.menuRightText');
 
-    //     gamePlay.innerHTML = "Music On/Off";
+        menuRightText.innerHTML = "Welcome to Konosuba Quest Adventure. Press play to start a new game.";
 
-    // }
+    }
 
     // text to show when combat is pushed
     combat() {
+        newMenu.defaultMenuText();
 
+        let menuRightText = document.querySelector('.menuRightText');
+
+        menuRightText.innerHTML = "<p>Combat is turn based.</p><p>" + 
+                                    "Select your action for each of your team</p><p>" + 
+                                    "The enemy will attack after your last team memeber performs their action</p>";
     }
 
     // text to show when leveling up is pushed
     leveling () {
+        newMenu.defaultMenuText();
 
-    }
+        let menuRightText = document.querySelector('.menuRightText');
 
-    // text to show when how to win is pushed
-    howToWin () {
-
+        menuRightText.innerHTML = "<p>Coming soon</p>";
     }
 
 }
@@ -1457,16 +1470,17 @@ let newMenu = new menu();
 let game = new gameLogic();
 let newEnemyArray = new enemyArray();
 
-let musicParent = document.querySelector('.mainMenu');
-let openingMusic = document.createElement('audio');
-musicParent.appendChild(openingMusic);
-openingMusic.setAttribute('type', 'audio/mpeg');
-openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
-openingMusic.autoplay = true;
-openingMusic.loop = true;
-openingMusic.volume = .1;
-openingMusic.load();
-openingMusic.muted = false;
+// let musicParent = document.querySelector('.mainMenu');
+// let openingMusic = document.createElement('audio');
+// musicParent.appendChild(openingMusic);
+// openingMusic.setAttribute('type', 'audio/mpeg');
+// openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
+// openingMusic.preload = "auto";
+// openingMusic.autoplay = true;
+// openingMusic.loop = true;
+// openingMusic.volume = .1;
+// openingMusic.load();
+// openingMusic.muted = false;
 
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
