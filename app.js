@@ -1091,7 +1091,7 @@ class gameLogic {
 
         //created new array of alive or dead
         for (let i = 0; i<array.length; i++) {
-           
+        
             if (array[i].alive){
                 deadArray.push("alive");
             } else if (array[i].alive===false){
@@ -1111,7 +1111,7 @@ class gameLogic {
                 anyAlive = false;
             }
         }
-       return anyAlive;
+        return anyAlive;
     }
 
     //enemy attack
@@ -1123,7 +1123,7 @@ class gameLogic {
         selectAction.replaceChildren();
 
         tempArrayLength = arrayEnemy.length;
-        let allDeadThisRound = false;
+        let whichCharacter;
 
         if (attackCount===1){
             enemyNum = 0;
@@ -1138,40 +1138,58 @@ class gameLogic {
             //which character will get hit
             if (attackWho>0&&attackWho<=20){
                 currentDefender = characterOrder[0];
+                whichCharacter = 0;
             } else if (attackWho>20&&attackWho<=70){
                 currentDefender = characterOrder[1];
+                whichCharacter = 1;
             } else if (attackWho>70&&attackWho<=85){
                 currentDefender = characterOrder[2];
+                whichCharacter = 2;
             } else if (attackWho>85&&attackWho<=100){
                 currentDefender = characterOrder[3];
+                whichCharacter = 3;
             }
 
             currentAttacker = arrayEnemy[enemyNum];
 
-            //check if all are dead
-            deadResult = game.enemyAllDead(characterOrder);
+            //calculate damage done
+            currentDefender.hp -= currentAttacker.attack;
+            console.log(`**************  ${currentDefender.name}  did some math = ${currentDefender.hp}   *********************`);
+            console.log(`**************  ${arrayEnemy.length}  its that long? does it match = ${enemyNum}   *********************`);
 
             if (enemyNum===(arrayEnemy.length-1)){
                 clearInterval(loop);
 
-                //checks if all enemies are dead
-                if (deadResult===true){
+                //if all dead or not
+                if (game.enemyAllDead(characterOrder)===true){
                     // game.gameOver();
-                } else if (deadResult===false){
+                    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                    console.log("YOU TOTALLY LOST HA HA");
+                    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                } else if (deadResult===true){
                     game.characterOptions("kazuma"); 
                 }
             }
 
 
             // if first element in array is deal remove it from array
-            if (currentAttacker.hp<=0){
+            if (currentDefender.hp<=0){
             
-                currentAttacker.hp = 0;
+                currentDefender.hp = 0;
                 enemyNum++;
 
-            } else if (currentAttacker.hp>0&&arrayEnemy.length>=1&&deadResult===false){
+                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                console.log(currentDefender.name + " HAS DIED");
+                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
-                currentDefender.hp -= currentAttacker.attack;
+                characterOrder[whichCharacter].alive = false;
+
+                let targetImg = document.querySelector(`.${currentDefender.name}`);
+                targetImg.style.transform = 'rotate(270deg)';
+                targetImg.style.cursor = "default";
+                targetImg.setAttribute('onclick', '');
+
+            } else if (currentDefender.hp>0&&arrayEnemy.length>=1&&deadResult===true){
                 enemyNum++;
 
                 //displays which enemy is attacking which character on battle bar
