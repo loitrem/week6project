@@ -1012,7 +1012,7 @@ class gameLogic {
 
     //character attack
     characterAttack (num) {
-
+        let tempBool = false;
         let allDeadThisRound = false;
         //sets current defender
         currentDefender = arrayEnemy[parseInt(clickedEnemy.charAt(clickedEnemy.length -1 ))];
@@ -1024,39 +1024,41 @@ class gameLogic {
         //if num is 99 set it to 2 (this is just to skip a turn for a character)
         if (num===99){
             num = 2;
-            tempBoolean = true
+            tempBool = true;
         }
 
-        //if enemy hp is 0 or less rotate them and remove their onclick
-        if (currentDefender.hp<=0){
-            currentDefender.hp = 0;
-           
-            arrayEnemy[parseInt(clickedEnemy.charAt(clickedEnemy.length -1))].alive = false;
+        if (tempBool===true){
+            //if enemy hp is 0 or less rotate them and remove their onclick
+            if (currentDefender.hp<=0){
+                currentDefender.hp = 0;
+            
+                arrayEnemy[parseInt(clickedEnemy.charAt(clickedEnemy.length -1))].alive = false;
 
-            let targetImg = document.getElementById(`${clickedEnemy}Img`);
-            targetImg.style.transform = 'rotate(180deg)';
-            targetImg.style.cursor = "default";
-            targetImg.setAttribute('onclick', '');
+                let targetImg = document.getElementById(`${clickedEnemy}Img`);
+                targetImg.style.transform = 'rotate(180deg)';
+                targetImg.style.cursor = "default";
+                targetImg.setAttribute('onclick', '');
 
-            //updates display showing enemies hp
-            if (currentDefender){
-                let updateScore = document.getElementById(clickedEnemy);
-                updateScore.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
-            }
+                //updates display showing enemies hp
+                if (currentDefender){
+                    let updateScore = document.getElementById(clickedEnemy);
+                    updateScore.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+                }
 
-            //empty clicked enemy
-            clickedEnemy = '';
+                //empty clicked enemy
+                clickedEnemy = '';
 
-            // if all enemies are dead go to next round
-            if (game.enemyAllDead(arrayEnemy)===true){
-                allDeadThisRound===true
-                game.nextRound();
-            }
+                // if all enemies are dead go to next round
+                if (game.enemyAllDead(arrayEnemy)===true){
+                    allDeadThisRound===true
+                    game.nextRound();
+                }
 
-        } else {
-            if (currentDefender.hp>=1){
-                let updateScore = document.getElementById(clickedEnemy);
-                updateScore.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+            } else {
+                if (currentDefender.hp>=1){
+                    let updateScore = document.getElementById(clickedEnemy);
+                    updateScore.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+                }
             }
         }
 
@@ -1121,6 +1123,7 @@ class gameLogic {
         selectAction.replaceChildren();
 
         tempArrayLength = arrayEnemy.length;
+        let allDeadThisRound = false;
 
         if (attackCount===1){
             enemyNum = 0;
@@ -1143,31 +1146,33 @@ class gameLogic {
                 currentDefender = characterOrder[3];
             }
 
-            deadResult = game.enemyAllDead(arrayEnemy);
+            currentAttacker = arrayEnemy[enemyNum];
+
+            //check if all are dead
+            deadResult = game.enemyAllDead(characterOrder);
 
             if (enemyNum===(arrayEnemy.length-1)){
                 clearInterval(loop);
 
                 //checks if all enemies are dead
                 if (deadResult===true){
-                    game.nextRound();
+                    // game.gameOver();
                 } else if (deadResult===false){
                     game.characterOptions("kazuma"); 
                 }
             }
 
+
             // if first element in array is deal remove it from array
-            if (arrayEnemy[enemyNum].hp<=0){
+            if (currentAttacker.hp<=0){
             
-                arrayEnemy[enemyNum].hp = 0;
+                currentAttacker.hp = 0;
                 enemyNum++;
 
-            } else if (arrayEnemy[enemyNum].hp>0&&arrayEnemy.length>=1&&deadResult===false){
+            } else if (currentAttacker.hp>0&&arrayEnemy.length>=1&&deadResult===false){
 
-                currentAttacker = arrayEnemy[enemyNum];
                 currentDefender.hp -= currentAttacker.attack;
                 enemyNum++;
-
 
                 //displays which enemy is attacking which character on battle bar
                 let updateScoreCharacter = document.getElementById(`${currentDefender.name}`);
