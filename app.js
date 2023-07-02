@@ -1314,16 +1314,22 @@ class gameLogic {
             let selectActionButton = document.createElement('button');
             let retreat = document.createElement('button');
             let selectName = document.createElement('p');
+            let btnOneWrapper = document.createElement('div');
+            let btnTwoWrapper = document.createElement('div');
 
             selectAction.appendChild(selectName);
             selectName.innerHTML = "Kazuma";
 
-            selectAction.appendChild(selectActionButton);
+            selectAction.appendChild(btnOneWrapper);
+            btnOneWrapper.appendChild(selectActionButton);
+            btnOneWrapper.setAttribute('class', 'btnWrapper');
             selectActionButton.setAttribute('class', 'attackBtn');
             selectActionButton.setAttribute('onclick', 'game.characterAttack(0)');
             selectActionButton.innerHTML="Attack";
 
-            selectAction.appendChild(retreat);
+            selectAction.appendChild(btnTwoWrapper);
+            btnTwoWrapper.appendChild(retreat);
+            btnTwoWrapper.setAttribute('class', 'btnWrapper');
             retreat.setAttribute('class', 'attackBtn');
             retreat.setAttribute('onclick', 'game.retreat()');
             retreat.innerHTML = "RUN";
@@ -1333,16 +1339,22 @@ class gameLogic {
             let selectActionButton = document.createElement('button');
             let retreat = document.createElement('button');
             let selectName = document.createElement('p');
+            let btnOneWrapper = document.createElement('div');
+            let btnTwoWrapper = document.createElement('div');
 
             selectAction.appendChild(selectName);
             selectName.innerHTML = "Darkness";
 
-            selectAction.appendChild(selectActionButton);
+            selectAction.appendChild(btnOneWrapper);
+            btnOneWrapper.appendChild(selectActionButton);
+            btnOneWrapper.setAttribute('class', 'btnWrapper');
             selectActionButton.setAttribute('class', 'attackBtn');
             selectActionButton.setAttribute('onclick', 'game.characterAttack(1)');
             selectActionButton.innerHTML="Attack";
 
-            selectAction.appendChild(retreat);
+            selectAction.appendChild(btnTwoWrapper);
+            btnTwoWrapper.appendChild(retreat);
+            btnTwoWrapper.setAttribute('class', 'btnWrapper');
             retreat.setAttribute('class', 'attackBtn');
             retreat.setAttribute('onclick', 'game.retreat()');
             retreat.innerHTML = "RUN";
@@ -1352,24 +1364,35 @@ class gameLogic {
             let selectActionButton = document.createElement('button');
             let btn2 = document.createElement('button');
             let retreat = document.createElement('button');
-            let selectActionDesc = document.createElement('p');
+            let selectActionDesc = document.createElement('div');
             let selectName = document.createElement('p');
+            let btnOneWrapper = document.createElement('div');
+            let btnTwoWrapper = document.createElement('div');
+            let btnThreeWrapper = document.createElement('div');
 
             selectAction.appendChild(selectName);
             selectName.innerHTML = "Megumin";
 
-            selectAction.appendChild(selectActionButton);
-            selectAction.appendChild(selectActionDesc);
+            selectAction.appendChild(btnOneWrapper);
+            btnOneWrapper.appendChild(selectActionButton);
+            btnOneWrapper.setAttribute('class', 'btnWrapper');
             selectActionButton.setAttribute('class', 'attackBtn');
             selectActionButton.setAttribute('onclick', 'game.characterAttack(2)');
             selectActionButton.innerHTML="EXPLOSION!";
+
+            selectActionDesc.setAttribute('class', 'descText');
             selectActionDesc.innerHTML="Will kill all enemies on screen. Can only be used once per world.";
-            selectAction.appendChild(btn2);
+
+            selectAction.appendChild(btnTwoWrapper);
+            btnTwoWrapper.appendChild(btn2);
+            btnTwoWrapper.setAttribute('class', 'btnWrapper');
             btn2.setAttribute('class', 'attackBtn');
             btn2.setAttribute('onclick', 'game.characterAttack(99)');
-            btn2.innerHTML="Skip";
+            btn2.innerHTML="Skip Turn";
 
-            selectAction.appendChild(retreat);
+            selectAction.appendChild(btnThreeWrapper);
+            btnThreeWrapper.appendChild(retreat);
+            btnThreeWrapper.setAttribute('class', 'btnWrapper');
             retreat.setAttribute('class', 'attackBtn');
             retreat.setAttribute('onclick', 'game.retreat()');
             retreat.innerHTML = "RUN";
@@ -1380,20 +1403,31 @@ class gameLogic {
             let selectActionHeal = document.createElement('button');
             let retreat = document.createElement('button');
             let selectName = document.createElement('p');
+            let btnOneWrapper = document.createElement('div');
+            let btnTwoWrapper = document.createElement('div');
+            let btnThreeWrapper = document.createElement('div');
 
             selectAction.appendChild(selectName);
             selectName.innerHTML = "Aqua";
 
-            selectAction.appendChild(selectActionButton);
-            selectAction.appendChild(selectActionHeal);
+            selectAction.appendChild(btnOneWrapper);
+            btnOneWrapper.appendChild(selectActionButton);
+            btnOneWrapper.setAttribute('class', 'btnWrapper');
             selectActionButton.setAttribute('class', 'attackBtn');
             selectActionButton.setAttribute('onclick', 'game.characterAttack(3)');
-            selectActionHeal.setAttribute('class', 'attackBtn');
-            selectActionHeal.setAttribute('onclick', 'game.oneCharacterHeal()');
             selectActionButton.innerHTML="Attack";
+
+            selectAction.appendChild(btnTwoWrapper);
+            btnTwoWrapper.appendChild(selectActionHeal);
+
+            btnTwoWrapper.setAttribute('class', 'btnWrapper');
+            selectActionHeal.setAttribute('class', 'attackBtn');
+            selectActionHeal.setAttribute('onclick', 'game.oneCharacterHeal(100)');
             selectActionHeal.innerHTML="Heal";
 
-            selectAction.appendChild(retreat);
+            selectAction.appendChild(btnThreeWrapper);
+            btnThreeWrapper.appendChild(retreat);
+            btnThreeWrapper.setAttribute('class', 'btnWrapper');
             retreat.setAttribute('class', 'attackBtn');
             retreat.setAttribute('onclick', 'game.retreat()');
             retreat.innerHTML = "RUN";

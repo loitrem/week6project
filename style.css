@@ -58,7 +58,7 @@ border-bottom: solid rgb(182, 46, 139);
 
 .startAgain {
     margin-top: 40px;
-     height: 50px;
+    height: 50px;
     width: 150px;
     border: 5px double black;
     border-radius: 10px;
@@ -744,13 +744,6 @@ border-bottom: solid rgb(182, 46, 139);
     font-weight: bold;
 }
 
-.attackBtn {
-    height: 50px;
-    width: 100px;
-    margin-top: 20px;
-    margin-left: 20px;
-}
-
 .leftMenuClickX {
     height: 45px;
     width: 45px;
@@ -794,4 +787,46 @@ border-bottom: solid rgb(182, 46, 139);
 .rightMenuClickX {
     height: 45px;
     width: 45px;
+}
+
+.descText { 
+    width: 50%;
+    font-size: 12px;
+    font-weight:normal;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.btnWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.attackBtn {
+    height: 40px;
+    width: 150px;
+    border: 5px double black;
+    border-radius: 10px;
+    background-color: rgb(59, 111, 207);
+    box-shadow: inset 0px 0px 10px 3px black;
+    font-size: 18px;
+    font-weight: bold;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.attackBtn:hover {
+    height: 40px;
+    width: 150px;
+    border: 5px double black;
+    border-radius: 10px;
+    background-color: rgb(25, 50, 98);
+    box-shadow: inset 0px 0px 10px 3px black;
+    font-size: 18px;
+    font-weight: bold;
+    color: whitesmoke;
+    cursor: pointer;
 }
