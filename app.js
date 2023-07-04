@@ -2,7 +2,7 @@
 class character {
 
     //constructor
-    constructor(name, attack, defense, hp, mp, xp,alive){
+    constructor(name, attack, defense, hp, mp, xp, alive, getHitChance){
         this.name = name;
         this.attack = attack;
         this.defense = defense;
@@ -10,6 +10,7 @@ class character {
         this.mp = mp;
         this.xp = xp;
         this.alive = alive;
+        this.getHitChance = getHitChance;
     }
 
     //upgrade character
@@ -30,6 +31,7 @@ class character {
         tempCharacter.hp = updatedCharacter.hp;
         tempCharacter.mp = updatedCharacter.mp;
         tempCharacter.xp = updatedCharacter.xp;
+        tempCharacter.getHitChance = updatedCharacter.getHitChance;
 
         //return the updated object
         return tempCharacter;
@@ -848,10 +850,10 @@ class gameLogic {
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
 
-        kazuma.hp = 1;
-        darkness.hp = 1;
-        megumin.hp = 1;
-        aqua.hp = 1;
+        kazuma = new character("kazuma", 5, 5, 30, 1, 0, true, 20);
+        darkness = new character("darkness", 1, 9, 75, 0, 0, true,65);
+        megumin = new character("megumin", 100, 2, 20, 1, 0, true,5);
+        aqua = new character("aqua", 3, 4, 25, 10, 0, true,10);
 
         //add all characters to array
         characterOrder = [kazuma, darkness, megumin, aqua];
@@ -922,13 +924,16 @@ class gameLogic {
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
         
-        kazuma.hp = 1;
-        darkness.hp = 1;
-        megumin.hp = 1;
-        aqua.hp = 1;
+        kazuma = new character("kazuma", 5, 5, 30, 1, 0, true, 20);
+        darkness = new character("darkness", 1, 9, 75, 0, 0, true,65);
+        megumin = new character("megumin", 100, 2, 20, 1, 0, true,5);
+        aqua = new character("aqua", 3, 4, 25, 10, 0, true,10);
 
         //add all characters to array
         characterOrder = [kazuma, darkness, megumin, aqua];
+
+        console.log("))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))");
+        console.log(characterOrder);
 
         //hides all elements of world path
         for (let i = 0; i<path.length; i++){
@@ -1005,8 +1010,18 @@ class gameLogic {
      game.characterOptions(characterOrder[counter].name); 
     }
 
-    //does attack hit
-    doesItHit (attacker, defender) {
+    //sets attack order based on who is left alive
+    characterAttackOrder(characterList) {
+
+        let newOrder = [];
+
+        for (let i = 0; i<characterList;i++){
+            if (characterList[i].alive===true){
+                newOrder.push(characterList[i]);
+                console.log("CHARACTER LIST = " + i +" " + characterList[i].alive);
+            }
+        }
+            return newOrder;
 
     }
 
@@ -1027,7 +1042,7 @@ class gameLogic {
             tempBool = true;
         }
 
-        if (tempBool===true){
+        if (tempBool===false){
             //if enemy hp is 0 or less rotate them and remove their onclick
             if (currentDefender.hp<=0){
                 currentDefender.hp = 0;
@@ -1099,41 +1114,46 @@ class gameLogic {
             }
         }
 
-        console.log("======================================================");
-        console.log(deadArray);
-        console.log("CHECKING IF EVERYONE IS DEAD");
-        console.log("======================================================");
-
-        let anyAlive = true;
+        let allDead = true;
         //goes through created array to veryify if everyone is dead or not
         for (let i = 0; i< deadArray.length; i++){
             if(deadArray[i]==="alive"){
-                anyAlive = false;
+                allDead = false;
             }
         }
-        return anyAlive;
+        return allDead;
     }
 
     //enemy attack
     enemyAttack () {
+
+        
+        let whichCharacter = 0;
+        let targetImg;
+        let tempArrayEnemy = [];
+        enemyNum = 0;
 
         let battleBarInfo = document.querySelector('.battleInfoBar');
 
         let selectAction = document.querySelector('.selectAction');
         selectAction.replaceChildren();
 
-        tempArrayLength = arrayEnemy.length;
-        let whichCharacter;
-
-        if (attackCount===1){
-            enemyNum = 0;
-            attackCount = 0;
+        //adds enemies to the new temp array if they are alive
+        for (let i = 0; i<arrayEnemy.length;i++){
+            if (arrayEnemy[i].alive===true){
+                tempArrayEnemy.push(arrayEnemy[i]);
+            }
         }
 
-            //loop through current arrayEnemy
-            let loop = setInterval(function(){
+        //loop through current arrayEnemy
+        let loop = setInterval(function(){
 
             let attackWho = Math.floor(Math.floor(Math.random()*(101-1)+1));
+
+            // if monster is alive set as current attacker
+            if (enemyNum!=tempArrayEnemy.length&&tempArrayEnemy[enemyNum].alive===true) {
+                currentAttacker = tempArrayEnemy[enemyNum];
+            }
 
             //which character will get hit
             if (attackWho>0&&attackWho<=20){
@@ -1150,58 +1170,121 @@ class gameLogic {
                 whichCharacter = 3;
             }
 
-            currentAttacker = arrayEnemy[enemyNum];
+            if (currentDefender.alive===false){
 
-            //calculate damage done
-            currentDefender.hp -= currentAttacker.attack;
-            console.log(`**************  ${currentDefender.name}  did some math = ${currentDefender.hp}   *********************`);
-            console.log(`**************  ${arrayEnemy.length}  its that long? does it match = ${enemyNum}   *********************`);
+                currentDefender = characterOrder[whichCharacter+1];
+            }
 
-            if (enemyNum===(arrayEnemy.length-1)){
+            if (enemyNum===tempArrayEnemy.length){
                 clearInterval(loop);
 
-                //if all dead or not
-                if (game.enemyAllDead(characterOrder)===true){
-                    // game.gameOver();
-                    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-                    console.log("YOU TOTALLY LOST HA HA");
-                    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-                } else if (deadResult===true){
-                    game.characterOptions("kazuma"); 
-                }
-            }
+                //checks if all enemies are dead
+                let deadResult = game.enemyAllDead(arrayEnemy);
+                let sendName = "";
 
+                    if (characterOrder[0].alive===true) {
+                        sendName = characterOrder[0];
+                    } else if (characterOrder[1].alive===true) {
+                        sendName = characterOrder[1];
+                    } else if (characterOrder[2].alive===true) {
+                        sendName = characterOrder[2];
+                    } else if (characterOrder[3].alive===true) {
+                        sendName = characterOrder[3];
+                    }
 
-            // if first element in array is deal remove it from array
-            if (currentDefender.hp<=0){
-            
-                currentDefender.hp = 0;
-                enemyNum++;
+                    game.characterOptions(sendName.name); 
+                // }
+            } else {
 
-                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-                console.log(currentDefender.name + " HAS DIED");
-                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
-                characterOrder[whichCharacter].alive = false;
-
-                let targetImg = document.querySelector(`.${currentDefender.name}`);
-                targetImg.style.transform = 'rotate(270deg)';
-                targetImg.style.cursor = "default";
-                targetImg.setAttribute('onclick', '');
-
-            } else if (currentDefender.hp>0&&arrayEnemy.length>=1&&deadResult===true){
-                enemyNum++;
-
-                //displays which enemy is attacking which character on battle bar
-                let updateScoreCharacter = document.getElementById(`${currentDefender.name}`);
-
-                console.log( battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`);
-                battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`;
+                currentAttacker = arrayEnemy[enemyNum];
+                currentDefender.hp -= currentAttacker.attack;
+                if (currentDefender.hp<=0){
+                    currentDefender.hp = 0;
+                    targetImg = document.querySelector(`.${currentDefender.name}`);
+                    targetImg.style.transform = 'rotate(270deg)';
+                    targetImg.style.cursor = "default";
+                    targetImg.setAttribute('onclick', '');
+                    characterOrder[whichCharacter].alive = false;
                 
-                updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+                }
+                // if (currentDefender.hp>0&&tempArrayEnemy.length>=1){
+
+            
+                    //displays which enemy is attacking which character on battle bar
+                    let updateScoreCharacter = document.getElementById(`${currentDefender.name}`);
+            
+                    console.log( battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`);
+                    battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`;
+                    
+                    updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+                    enemyNum++;
+                    console.log(currentDefender);
+                // }
             }
         }, 1500);  
-        attackCount++;   
+        attackCount++;     
+    }
+
+    characterGetHitChance(stillAlive){
+
+        let tempTotal = 0;
+        let subTotal = 0;
+        let addToEach;
+        
+        //adds all hit chances together
+        for (let i = 0; i<stillAlive.length; i++){
+            tempTotal += stillAlive[i].getHitChance;
+        }
+
+        //sets remainder as 100 - all hit chances added toegether
+        let remainder = 100-tempTotal;
+
+        //sets addToEach to remainder divided by number of alive characters
+        addToEach = Math.floor(remainder/stillAlive.length);
+
+        //adds addtoeach to everyone left alive
+        for (let i = 0; i<stillAlive.length; i++){
+            stillAlive[i].getHitChance += addToEach;
+        }
+
+        //add each attack chance left together and then subtracts it from 100 to get whats left
+        for (let i = 0; i<stillAlive.length; i++){
+            subTotal += stillAlive[i].getHitChance;
+        }
+    
+        //find out whats left after above calculations
+        let extra = 100 - subTotal;
+    
+        //adds the extra to the last character in the array
+        stillAlive[stillAlive.length-1].getHitChance += extra;
+    
+        //returns a sorted list from smallest chance to highest
+        return game.characterLeftGetHitSorted(stillAlive);
+    }
+
+    characterLeftGetHitSorted(array){
+        let sorted = [];
+        let tempSort = 0;
+        let unsorted = [];
+
+        for (let i = 0; i<array.length;i++){
+            unsorted.push(array[i].getHitChance)
+        }
+
+        for (let i = 0; i<array.length; i++){
+
+            tempSort = Math.min(...unsorted);
+
+            let temp = array.find(array =>array.getHitChance === tempSort);
+
+            sorted.push(tempSort);
+            
+            unsorted.splice(unsorted.indexOf(tempSort), 1);
+    
+        } 
+
+        return sorted;
+
     }
 
     //retreat
@@ -1458,10 +1541,10 @@ class gameLogic {
     }
 }
 
-let kazuma = new character("kazuma", 5, 5, 1, 1, 0, true);
-let darkness = new character("darkness", 1, 9, 1, 0, 0, true);
-let megumin = new character("megumin", 100, 2, 1, 1, 0, true);
-let aqua = new character("aqua", 3, 4, 1, 10, 0, true);
+let kazuma = new character("kazuma", 5, 5, 30, 1, 0, true, 20);
+let darkness = new character("darkness", 1, 9, 75, 0, 0, true,65);
+let megumin = new character("megumin", 100, 2, 20, 1, 0, true,5);
+let aqua = new character("aqua", 3, 4, 25, 10, 0, true,10);
 let menuRight = document.querySelector('.menuRight');
 let gameplayBtn = document.querySelector('.gameplay');
 let combat = document.querySelector('.combat');
@@ -1502,11 +1585,11 @@ let currentAttacker = 0;
 let counter = 0;
 let clickedEnemy;
 let enemyNum = 0;
-let tempArrayLength = 0;
 let attackCount = 0;
 let world = 1;
 let restartAttackOrder = false;
 let deadResult = false;
+
 
 
 const scoreLeft = () => {
