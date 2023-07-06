@@ -321,20 +321,21 @@ border-bottom: solid rgb(182, 46, 139);
 .claw {
     width: 100px;
     height: 100px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
     margin-right: 50px;
 }
 
-.enemyAttack {
-    width: 100px;
+.enemyMember {
     height: 100px;
     display: flex;
     justify-content: right;
     align-items: center;
+}
+
+.enemyAttack {
+    width: 100px;
+    height: 100px;
     animation: enemyAttack 2s ease-in-out;
 }
 
@@ -720,14 +721,6 @@ border-bottom: solid rgb(182, 46, 139);
         rotate: 65deg;
     }
 
-}
-
-.enemyMember {
-    width: 100px;
-    height: 100px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
 }
 
 .blackBat,.blackSpider,.blueSpider,.demonBat,.grayBat,.graySpider,.greenSpider,.purpleSpider,.skeleton,.zombie,.whiteSpider {

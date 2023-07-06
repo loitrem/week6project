@@ -1059,6 +1059,7 @@ class gameLogic {
                     attackAnimate.setAttribute('class', `${characterOrder[num].name} characterAttack`);
                     attackAnimate.setAttribute('src', `./images/characters/${characterOrder[num].name}walk.png`);
                     let tempCharacterNum = num;
+
                     setTimeout(function() {
                         attackImg.setAttribute('class', `punch`);
                     }, 750);
@@ -1074,6 +1075,7 @@ class gameLogic {
                 }
                 explosion = true;
                 restartAttackOrder = true;
+                console.log("RESTART STATUS = " + restartAttackOrder);
             } else {
                 currentDefender.hp -= characterOrder[num].attack; 
                 attackAnimate.setAttribute('class', `${characterOrder[num].name} characterAttack`);
@@ -1254,29 +1256,31 @@ class gameLogic {
                 // }
             } else {
 
-                
-                currentAttacker = arrayEnemy[enemyNum];
+                if (arrayEnemy[enemyNum].alive===false){
+                    enemyNum++;
+                }
+    
+                    let enemyAttackAnimate = document.getElementById(`${arrayEnemy[enemyNum].name + enemyNum}Img`);
+                    let enemyAttackGifAnimate = document.getElementById(`${arrayEnemy[enemyNum].name + enemyNum}Atk`);
+                    let tempLastEnemyNum = enemyNum;
+                    
+                    currentDefender.hp -= currentAttacker.attack;
+                    enemyAttackAnimate.setAttribute('class', `enemyAttack`);
+                    enemyAttackAnimate.setAttribute('src', `./images/enemies/${arrayEnemy[enemyNum].name}walk.png`);
+                    
+                    setTimeout(function() {
+                        enemyAttackGifAnimate.setAttribute('class', `claw`);
+                    }, 750);
 
-                let enemyAttackAnimate = document.getElementById(`${arrayEnemy[enemyNum].name + enemyNum}Img`);
-                let enemyAttackGifAnimate = document.getElementById(`${arrayEnemy[enemyNum].name + enemyNum}Atk`);
-                let tempLastEnemyNum = enemyNum;
+                    setTimeout(function() {
+                        enemyAttackGifAnimate.setAttribute('class', `claw hideAttack`);
+                    }, 1750);
 
-                currentDefender.hp -= currentAttacker.attack;
-                enemyAttackAnimate.setAttribute('class', `${arrayEnemy[enemyNum].name + enemyNum}Img enemyAttack`);
-                enemyAttackAnimate.setAttribute('src', `./images/enemies/${arrayEnemy[enemyNum].name}walk.png`);
-                
-                setTimeout(function() {
-                    enemyAttackGifAnimate.setAttribute('class', `claw`);
-                }, 750);
-
-                setTimeout(function() {
-                    enemyAttackGifAnimate.setAttribute('class', `claw hideAttack`);
-                }, 1750);
-
-                setTimeout(function() {
-                    enemyAttackAnimate.setAttribute('class', `${arrayEnemy[tempLastEnemyNum].name}`);
-                    enemyAttackAnimate.setAttribute('src', `./images/enemies/${arrayEnemy[tempLastEnemyNum].name}.png`);
-                }, 2000);
+                    setTimeout(function() {
+                        enemyAttackAnimate.setAttribute('class', arrayEnemy[tempLastEnemyNum].name);
+                        enemyAttackAnimate.setAttribute('src', `./images/enemies/${arrayEnemy[tempLastEnemyNum].name}.png`);
+                    }, 2000);
+                // }
 
                 if (currentDefender.hp<=0){
                     currentDefender.hp = 0;
@@ -1301,7 +1305,7 @@ class gameLogic {
                     console.log(currentDefender);
                 // }
             }
-        }, 1500);  
+        }, 2000);  
         attackCount++;     
     }
 
