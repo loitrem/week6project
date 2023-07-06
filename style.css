@@ -795,6 +795,16 @@ border-bottom: solid rgb(182, 46, 139);
     font-weight:normal;
     margin-left: 10px;
     text-align: center;
+    color: whitesmoke;
+}
+
+.descTextUsed { 
+    width: 50%;
+    font-size: 20px;
+    font-weight:bold;
+    margin-left: 10px;
+    text-align: center;
+    color: whitesmoke;
 }
 
 .btnWrapper {

@@ -573,6 +573,8 @@ class gameLogic {
             gameOver = false;
             gameStart = false;
             arrayEnemy = [];
+            explosion = false;
+            restartAttackOrder = true;
 
             let selectAction = document.querySelector('.selectAction');
 
@@ -714,7 +716,6 @@ class gameLogic {
             gameOver = false;
             gameStart = false;
             arrayEnemy = [];
-            
 
             //set variables
             let bottomContentHide = document.querySelector('.bottomContent');
@@ -827,12 +828,14 @@ class gameLogic {
     
         round++;
 
-        if (round===1){
+        if (round===2){
             gameStart = true;
             battle =1;
             round = 0;
             world++;
+
             game.nextWorld();
+            
         }
         console.log("============================================================================");
         console.log("round = " + round);
@@ -848,7 +851,7 @@ class gameLogic {
         battleBarInfo.innerHTML = "New Round";
 
         //determines number of enemies per battle
-        arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
+        arrayEnemy = newEnemyArray.newEnemyArray(game.enemiesPerBattle());
 
         kazuma = new character("kazuma", 5, 5, 30, 1, 0, true, 20);
         darkness = new character("darkness", 1, 9, 75, 0, 0, true,65);
@@ -912,6 +915,8 @@ class gameLogic {
         let characterHp = document.querySelector('.showCharacterHealth');
         let battleBarInfo = document.querySelector('.battleInfoBar');
         let bottomContentHide = document.querySelector('.bottomContent');
+        
+        explosion = false;
 
         bottomContentHide.classList.remove('infoBarHide');
         //saves which enemy was clicked on
@@ -922,7 +927,7 @@ class gameLogic {
         }
         
         //determines number of enemies per battle
-        arrayEnemy = newEnemyArray.newEnemyArray(this.enemiesPerBattle());
+        arrayEnemy = newEnemyArray.newEnemyArray(game.enemiesPerBattle());
         
         kazuma = new character("kazuma", 5, 5, 30, 1, 0, true, 20);
         darkness = new character("darkness", 1, 9, 75, 0, 0, true,65);
@@ -1029,12 +1034,28 @@ class gameLogic {
     characterAttack (num) {
         let tempBool = false;
         let allDeadThisRound = false;
+
         //sets current defender
         currentDefender = arrayEnemy[parseInt(clickedEnemy.charAt(clickedEnemy.length -1 ))];
 
         //checks if num is 99 which is the skip button
         if (num!=99){
-            currentDefender.hp -= characterOrder[num].attack;  
+            if (characterOrder[num].name==="megumin"){
+
+                for (let i = 0; i<arrayEnemy.length;i++){
+                    arrayEnemy[i].hp = 0;
+                    arrayEnemy[i].alive = false;
+
+                    let targetImg = document.getElementById(`${arrayEnemy[i].name + i}Img`);
+                    targetImg.style.transform = 'rotate(180deg)';
+                    targetImg.style.cursor = "default";
+                    targetImg.setAttribute('onclick', '');
+                }
+                explosion = true;
+                restartAttackOrder = true;
+            } else {
+                currentDefender.hp -= characterOrder[num].attack; 
+            }
         }
         //if num is 99 set it to 2 (this is just to skip a turn for a character)
         if (num===99){
@@ -1065,8 +1086,9 @@ class gameLogic {
 
                 // if all enemies are dead go to next round
                 if (game.enemyAllDead(arrayEnemy)===true){
-                    allDeadThisRound===true
-                    game.nextRound();
+                    allDeadThisRound===true;
+                    
+                    setTimeout(game.nextRound,2000);
                 }
 
             } else {
@@ -1309,6 +1331,8 @@ class gameLogic {
             let mainMenuImg = document.querySelector('.menuIconImg');
             let mainMenu = document.querySelector('.mainMenuWrapper');
 
+            explosion = false;
+
             enemyHp.innerHTML = "";
             characterHp.innerHTML = "";
             battleBarInfo.innerHTML = "BATTLE INFORMATION";
@@ -1467,42 +1491,84 @@ class gameLogic {
 
         } else if (name==="megumin"){
 
-            let selectActionButton = document.createElement('button');
-            let btn2 = document.createElement('button');
-            let retreat = document.createElement('button');
-            let selectActionDesc = document.createElement('div');
-            let selectName = document.createElement('p');
-            let btnOneWrapper = document.createElement('div');
-            let btnTwoWrapper = document.createElement('div');
-            let btnThreeWrapper = document.createElement('div');
+            console.log("explosion = " + explosion);
+            if (explosion===false) {
+                let selectActionButton = document.createElement('button');
+                let btn2 = document.createElement('button');
+                let retreat = document.createElement('button');
+                let selectName = document.createElement('p');
+                let btnOneWrapper = document.createElement('div');
+                let btnTwoWrapper = document.createElement('div');
+                let btnThreeWrapper = document.createElement('div');
+                let selectActionDesc = document.createElement('div');
 
-            selectAction.appendChild(selectName);
-            selectName.innerHTML = "Megumin";
+                selectAction.appendChild(selectName);
+                selectName.innerHTML = "Megumin";
 
-            selectAction.appendChild(btnOneWrapper);
-            btnOneWrapper.appendChild(selectActionButton);
-            btnOneWrapper.setAttribute('class', 'btnWrapper');
-            selectActionButton.setAttribute('class', 'attackBtn');
-            selectActionButton.setAttribute('onclick', 'game.characterAttack(2)');
-            selectActionButton.innerHTML="EXPLOSION!";
+                selectAction.appendChild(btnOneWrapper);
+                btnOneWrapper.appendChild(selectActionButton);
+                btnOneWrapper.appendChild(selectActionDesc);
+                btnOneWrapper.setAttribute('class', 'btnWrapper');
+                selectActionButton.setAttribute('class', 'attackBtn');
+                selectActionButton.setAttribute('onclick', 'game.characterAttack(2)');
+                selectActionButton.innerHTML="EXPLOSION!";
 
-            selectActionDesc.setAttribute('class', 'descText');
-            selectActionDesc.innerHTML="Will kill all enemies on screen. Can only be used once per world.";
+                selectActionDesc.setAttribute('class', 'descText');
+                selectActionDesc.innerHTML="Will kill all enemies on screen. Can only be used once per world.";
 
-            selectAction.appendChild(btnTwoWrapper);
-            btnTwoWrapper.appendChild(btn2);
-            btnTwoWrapper.setAttribute('class', 'btnWrapper');
-            btn2.setAttribute('class', 'attackBtn');
-            btn2.setAttribute('onclick', 'game.characterAttack(99)');
-            btn2.innerHTML="Skip Turn";
+                selectAction.appendChild(btnTwoWrapper);
+                btnTwoWrapper.appendChild(btn2);
+                btnTwoWrapper.setAttribute('class', 'btnWrapper');
+                btn2.setAttribute('class', 'attackBtn');
+                btn2.setAttribute('onclick', 'game.characterAttack(99)');
+                btn2.innerHTML="Skip Turn";
+    
+                selectAction.appendChild(btnThreeWrapper);
+                btnThreeWrapper.appendChild(retreat);
+                btnThreeWrapper.setAttribute('class', 'btnWrapper');
+                retreat.setAttribute('class', 'attackBtn');
+                retreat.setAttribute('onclick', 'game.retreat()');
+                retreat.innerHTML = "RUN";
 
-            selectAction.appendChild(btnThreeWrapper);
-            btnThreeWrapper.appendChild(retreat);
-            btnThreeWrapper.setAttribute('class', 'btnWrapper');
-            retreat.setAttribute('class', 'attackBtn');
-            retreat.setAttribute('onclick', 'game.retreat()');
-            retreat.innerHTML = "RUN";
+            } else if (explosion===true) {
 
+                let selectActionButton = document.createElement('button');
+                let btn2 = document.createElement('button');
+                let retreat = document.createElement('button');
+                let selectName = document.createElement('p');
+                let btnOneWrapper = document.createElement('div');
+                let btnTwoWrapper = document.createElement('div');
+                let btnThreeWrapper = document.createElement('div');
+                let selectActionDesc = document.createElement('div');
+
+                selectAction.appendChild(selectName);
+                selectName.innerHTML = "Megumin";
+
+                selectAction.appendChild(btnOneWrapper);
+                btnOneWrapper.appendChild(selectActionButton);
+                btnOneWrapper.appendChild(selectActionDesc);
+                btnOneWrapper.setAttribute('class', 'btnWrapper');
+                selectActionButton.setAttribute('class', 'attackBtn');
+                selectActionButton.setAttribute('onclick', '');
+                selectActionButton.innerHTML="EXPLOSION!";
+    
+                selectActionDesc.setAttribute('class', 'descTextUsed');
+                selectActionDesc.innerHTML="EXPLOSION Used";
+        
+                selectAction.appendChild(btnTwoWrapper);
+                btnTwoWrapper.appendChild(btn2);
+                btnTwoWrapper.setAttribute('class', 'btnWrapper');
+                btn2.setAttribute('class', 'attackBtn');
+                btn2.setAttribute('onclick', 'game.characterAttack(99)');
+                btn2.innerHTML="Skip Turn";
+
+                selectAction.appendChild(btnThreeWrapper);
+                btnThreeWrapper.appendChild(retreat);
+                btnThreeWrapper.setAttribute('class', 'btnWrapper');
+                retreat.setAttribute('class', 'attackBtn');
+                retreat.setAttribute('onclick', 'game.retreat()');
+                retreat.innerHTML = "RUN";
+            }
         } else if (name==="aqua"){
             
             let selectActionButton = document.createElement('button');
@@ -1589,7 +1655,7 @@ let attackCount = 0;
 let world = 1;
 let restartAttackOrder = false;
 let deadResult = false;
-
+let explosion = false;
 
 
 const scoreLeft = () => {
