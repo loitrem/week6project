@@ -291,6 +291,69 @@ border-bottom: solid rgb(182, 46, 139);
 .punch {
     height: 75px;
     width: 75px;
+    margin-left: 50px;
+}
+
+.characterAttack {
+    height: 75px;
+    width: 75px;
+    animation: characterAttack 2s ease-in-out;
+}
+
+@keyframes characterAttack {
+    0% {
+        transform: translateX(0vw);
+    }
+
+    25% {
+        transform: translateX(50px);
+    }
+
+    75% {
+        transform: translateX(50px);
+    }
+
+    100% {
+        transform: translateX(0vw);
+    }
+}
+
+.claw {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    margin-right: 50px;
+}
+
+.enemyAttack {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    animation: enemyAttack 2s ease-in-out;
+}
+
+@keyframes enemyAttack {
+    0% {
+        transform: translateX(0vw);
+    }
+
+    25% {
+        transform: translateX(-50px);
+    }
+
+    75% {
+        transform: translateX(-50px);
+    }
+
+    100% {
+        transform: translateX(0vw);
+    }
 }
 
 .centerContentWrapper {
@@ -667,7 +730,7 @@ border-bottom: solid rgb(182, 46, 139);
     align-items: center;
 }
 
-.blackBat,.blackSpider,.blueSpider,.demonBat,.grayBat,.graySpider,.purpleSpider,.skeleton,.zombie,.whiteSpider {
+.blackBat,.blackSpider,.blueSpider,.demonBat,.grayBat,.graySpider,.greenSpider,.purpleSpider,.skeleton,.zombie,.whiteSpider {
     width: 100px;
     height: 100px;
     display: flex;

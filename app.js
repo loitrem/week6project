@@ -966,7 +966,9 @@ class gameLogic {
             enemyMemberDiv.setAttribute('class', 'enemyMember');
 
             enemyMemberDiv.appendChild(enemyAttackImg);
-            enemyAttackImg.setAttribute('class', 'hideAttack');
+            enemyAttackImg.setAttribute('class', 'claw hideAttack');
+            enemyAttackImg.setAttribute('id', `${arrayEnemy[i].name + i}Atk`);
+            enemyAttackImg.setAttribute('src', `./images/attacks/claw.gif`);
 
             enemyMemberDiv.appendChild(enemyMemberImg);
             enemyMemberImg.setAttribute('class', arrayEnemy[i].name);
@@ -1035,11 +1037,15 @@ class gameLogic {
         let tempBool = false;
         let allDeadThisRound = false;
 
+        
+
         //sets current defender
         currentDefender = arrayEnemy[parseInt(clickedEnemy.charAt(clickedEnemy.length -1 ))];
 
         //checks if num is 99 which is the skip button
         if (num!=99){
+            let attackAnimate = document.querySelector(`.${characterOrder[num].name}`);
+            let attackImg = document.getElementById(`${characterOrder[num].name}Atk`);
             if (characterOrder[num].name==="megumin"){
 
                 for (let i = 0; i<arrayEnemy.length;i++){
@@ -1050,11 +1056,41 @@ class gameLogic {
                     targetImg.style.transform = 'rotate(180deg)';
                     targetImg.style.cursor = "default";
                     targetImg.setAttribute('onclick', '');
+                    attackAnimate.setAttribute('class', `${characterOrder[num].name} characterAttack`);
+                    attackAnimate.setAttribute('src', `./images/characters/${characterOrder[num].name}walk.png`);
+                    let tempCharacterNum = num;
+                    setTimeout(function() {
+                        attackImg.setAttribute('class', `punch`);
+                    }, 750);
+
+                    setTimeout(function() {
+                        attackImg.setAttribute('class', `punch hideAttack`);
+                    }, 1750);
+
+                    setTimeout(function() {
+                        attackAnimate.setAttribute('class', `${characterOrder[tempCharacterNum].name}`);
+                        attackAnimate.setAttribute('src', `./images/characters/${characterOrder[tempCharacterNum].name}.png`);
+                    }, 2000)
                 }
                 explosion = true;
                 restartAttackOrder = true;
             } else {
                 currentDefender.hp -= characterOrder[num].attack; 
+                attackAnimate.setAttribute('class', `${characterOrder[num].name} characterAttack`);
+                attackAnimate.setAttribute('src', `./images/characters/${characterOrder[num].name}walk.png`);
+                let tempCharacterNum = num;
+                setTimeout(function() {
+                    attackImg.setAttribute('class', `punch`);
+                }, 750);
+
+                setTimeout(function() {
+                    attackImg.setAttribute('class', `punch hideAttack`);
+                }, 1750);
+
+                setTimeout(function() {
+                    attackAnimate.setAttribute('class', `${characterOrder[tempCharacterNum].name}`);
+                    attackAnimate.setAttribute('src', `./images/characters/${characterOrder[tempCharacterNum].name}.png`);
+                }, 2000)
             }
         }
         //if num is 99 set it to 2 (this is just to skip a turn for a character)
@@ -1218,8 +1254,30 @@ class gameLogic {
                 // }
             } else {
 
+                
                 currentAttacker = arrayEnemy[enemyNum];
+
+                let enemyAttackAnimate = document.getElementById(`${arrayEnemy[enemyNum].name + enemyNum}Img`);
+                let enemyAttackGifAnimate = document.getElementById(`${arrayEnemy[enemyNum].name + enemyNum}Atk`);
+                let tempLastEnemyNum = enemyNum;
+
                 currentDefender.hp -= currentAttacker.attack;
+                enemyAttackAnimate.setAttribute('class', `${arrayEnemy[enemyNum].name + enemyNum}Img enemyAttack`);
+                enemyAttackAnimate.setAttribute('src', `./images/enemies/${arrayEnemy[enemyNum].name}walk.png`);
+                
+                setTimeout(function() {
+                    enemyAttackGifAnimate.setAttribute('class', `claw`);
+                }, 750);
+
+                setTimeout(function() {
+                    enemyAttackGifAnimate.setAttribute('class', `claw hideAttack`);
+                }, 1750);
+
+                setTimeout(function() {
+                    enemyAttackAnimate.setAttribute('class', `${arrayEnemy[tempLastEnemyNum].name}`);
+                    enemyAttackAnimate.setAttribute('src', `./images/enemies/${arrayEnemy[tempLastEnemyNum].name}.png`);
+                }, 2000);
+
                 if (currentDefender.hp<=0){
                     currentDefender.hp = 0;
                     targetImg = document.querySelector(`.${currentDefender.name}`);
