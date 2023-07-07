@@ -42,7 +42,7 @@ class character {
 class enemy {
 
     //constructor
-    constructor(name, attack,attackMax, attackMin, defense, defenseMax, defenseMin, hp, hpMax, hpMin, mp, mpMax, mpMin, xp, xpMax, xpMin, alive){
+    constructor(name,id, attack,attackMax, attackMin, defense, defenseMax, defenseMin, hp, hpMax, hpMin, mp, mpMax, mpMin, xp, xpMax, xpMin, alive){
         this.name = name;
         this.attack = attack;
         this.attackMax = attackMax;
@@ -60,6 +60,7 @@ class enemy {
         this.xpMax = xpMax;
         this.xpMin = xpMin;
         this.alive = alive;
+        this.id = id;
     }
 }
 
@@ -875,14 +876,17 @@ class gameLogic {
             enemyMemberDiv.setAttribute('class', 'enemyMember');
 
             enemyMemberDiv.appendChild(enemyAttackImg);
-            enemyAttackImg.setAttribute('class', 'hideAttack');
-        
+            enemyAttackImg.setAttribute('class', 'claw hideAttack');
+            enemyAttackImg.setAttribute('id', `${arrayEnemy[i].name + i}Atk`);
+            enemyAttackImg.setAttribute('src', `./images/attacks/claw.gif`);
+
             enemyMemberDiv.appendChild(enemyMemberImg);
             enemyMemberImg.setAttribute('class', arrayEnemy[i].name);
             enemyMemberImg.setAttribute('src', `./images/enemies/${arrayEnemy[i].name}.png`);
             enemyMemberImg.setAttribute('id', `${arrayEnemy[i].name+i}Img`);
             enemyMemberImg.setAttribute('onclick', `game.targetSelect('${arrayEnemy[i].name+i}')`);
             document.getElementById(`${arrayEnemy[i].name+i}Img`).style.cursor = 'pointer';
+
 
             //clear stat boxes
             characterHp.replaceChildren();
@@ -895,6 +899,15 @@ class gameLogic {
 
         //adds character stats to bottom middle
         for (let i = 0; i<4; i++){
+            let characterMemberP = document.createElement('p');
+            characterHp.appendChild(characterMemberP);
+            characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+            characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
+        }
+
+        characterHp.replaceChildren();
+        //adds character stats to bottom middle
+        for (let i = 0; i<characterOrder.length; i++){
             let characterMemberP = document.createElement('p');
             characterHp.appendChild(characterMemberP);
             characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
@@ -1207,6 +1220,7 @@ class gameLogic {
         let targetImg;
         let tempArrayEnemy = [];
         enemyNum = 0;
+        let atkNum = 0;
 
         let battleBarInfo = document.querySelector('.battleInfoBar');
 
@@ -1216,18 +1230,21 @@ class gameLogic {
         //adds enemies to the new temp array if they are alive
         for (let i = 0; i<arrayEnemy.length;i++){
             if (arrayEnemy[i].alive===true){
-                tempArrayEnemy.push(arrayEnemy[i]);
+                tempArrayEnemy.push({
+                    id: i,
+                    obj: arrayEnemy[i]
+                });
             }
         }
-
+        
         //loop through current arrayEnemy
         let loop = setInterval(function(){
 
             let attackWho = Math.floor(Math.floor(Math.random()*(101-1)+1));
 
             // if monster is alive set as current attacker
-            if (enemyNum!=tempArrayEnemy.length&&tempArrayEnemy[enemyNum].alive===true) {
-                currentAttacker = tempArrayEnemy[enemyNum];
+            if (enemyNum!=tempArrayEnemy.length&&arrayEnemy[enemyNum].alive===true) {
+                currentAttacker = tempArrayEnemy[enemyNum].obj;
             }
 
             //which character will get hit
@@ -1270,32 +1287,63 @@ class gameLogic {
                     game.characterOptions(sendName.name); 
                 // }
             } else {
+//   console.log("*******************sfddddddddddddddddddddddddddddddddd55555");
+               
+//                     console.log(arrayEnemy);
+//                     console.log(tempArrayEnemy);
+//                     console.log("*******************sfddddddddddddddddddddddddddddddddd55555");
+//                 if (tempArrayEnemy[enemyNum].obj.alive===false){
+//                     tempArrayEnemy[enemyNum].pop(tempArrayEnemy[enemyNum])
+//                     currentAttacker = tempArrayEnemy[enemyNum].obj;
+                  
 
-                if (arrayEnemy[enemyNum].alive===false){
-                    enemyNum++;
-                }
-    
-                    let enemyAttackAnimate = document.getElementById(`${arrayEnemy[enemyNum].name + enemyNum}Img`);
-                    let enemyAttackGifAnimate = document.getElementById(`${arrayEnemy[enemyNum].name + enemyNum}Atk`);
+//                 } else 
+                if (tempArrayEnemy[enemyNum].obj.alive===true){
+                    console.log("*********************55555555555555555555555555555");
+                    console.log(tempArrayEnemy);
+                   
+                    // if (tempArrayEnemy.length<=0){
+                        currentAttacker = tempArrayEnemy[atkNum].obj;
+                        currentAttacker.id = tempArrayEnemy[atkNum].id;
+                        console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFF = " + atkNum);
+                            console.log(tempArrayEnemy);
+
+                            atkNum++;
+                            if(atkNum>tempArrayEnemy.length){
+                                atkNum = tempArrayEnemy.length;
+                            }
+                    } 
+                    // else {
+                    //     atkNum++;
+                       
+                    //     console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFF" + atkNum);
+                    //     console.log(tempArrayEnemy);
+                    //     currentAttacker = tempArrayEnemy[atkNum].obj;
+                    // }
+                    let tempName = "";
+                    let enemyAttackAnimate = document.getElementById(`${currentAttacker.name + currentAttacker.id}Img`);
+                    let enemyAttackGifAnimate = document.getElementById(`${currentAttacker.name + currentAttacker.id}Atk`);
                     let tempLastEnemyNum = enemyNum;
                     let clawSound = new Audio('./audio/claw.mp3');
 
                     currentDefender.hp -= currentAttacker.attack;
+
                     enemyAttackAnimate.setAttribute('class', `enemyAttack`);
-                    enemyAttackAnimate.setAttribute('src', `./images/enemies/${arrayEnemy[enemyNum].name}walk.png`);
+                    enemyAttackAnimate.setAttribute('src', `./images/enemies/${currentAttacker.name}walk.png`);
+                    tempName = currentAttacker.name;
                     
-                    setTimeout(function() {
+                    let attackShow = setTimeout(function() {
                         enemyAttackGifAnimate.setAttribute('class', `claw`);
                         clawSound.play()
                     }, 700);
 
-                    setTimeout(function() {
+                    let attackHide = setTimeout(function() {
                         enemyAttackGifAnimate.setAttribute('class', `claw hideAttack`);
                     }, 1750);
 
-                    setTimeout(function() {
-                        enemyAttackAnimate.setAttribute('class', arrayEnemy[tempLastEnemyNum].name);
-                        enemyAttackAnimate.setAttribute('src', `./images/enemies/${arrayEnemy[tempLastEnemyNum].name}.png`);
+                    let attackMove = setTimeout(function() {
+                        enemyAttackAnimate.setAttribute('class', tempName);
+                        enemyAttackAnimate.setAttribute('src', `./images/enemies/${tempName}.png`);
                     }, 2000);
                 // }
 
@@ -1308,18 +1356,16 @@ class gameLogic {
                     characterOrder[whichCharacter].alive = false;
                 
                 }
-                // if (currentDefender.hp>0&&tempArrayEnemy.length>=1){
 
-            
-                    //displays which enemy is attacking which character on battle bar
-                    let updateScoreCharacter = document.getElementById(`${currentDefender.name}`);
-            
-                    console.log( battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`);
-                    battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`;
-                    
-                    updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
-                    enemyNum++;
-                    console.log(currentDefender);
+                //displays which enemy is attacking which character on battle bar
+                let updateScoreCharacter = document.getElementById(`${currentDefender.name}`);
+
+                console.log( battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`);
+                battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`;
+                
+                updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
+                enemyNum++;
+                console.log(currentDefender);
                 // }
             }
         }, 2000);  
