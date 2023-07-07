@@ -576,6 +576,9 @@ class gameLogic {
             arrayEnemy = [];
             explosion = false;
             restartAttackOrder = true;
+            world1 = false;
+            world2 = false;
+            world3 = false;
 
             let selectAction = document.querySelector('.selectAction');
 
@@ -705,7 +708,7 @@ class gameLogic {
     }
 
     //unlock next world
-    nextWorld(){
+    nextWorld(num){
         
         console.log("============================================================================");
         console.log("world = ", world);
@@ -755,17 +758,29 @@ class gameLogic {
                     showPlay[i].classList.remove('show');
                 }
 
-            if (world===1){
+            if (num===1){
                 
                 leftMenuClickX.setAttribute('src', './images/path/yellow.png');
                 leftMenuClickX.setAttribute('class', 'leftMenuClick path');
                 leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
                 leftMenuClick.style.cursor = "pointer";
 
-            } else if (world===2){
+                centerMenuClick.setAttribute('src', './images/path/x.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClickX path');
+                centerMenuClick.setAttribute('onclick', "game.displayWorld('sand')");
+                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.style.cursor = "pointer";
+
+                rightMenuClickX.setAttribute('src', './images/path/x.png');
+                rightMenuClickX.setAttribute('class', 'rightMenuClickX path');
+                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                rightMenuClickX.style.cursor = "default";
+
+            } else if (num===2){
             
                 leftMenuClick.setAttribute('src', './images/path/yellow.png');
                 leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuClick.setAttribute('onclick', '');
                 leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
                 leftMenuClick.style.cursor = "pointer";
 
@@ -780,15 +795,17 @@ class gameLogic {
                 rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
                 rightMenuClickX.style.cursor = "default";
 
-            } else if (world===3){
-               
+            } else if (num===3){
+            
                 leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClick path');
                 leftMenuClick.setAttribute('class', 'leftMenuClick path');
                 leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
                 leftMenuClick.style.cursor = "pointer";
 
                 centerMenuClick.setAttribute('src', './images/path/yellow.png');
                 centerMenuClick.setAttribute('class', 'centerMenuClick path');
+                centerMenuClick.setAttribute('class', 'leftMenuClick path');
                 centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
                 centerMenuClick.style.cursor = "pointer";
 
@@ -797,7 +814,7 @@ class gameLogic {
                 rightMenuClickX.setAttribute('onclick', "game.displayWorld('ice')");
                 rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
                 rightMenuClickX.style.cursor = "pointer";
-            } else if (world>=4){
+            } else if (num>=4){
 
                 gameOverWrapper.setAttribute('class', 'gameOverWrapper');
            
@@ -829,13 +846,26 @@ class gameLogic {
     
         round++;
 
-        if (round===2){
+        if (round===3){
             gameStart = true;
             battle =1;
             round = 0;
-            world++;
+            if (world===1){
+                world1 = true;
 
-            game.nextWorld();
+                game.nextWorld(2);
+            }
+            if (world===2&&world1===true){
+                world2 = true;
+             
+                game.nextWorld(3);
+            }
+            if (world===3&&world1===true&&world3===true){
+                world3 = true;
+              
+                game.nextWorld(4);
+
+            }
             
         }
         console.log("============================================================================");
@@ -853,11 +883,6 @@ class gameLogic {
 
         //determines number of enemies per battle
         arrayEnemy = newEnemyArray.newEnemyArray(game.enemiesPerBattle());
-
-        kazuma = new character("kazuma", 5, 5, 30, 1, 0, true, 20);
-        darkness = new character("darkness", 1, 9, 75, 0, 0, true,65);
-        megumin = new character("megumin", 100, 2, 20, 1, 0, true,5);
-        aqua = new character("aqua", 3, 4, 25, 10, 0, true,10);
 
         //add all characters to array
         characterOrder = [kazuma, darkness, megumin, aqua];
@@ -962,6 +987,14 @@ class gameLogic {
         partyWrapper.setAttribute('class', 'partyWrapper showParty');
         enemyWrapper.setAttribute('class', 'enemyWrapper showEnemy');
 
+        if (name==="field"){
+            world = 1;
+        } else if (name==="sand"){
+            world = 2;
+        } else if (name==="ice"){
+            world = 3;
+        }
+        console.log("WORLD IS NOW = " + world);
         //sets background to this worlds background
         background.style.backgroundImage = `url('./images/backgrounds/${name}.png')`;  
 
@@ -1315,7 +1348,7 @@ class gameLogic {
                     } 
                     // else {
                     //     atkNum++;
-                       
+                    
                     //     console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFF" + atkNum);
                     //     console.log(tempArrayEnemy);
                     //     currentAttacker = tempArrayEnemy[atkNum].obj;
@@ -1457,6 +1490,7 @@ class gameLogic {
             let mainMenu = document.querySelector('.mainMenuWrapper');
 
             explosion = false;
+            battle = 1;
 
             enemyHp.innerHTML = "";
             characterHp.innerHTML = "";
@@ -1781,6 +1815,9 @@ let world = 1;
 let restartAttackOrder = false;
 let deadResult = false;
 let explosion = false;
+let world1 = false;
+let world2 = false;
+let world3 = false;
 
 
 const scoreLeft = () => {
