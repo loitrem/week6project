@@ -498,7 +498,10 @@ class menu {
 
         menuRightText.innerHTML = "<p>Combat is turn based.</p><p>" + 
                                     "Select your action for each of your team</p><p>" + 
-                                    "The enemy will attack after your last team memeber performs their action</p>";
+                                    "The enemy will attack after your last team memeber performs their action</p> " + 
+                                    "<p>Kazuma is well rounded, Darkness is good at taking damage but bad at attacking</p>" + 
+                                    "<p>Megumin can destroy everyone on screen but only once per world</p>" + 
+                                    "<p>Aqua can do a little damage and can heal</p>";
     }
 
     // text to show when leveling up is pushed
@@ -1779,17 +1782,17 @@ let newMenu = new menu();
 let game = new gameLogic();
 let newEnemyArray = new enemyArray();
 
-// let musicParent = document.querySelector('.mainMenu');
-// let openingMusic = document.createElement('audio');
-// musicParent.appendChild(openingMusic);
-// openingMusic.setAttribute('type', 'audio/mpeg');
-// openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
-// openingMusic.preload = "auto";
-// openingMusic.autoplay = true;
-// openingMusic.loop = true;
-// openingMusic.volume = .1;
-// openingMusic.load();
-// openingMusic.muted = false;
+let musicParent = document.querySelector('.mainMenu');
+let openingMusic = document.createElement('audio');
+musicParent.appendChild(openingMusic);
+openingMusic.setAttribute('type', 'audio/mpeg');
+openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
+openingMusic.preload = "auto";
+openingMusic.autoplay = true;
+openingMusic.loop = true;
+openingMusic.volume = .1;
+openingMusic.load();
+openingMusic.muted = false;
 
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
