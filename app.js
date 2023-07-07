@@ -818,24 +818,26 @@ class gameLogic {
                 rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
                 rightMenuClickX.style.cursor = "pointer";
             } else if (num>=4){
-
+                console.log("=========================================");
+                console.log("Game should be over");
+                console.log("=========================================");
                 gameOverWrapper.setAttribute('class', 'gameOverWrapper');
-           
-                // leftMenuClick.setAttribute('src', './images/path/yellow.png');
-                // leftMenuClick.setAttribute('class', 'leftMenuClick path');
-                // leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
-                // leftMenuClick.style.cursor = "pointer";
 
-                // centerMenuClick.setAttribute('src', './images/path/yellow.png');
-                // centerMenuClick.setAttribute('class', 'centerMenuClick path');
-                // centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
-                // centerMenuClick.style.cursor = "pointer";
+                leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+                leftMenuClick.style.cursor = "pointer";
 
-                // rightMenuClick.setAttribute('src', './images/path/yellow.png');
-                // rightMenuClick.setAttribute('class', 'rightMenuClick path');
-                // rightMenuClick.setAttribute('onclick', "game.displayWorld('ice')");
-                // rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                // rightMenuClick.style.cursor = "pointer";
+                centerMenuClick.setAttribute('src', './images/path/yellow.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClick path');
+                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.style.cursor = "pointer";
+
+                rightMenuClick.setAttribute('src', './images/path/yellow.png');
+                rightMenuClick.setAttribute('class', 'rightMenuClick path');
+                rightMenuClick.setAttribute('onclick', "game.displayWorld('ice')");
+                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+                rightMenuClick.style.cursor = "pointer";
             }
 
             //hides party/enemy wrapper
@@ -848,11 +850,15 @@ class gameLogic {
     nextRound () {
     
         round++;
+        console.log("============================================================================");
+        console.log("World = " + world);
+        console.log("============================================================================");
 
         if (round===3){
             gameStart = true;
             battle =1;
             round = 0;
+
             if (world===1){
                 world1 = true;
 
@@ -860,13 +866,14 @@ class gameLogic {
             }
             if (world===2&&world1===true){
                 world2 = true;
-             
+            
                 game.nextWorld(3);
             }
-            if (world===3&&world1===true&&world3===true){
+            if (world===3&&world1===true&&world2===true){
                 world3 = true;
-              
+    
                 game.nextWorld(4);
+                gameOver = true;
 
             }
             
@@ -958,6 +965,7 @@ class gameLogic {
         let bottomContentHide = document.querySelector('.bottomContent');
         
         explosion = false;
+        round = 0;
 
         bottomContentHide.classList.remove('infoBarHide');
         //saves which enemy was clicked on
@@ -1095,7 +1103,7 @@ class gameLogic {
         if (num!=99){
             let attackAnimate = document.querySelector(`.${characterOrder[num].name}`);
             let attackImg = document.getElementById(`${characterOrder[num].name}Atk`);
-            if (characterOrder[num].name==="megumin"){
+            if (characterOrder[num].name==="megumin"&&currentDefender.alive===true){
 
                 for (let i = 0; i<arrayEnemy.length;i++){
                     arrayEnemy[i].hp = 0;
