@@ -608,6 +608,28 @@ class gameLogic {
             let gameOverWrapper = document.querySelector('.gameOverWrapper');
 
             gameOverWrapper.setAttribute('class', 'gameOverWrapper gameOverHide');
+            mainMenu.setAttribute('class', 'mainMenuWrapper');
+            mainMenuImg.setAttribute('class', 'menuIconImg menuIconHide');
+
+            //sets world icon to red x and mouse to default
+            leftMenuClick.setAttribute('src', './images/path/x.png');
+            leftMenuClick.setAttribute('class', 'leftMenuClickX path');
+            leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
+            leftMenuClick.style.cursor = "default";
+
+            centerMenuClick.setAttribute('src', './images/path/x.png');
+            centerMenuClick.setAttribute('class', 'centerMenuClickX path');
+            centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+            centerMenuClick.style.cursor = "default";
+
+            rightMenuClick.setAttribute('src', './images/path/x.png');
+            rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+            rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
+            rightMenuClick.style.cursor = "default"; 
+
+            //hides party/enemy wrapper
+            partyWrapper.setAttribute('class', 'partyWrapper hideParty');
+            enemyWrapper.setAttribute('class', 'enemyWrapper hideEnemy'); 
 
             enemyHp.innerHTML = "";
             characterHp.innerHTML = "";
@@ -615,8 +637,7 @@ class gameLogic {
             //sets the background to world select
             document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;
     
-            //hides info bar and menu icon
-            mainMenuImg.classList.add('menuIconHide');
+            //hides info bar
             bottomContentHide.classList.add('infoBarHide');
 
             //hides all elements with .show
@@ -625,85 +646,8 @@ class gameLogic {
                 showPlay[i].classList.remove('show');
             }
 
-            if (world===1){
-                //sets first world icon to red x and mouse to default
-                leftMenuClick.setAttribute('src', './images/path/x.png');
-                leftMenuClick.setAttribute('class', 'leftMenuClickX path');
-                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
-                leftMenuClick.style.cursor = "default";
-
-                centerMenuClickX.setAttribute('src', './images/path/x.png');
-                centerMenuClickX.setAttribute('class', 'centerMenuClickX path');
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
-                centerMenuClickX.style.cursor = "default";
-
-                rightMenuClickX.setAttribute('src', './images/path/x.png');
-                rightMenuClickX.setAttribute('class', 'rightMenuClickX path');
-                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                rightMenuClickX.style.cursor = "default";
-
-            } else if (world===2){
-                //sets first world icon to red x and mouse to default
-                leftMenuClick.setAttribute('src', './images/path/x.png');
-                leftMenuClick.setAttribute('class', 'leftMenuClickX path');
-                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
-                leftMenuClick.style.cursor = "default";
-
-                centerMenuClick.setAttribute('src', './images/path/x.png');
-                centerMenuClick.setAttribute('class', 'centerMenuClickX path');
-                centerMenuClick.setAttribute('onclick', "game.displayWorld('sand')");
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
-                centerMenuClick.style.cursor = "default";
-
-                rightMenuClickX.setAttribute('src', './images/path/x.png');
-                rightMenuClickX.setAttribute('class', 'rightMenuClickX path');
-                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                rightMenuClickX.style.cursor = "default";
-
-            } else if (world===3){
-                //sets first world icon to red x and mouse to default
-                leftMenuClick.setAttribute('src', './images/path/x.png');
-                leftMenuClick.setAttribute('class', 'leftMenuClickX path');
-                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
-                leftMenuClick.style.cursor = "default";
-
-                centerMenuClick.setAttribute('src', './images/path/x.png');
-                centerMenuClick.setAttribute('class', 'centerMenuClickX path');
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
-                centerMenuClick.style.cursor = "default";
-
-                rightMenuClick.setAttribute('src', './images/path/x.png');
-                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
-                rightMenuClick.setAttribute('onclick', "game.displayWorld('ice')");
-                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                rightMenuClick.style.cursor = "default";
-            } else if (world>=4){
-                //sets first world icon to red x and mouse to default
-                leftMenuClick.setAttribute('src', './images/path/x.png');
-                leftMenuClick.setAttribute('class', 'leftMenuClickX path');
-                leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
-                leftMenuClick.style.cursor = "pointer";
-
-                centerMenuClick.setAttribute('src', './images/path/x.png');
-                centerMenuClick.setAttribute('class', 'centerMenuClickX path');
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
-                centerMenuClick.style.cursor = "pointer";
-
-                rightMenuClick.setAttribute('src', './images/path/x.png');
-                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
-                rightMenuClick.setAttribute('onclick', "game.displayWorld('ice')");
-                rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-                rightMenuClick.style.cursor = "pointer";
-            }
-
-            //hides party/enemy wrapper
-            partyWrapper.setAttribute('class', 'partyWrapper hideParty');
-            enemyWrapper.setAttribute('class', 'enemyWrapper hideEnemy'); 
-
-            mainMenu.setAttribute('class', 'mainMenuWrapper');
-
             world = 1;
-            round = 1;
+            round = 0;
             battle = 1;
             counter = 0;
             enemyNum = 0;
@@ -808,7 +752,6 @@ class gameLogic {
 
                 centerMenuClick.setAttribute('src', './images/path/yellow.png');
                 centerMenuClick.setAttribute('class', 'centerMenuClick path');
-                centerMenuClick.setAttribute('class', 'leftMenuClick path');
                 centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
                 centerMenuClick.style.cursor = "pointer";
 
@@ -822,20 +765,24 @@ class gameLogic {
                 console.log("Game should be over");
                 console.log("=========================================");
                 gameOverWrapper.setAttribute('class', 'gameOverWrapper');
+                partyWrapper.setAttribute('class', 'partyWrapper hideParty');
+                enemyWrapper.setAttribute('class', 'enemyWrapper hideEnemy')
 
-                leftMenuClick.setAttribute('src', './images/path/yellow.png');
+                leftMenuClick.setAttribute('src', './images/path/x.png');
                 leftMenuClick.setAttribute('class', 'leftMenuClick path');
+                leftMenuClick.setAttribute('onclick', "");
                 leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
                 leftMenuClick.style.cursor = "pointer";
 
-                centerMenuClick.setAttribute('src', './images/path/yellow.png');
+                centerMenuClick.setAttribute('src', './images/path/x.png');
                 centerMenuClick.setAttribute('class', 'centerMenuClick path');
+                centerMenuClick.setAttribute('onclick', "");
                 centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
                 centerMenuClick.style.cursor = "pointer";
 
-                rightMenuClick.setAttribute('src', './images/path/yellow.png');
+                rightMenuClick.setAttribute('src', './images/path/x.png');
                 rightMenuClick.setAttribute('class', 'rightMenuClick path');
-                rightMenuClick.setAttribute('onclick', "game.displayWorld('ice')");
+                rightMenuClick.setAttribute('onclick', "");
                 rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
                 rightMenuClick.style.cursor = "pointer";
             }
@@ -854,7 +801,7 @@ class gameLogic {
         console.log("World = " + world);
         console.log("============================================================================");
 
-        if (round===3){
+        if (round===1){
             gameStart = true;
             battle =1;
             round = 0;
@@ -1110,6 +1057,7 @@ class gameLogic {
                     arrayEnemy[i].alive = false;
 
                     let explosionSound = new Audio('./audio/explosion.mp3');
+                    explosionSound.volume = .1;
                     let targetImg = document.getElementById(`${arrayEnemy[i].name + i}Img`);
                     targetImg.style.transform = 'rotate(180deg)';
                     targetImg.style.cursor = "default";
@@ -1790,17 +1738,17 @@ let newMenu = new menu();
 let game = new gameLogic();
 let newEnemyArray = new enemyArray();
 
-let musicParent = document.querySelector('.mainMenu');
-let openingMusic = document.createElement('audio');
-musicParent.appendChild(openingMusic);
-openingMusic.setAttribute('type', 'audio/mpeg');
-openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
-openingMusic.preload = "auto";
-openingMusic.autoplay = true;
-openingMusic.loop = true;
-openingMusic.volume = .1;
-openingMusic.load();
-openingMusic.muted = false;
+// let musicParent = document.querySelector('.mainMenu');
+// let openingMusic = document.createElement('audio');
+// musicParent.appendChild(openingMusic);
+// openingMusic.setAttribute('type', 'audio/mpeg');
+// openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
+// openingMusic.preload = "auto";
+// openingMusic.autoplay = true;
+// openingMusic.loop = true;
+// openingMusic.volume = .1;
+// openingMusic.load();
+// openingMusic.muted = false;
 
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
