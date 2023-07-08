@@ -1024,8 +1024,65 @@ class gameLogic {
         //sets current defender
         currentDefender = arrayEnemy[parseInt(clickedEnemy.charAt(clickedEnemy.length -1 ))];
 
-        //checks if num is 99 which is the skip button
-        if (num!=99){
+        //if num is 100 aqua heals
+        if (num===100){
+
+            let healSound = new Audio('./audio/heal.mp3');
+            healSound.volume = .5;
+            let healAnimate = document.querySelector(`.aqua`);
+            let healImg = document.getElementById(`aquaAtk`);
+            let characterHp = document.querySelector('.showCharacterHealth');
+
+            // adds 5 health to each character who is alive
+            for (let i = 0;i<characterOrder.length;i++){
+
+                if (characterOrder[i].alive===true){
+
+                    characterOrder[i].hp += 5;
+                }
+            }
+
+            //clears all children
+            characterHp.replaceChildren();
+
+            //updates character stats to bottom middle
+            for (let i = 0; i<characterOrder.length; i++){
+                let characterMemberP = document.createElement('p');
+                characterHp.appendChild(characterMemberP);
+                characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+                characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
+            }
+
+            healAnimate.setAttribute('class', `aqua characterAttack`);
+            healAnimate.setAttribute('src', `./images/characters/aquawalk.png`);
+
+            let tempCharacterNum = num;
+
+            setTimeout(function() {
+                healImg.setAttribute('class', `punch`);
+                healImg.setAttribute('src', `./images/attacks/heal.gif`);
+
+                healSound.play();
+
+            }, 700);
+
+            setTimeout(function() {
+                healImg.setAttribute('class', `punch hideAttack`);
+                healImg.setAttribute('src', `./images/attacks/punch.gif`);
+
+            }, 1750);
+
+            setTimeout(function() {
+
+
+            healAnimate.setAttribute('class', `aqua`);
+            healAnimate.setAttribute('src', `./images/characters/aqua.png`);
+
+
+            }, 2000)
+            //checks if num is not 99
+        } else if (num!=99){
+            
             let attackAnimate = document.querySelector(`.${characterOrder[num].name}`);
             let getHitAnimate = document.getElementById(`${clickedEnemy}Img`);
             let attackImg = document.getElementById(`${characterOrder[num].name}Atk`);
@@ -1075,7 +1132,7 @@ class gameLogic {
             } else {
                 let punchSound = new Audio('./audio/punch.mp3');
                 let swordSound = new Audio('./audio/sword.mp3');
-                let healSound = new Audio('./audio/heal.mp3');
+
                 currentDefender.hp -= characterOrder[num].attack; 
                 attackAnimate.setAttribute('class', `${characterOrder[num].name} characterAttack`);
                 attackAnimate.setAttribute('src', `./images/characters/${characterOrder[num].name}walk.png`);
@@ -1693,7 +1750,7 @@ class gameLogic {
 
             btnTwoWrapper.setAttribute('class', 'btnWrapper');
             selectActionHeal.setAttribute('class', 'attackBtn');
-            selectActionHeal.setAttribute('onclick', 'game.oneCharacterHeal(100)');
+            selectActionHeal.setAttribute('onclick', 'game.characterAttack(100)');
             selectActionHeal.innerHTML="Heal";
 
             selectAction.appendChild(btnThreeWrapper);
