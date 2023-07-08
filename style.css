@@ -230,7 +230,55 @@ border-bottom: solid rgb(182, 46, 139);
     cursor: pointer;
 }
 
+.characterGetHit {
+    animation: enemyGetHit .5s ease-in-out;
+}
 
+.enemyGetHit {
+    animation: enemyGetHit .5s ease-in-out;
+}
+
+@keyframes characterGetHit {
+    0% {
+        transform: translateX(10px);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(10px);
+    }
+}
+
+@keyframes enemyGetHit {
+    0% {
+        transform: translateX(10px);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+    100% {
+        transform: translateX(10px);
+    }
+}
 
 @keyframes characterAttack {
     0% {
@@ -248,6 +296,7 @@ border-bottom: solid rgb(182, 46, 139);
     100% {
         transform: translateX(0vw);
     }
+    
 }
 
 @keyframes enemyAttack {

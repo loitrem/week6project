@@ -283,26 +283,6 @@ class enemyArray {
     }
 }
 
-//animation class
-class animation {
-
-    //animate
-    animate () {
-
-    }
-
-    //attack right
-    attackRight () {
-
-    }
-
-    //attack left
-    attackLeft () {
-
-    }
-
-}
-
 //menu class
 class menu {
 
@@ -1041,14 +1021,13 @@ class gameLogic {
         let tempBool = false;
         let allDeadThisRound = false;
 
-        
-
         //sets current defender
         currentDefender = arrayEnemy[parseInt(clickedEnemy.charAt(clickedEnemy.length -1 ))];
 
         //checks if num is 99 which is the skip button
         if (num!=99){
             let attackAnimate = document.querySelector(`.${characterOrder[num].name}`);
+            let getHitAnimate = document.getElementById(`${clickedEnemy}Img`);
             let attackImg = document.getElementById(`${characterOrder[num].name}Atk`);
             if (characterOrder[num].name==="megumin"&&currentDefender.alive===true){
 
@@ -1064,10 +1043,14 @@ class gameLogic {
                     targetImg.setAttribute('onclick', '');
                     attackAnimate.setAttribute('class', `${characterOrder[num].name} characterAttack`);
                     attackAnimate.setAttribute('src', `./images/characters/${characterOrder[num].name}walk.png`);
+                    getHitAnimate.setAttribute('class', `${currentDefender.name} enemyGetHit`);
                     let tempCharacterNum = num;
 
                     setTimeout(function() {
                         attackImg.setAttribute('class', `punch`);
+                        if (currentDefender.hp>0){
+                            getHitAnimate.setAttribute('class', `${currentDefender.name} enemyGetHit`);
+                        }
                     
                         if (characterOrder[num-1].name==="megumin"){
                             explosionSound.play();
@@ -1076,6 +1059,9 @@ class gameLogic {
 
                     setTimeout(function() {
                         attackImg.setAttribute('class', `punch hideAttack`);
+                        if (currentDefender.hp>0){
+                            getHitAnimate.setAttribute('class', currentDefender.name);
+                        }
                     }, 1750);
 
                     setTimeout(function() {
@@ -1094,8 +1080,12 @@ class gameLogic {
                 attackAnimate.setAttribute('class', `${characterOrder[num].name} characterAttack`);
                 attackAnimate.setAttribute('src', `./images/characters/${characterOrder[num].name}walk.png`);
                 let tempCharacterNum = num;
+
                 setTimeout(function() {
                     attackImg.setAttribute('class', `punch`);
+                    if (currentDefender.hp>0){
+                        getHitAnimate.setAttribute('class', `${currentDefender.name} enemyGetHit`);
+                    }
                     if (characterOrder[num-1].name==="kazuma"||characterOrder[num-1].name==="aqua"){
                         punchSound.play();
                     }
@@ -1107,6 +1097,9 @@ class gameLogic {
 
                 setTimeout(function() {
                     attackImg.setAttribute('class', `punch hideAttack`);
+                    if (currentDefender.hp>0){
+                        getHitAnimate.setAttribute('class', currentDefender.name);
+                    }
                 }, 1750);
 
                 setTimeout(function() {
@@ -1277,43 +1270,26 @@ class gameLogic {
                     }
 
                     game.characterOptions(sendName.name); 
-                // }
             } else {
-//   console.log("*******************sfddddddddddddddddddddddddddddddddd55555");
-               
-//                     console.log(arrayEnemy);
-//                     console.log(tempArrayEnemy);
-//                     console.log("*******************sfddddddddddddddddddddddddddddddddd55555");
-//                 if (tempArrayEnemy[enemyNum].obj.alive===false){
-//                     tempArrayEnemy[enemyNum].pop(tempArrayEnemy[enemyNum])
-//                     currentAttacker = tempArrayEnemy[enemyNum].obj;
-                  
-
-//                 } else 
                 if (tempArrayEnemy[enemyNum].obj.alive===true){
                     console.log("*********************55555555555555555555555555555");
                     console.log(tempArrayEnemy);
-                   
+                
                     // if (tempArrayEnemy.length<=0){
                         currentAttacker = tempArrayEnemy[atkNum].obj;
                         currentAttacker.id = tempArrayEnemy[atkNum].id;
                         console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFF = " + atkNum);
-                            console.log(tempArrayEnemy);
+                        console.log(tempArrayEnemy);
 
-                            atkNum++;
-                            if(atkNum>tempArrayEnemy.length){
-                                atkNum = tempArrayEnemy.length;
-                            }
+                        atkNum++;
+                        if(atkNum>tempArrayEnemy.length){
+                            atkNum = tempArrayEnemy.length;
+                        }
                     } 
-                    // else {
-                    //     atkNum++;
-                    
-                    //     console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFF" + atkNum);
-                    //     console.log(tempArrayEnemy);
-                    //     currentAttacker = tempArrayEnemy[atkNum].obj;
-                    // }
                     let tempName = "";
                     let enemyAttackAnimate = document.getElementById(`${currentAttacker.name + currentAttacker.id}Img`);
+                    let characterGetHitAnimate = document.getElementById(currentDefender.name);
+
                     let enemyAttackGifAnimate = document.getElementById(`${currentAttacker.name + currentAttacker.id}Atk`);
                     let tempLastEnemyNum = enemyNum;
                     let clawSound = new Audio('./audio/claw.mp3');
@@ -1326,18 +1302,23 @@ class gameLogic {
                     
                     let attackShow = setTimeout(function() {
                         enemyAttackGifAnimate.setAttribute('class', `claw`);
+                        if (currentDefender.hp>0){
+                            characterGetHitAnimate.setAttribute('class', `${currentDefender.name} characterGetHit`);
+                        }
                         clawSound.play()
                     }, 700);
 
                     let attackHide = setTimeout(function() {
                         enemyAttackGifAnimate.setAttribute('class', `claw hideAttack`);
+                        if (currentDefender.hp>0){
+                            characterGetHitAnimate.setAttribute('class', currentDefender.name);
+                        }
                     }, 1750);
 
                     let attackMove = setTimeout(function() {
                         enemyAttackAnimate.setAttribute('class', tempName);
                         enemyAttackAnimate.setAttribute('src', `./images/enemies/${tempName}.png`);
                     }, 2000);
-                // }
 
                 if (currentDefender.hp<=0){
                     currentDefender.hp = 0;
