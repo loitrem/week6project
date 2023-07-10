@@ -398,7 +398,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (min-width:2101px){
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
@@ -622,7 +622,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (min-width:1790px) and (max-width: 2100px) {
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
@@ -854,7 +854,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (min-width:1600px) and (max-width: 1789px) {
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
@@ -1223,7 +1223,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (min-width:1430px) and (max-width: 1600px) {
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
@@ -1454,7 +1454,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (min-width:1330px) and (max-width: 1430px) {
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
@@ -1685,7 +1685,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (min-width: 1000px) and (max-width: 1330px) {
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
@@ -1909,7 +1909,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (min-width: 600px) and (max-width: 999px) {
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
@@ -2140,7 +2140,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (min-width: 450px) and (max-width: 599px) {
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
@@ -2365,7 +2365,7 @@ border-bottom: solid rgb(182, 46, 139);
 @media only screen and (max-width: 450px) {
 
     .headerImg {
-        height: 90px;
+        height: 100px;
     }
     
     .headerText {
