@@ -811,7 +811,7 @@ class gameLogic {
         console.log("World = " + world);
         console.log("============================================================================");
 
-        if (round===1){
+        if (round===3){
             gameStart = true;
             battle =1;
             round = 0;
@@ -889,23 +889,14 @@ class gameLogic {
             enemyMemberP.innerHTML = `${newMenu.ucFirst(arrayEnemy[i].name)} | HP: ${arrayEnemy[i].hp}`;
         }
 
+        characterHp.replaceChildren();
         //adds character stats to bottom middle
         for (let i = 0; i<4; i++){
             let characterMemberP = document.createElement('p');
             characterHp.appendChild(characterMemberP);
-            characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+            characterMemberP.setAttribute('id', `${characterOrder[i].name+characterOrder[i].name}`);
             characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
         }
-
-        characterHp.replaceChildren();
-        //adds character stats to bottom middle
-        for (let i = 0; i<characterOrder.length; i++){
-            let characterMemberP = document.createElement('p');
-            characterHp.appendChild(characterMemberP);
-            characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
-            characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
-        }
-
     }
 
     //display world
@@ -1003,7 +994,7 @@ class gameLogic {
         for (let i = 0; i<characterOrder.length; i++){
             let characterMemberP = document.createElement('p');
             characterHp.appendChild(characterMemberP);
-            characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+            characterMemberP.setAttribute('id', `${characterOrder[i].name+characterOrder[i].name}`);
             characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
         }
         game.nextTurn();
@@ -1079,7 +1070,7 @@ class gameLogic {
             for (let i = 0; i<characterOrder.length; i++){
                 let characterMemberP = document.createElement('p');
                 characterHp.appendChild(characterMemberP);
-                characterMemberP.setAttribute('id', `${characterOrder[i].name}`);
+                characterMemberP.setAttribute('id', `${characterOrder[i].name+characterOrder[i].name}`);
                 characterMemberP.innerHTML = `${newMenu.ucFirst(characterOrder[i].name)} | HP: ${characterOrder[i].hp}`;
             }
 
@@ -1186,6 +1177,7 @@ class gameLogic {
                     if (currentDefender.hp>0){
                         getHitAnimate.setAttribute('class', currentDefender.name);
                     }
+                    
                 }, 1750);
 
                 setTimeout(function() {
@@ -1379,6 +1371,7 @@ class gameLogic {
                     let tempLastEnemyNum = enemyNum;
                     let clawSound = new Audio('./audio/claw.mp3');
 
+
                     currentDefender.hp -= currentAttacker.attack;
 
                     enemyAttackAnimate.setAttribute('class', `enemyAttack`);
@@ -1416,11 +1409,11 @@ class gameLogic {
                 }
 
                 //displays which enemy is attacking which character on battle bar
-                let updateScoreCharacter = document.getElementById(`${currentDefender.name}`);
-
+                let updateScoreCharacter = document.getElementById(currentDefender.name+currentDefender.name);
+                console.log(updateScoreCharacter);
                 console.log( battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`);
                 battleBarInfo.innerHTML = `It's ${newMenu.ucFirst(currentAttacker.name)} turn! They ATTACK ${newMenu.ucFirst(currentDefender.name)} for ${currentAttacker.attack}`;
-                
+
                 updateScoreCharacter.innerHTML = `${newMenu.ucFirst(currentDefender.name)} | HP: ${currentDefender.hp}`;
                 enemyNum++;
                 console.log(currentDefender);
@@ -1806,17 +1799,17 @@ let newMenu = new menu();
 let game = new gameLogic();
 let newEnemyArray = new enemyArray();
 
-// let musicParent = document.querySelector('.mainMenu');
-// let openingMusic = document.createElement('audio');
-// musicParent.appendChild(openingMusic);
-// openingMusic.setAttribute('type', 'audio/mpeg');
-// openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
-// openingMusic.preload = "auto";
-// openingMusic.autoplay = true;
-// openingMusic.loop = true;
-// openingMusic.volume = .1;
-// openingMusic.load();
-// openingMusic.muted = false;
+let musicParent = document.querySelector('.mainMenu');
+let openingMusic = document.createElement('audio');
+musicParent.appendChild(openingMusic);
+openingMusic.setAttribute('type', 'audio/mpeg');
+openingMusic.setAttribute('src', './audio/KONOSUBAopening.mp3');
+openingMusic.preload = "auto";
+openingMusic.autoplay = true;
+openingMusic.loop = true;
+openingMusic.volume = .1;
+openingMusic.load();
+openingMusic.muted = false;
 
 document.querySelector('.topContentWrapper').style.backgroundImage = `url('./images/backgrounds/world.png')`;  
 
