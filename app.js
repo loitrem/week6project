@@ -574,7 +574,7 @@ class gameLogic {
             let leftMenuDotted = document.querySelector('.leftMenuDotted');
             let centerMenuClickX = document.querySelector('.centerMenuClickX');
             let centerMenuClick = document.querySelector('.centerMenuClick');
-            let centerMenuDotted = document.querySelector('.centerMenuDotted');
+            let centerMenuDotted = document.querySelectorAll('.centerMenuDotted');
             let rightMenuClickX = document.querySelector('.rightMenuClickX');
             let rightMenuClick = document.querySelector('.rightMenuClick');
             let rightMenuDotted = document.querySelector('.rightMenuDotted');
@@ -594,18 +594,36 @@ class gameLogic {
             //sets world icon to red x and mouse to default
             leftMenuClick.setAttribute('src', './images/path/x.png');
             leftMenuClick.setAttribute('class', 'leftMenuClickX path');
+            leftMenuClick.setAttribute('onclick', "game.displayWorld('field')");
             leftMenuDotted.setAttribute('class', 'leftMenuDotted path');
             leftMenuClick.style.cursor = "default";
 
-            centerMenuClick.setAttribute('src', './images/path/x.png');
-            centerMenuClick.setAttribute('class', 'centerMenuClickX path');
-            centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
-            centerMenuClick.style.cursor = "default";
+            if (centerMenuClick===null){
+                centerMenuClickX.setAttribute('src', './images/path/x.png');
+                centerMenuClickX.setAttribute('class', 'centerMenuClickX path');
+                centerMenuClickX.style.cursor = "default";
+            } else {
+                centerMenuClick.setAttribute('src', './images/path/x.png');
+                centerMenuClick.setAttribute('class', 'centerMenuClickX path');    
+                centerMenuClick.style.cursor = "default";
+            }
+            for (let i = 0; i<centerMenuDotted.length;i++){
+                centerMenuDotted[i].setAttribute('class', 'centerMenuDotted path');
+            }
+            
 
-            rightMenuClick.setAttribute('src', './images/path/x.png');
-            rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+            if (rightMenuClick===null){
+                rightMenuClickX.setAttribute('src', './images/path/x.png');
+                rightMenuClickX.setAttribute('class', 'rightMenuClickX path');
+                rightMenuClickX.style.cursor = "default"; 
+            } else {
+                rightMenuClick.setAttribute('src', './images/path/x.png');
+                rightMenuClick.setAttribute('class', 'rightMenuClickX path');
+                rightMenuClick.style.cursor = "default"; 
+            }
+
             rightMenuDotted.setAttribute('class', 'rightMenuDotted path');
-            rightMenuClick.style.cursor = "default"; 
+
 
             //hides party/enemy wrapper
             partyWrapper.setAttribute('class', 'partyWrapper hideParty');
@@ -638,7 +656,10 @@ class gameLogic {
     nextWorld(num){
         
         console.log("============================================================================");
-        console.log("world = ", world);
+        console.log(" Next world  - world = ", world);
+        console.log(" world 1 = ", world1);
+        console.log(" world 2 = ", world2);
+        console.log(" world 3 = ", world3);
         console.log("============================================================================");
 
         if (gameStart) {
@@ -655,7 +676,7 @@ class gameLogic {
             let leftMenuDotted = document.querySelector('.leftMenuDotted');
             let centerMenuClickX = document.querySelector('.centerMenuClickX');
             let centerMenuClick = document.querySelector('.centerMenuClick');
-            let centerMenuDotted = document.querySelector('.centerMenuDotted');
+            let centerMenuDotted = document.querySelectorAll('.centerMenuDotted');
             let rightMenuClickX = document.querySelector('.rightMenuClickX');
             let rightMenuClick = document.querySelector('.rightMenuClick');
             let rightMenuDotted = document.querySelector('.rightMenuDotted');
@@ -694,8 +715,10 @@ class gameLogic {
 
                 centerMenuClick.setAttribute('src', './images/path/x.png');
                 centerMenuClick.setAttribute('class', 'centerMenuClickX path');
-                centerMenuClick.setAttribute('onclick', "game.displayWorld('sand')");
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.setAttribute('onclick', "");
+                for (let i = 0; i<centerMenuDotted.length;i++){
+                    centerMenuDotted[i].setAttribute('class', 'centerMenuDotted path');
+                }
                 centerMenuClick.style.cursor = "pointer";
 
                 rightMenuClickX.setAttribute('src', './images/path/x.png');
@@ -714,7 +737,9 @@ class gameLogic {
                 centerMenuClickX.setAttribute('src', './images/path/yellow.png');
                 centerMenuClickX.setAttribute('class', 'centerMenuClick path');
                 centerMenuClickX.setAttribute('onclick', "game.displayWorld('sand')");
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                for (let i = 0; i<centerMenuDotted.length;i++){
+                    centerMenuDotted[i].setAttribute('class', 'centerMenuDotted path');
+                }
                 centerMenuClickX.style.cursor = "pointer";
 
                 rightMenuClickX.setAttribute('src', './images/path/x.png');
@@ -732,7 +757,10 @@ class gameLogic {
 
                 centerMenuClick.setAttribute('src', './images/path/yellow.png');
                 centerMenuClick.setAttribute('class', 'centerMenuClick path');
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                centerMenuClick.setAttribute('onclick', "");
+                for (let i = 0; i<centerMenuDotted.length;i++){
+                    centerMenuDotted[i].setAttribute('class', 'centerMenuDotted path');
+                }
                 centerMenuClick.style.cursor = "pointer";
 
                 rightMenuClickX.setAttribute('src', './images/path/yellow.png');
@@ -757,7 +785,9 @@ class gameLogic {
                 centerMenuClick.setAttribute('src', './images/path/x.png');
                 centerMenuClick.setAttribute('class', 'centerMenuClick path');
                 centerMenuClick.setAttribute('onclick', "");
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                for (let i = 0; i<centerMenuDotted.length;i++){
+                    centerMenuDotted[i].setAttribute('class', 'centerMenuDotted path');
+                }
                 centerMenuClick.style.cursor = "pointer";
 
                 rightMenuClick.setAttribute('src', './images/path/x.png');
@@ -998,7 +1028,7 @@ class gameLogic {
     }
 
     nextTurn(){
-     game.characterOptions(characterOrder[counter].name); 
+        game.characterOptions(characterOrder[counter].name); 
     }
 
     //sets attack order based on who is left alive
@@ -1082,7 +1112,6 @@ class gameLogic {
             }, 2000)
             //checks if num is not 99
         } else if (num!=99){
-            
             let attackAnimate = document.querySelector(`.${characterOrder[num].name}`);
             let getHitAnimate = document.getElementById(`${clickedEnemy}Img`);
             let attackImg = document.getElementById(`${characterOrder[num].name}Atk`);
@@ -1194,9 +1223,8 @@ class gameLogic {
 
                 // if all enemies are dead go to next round
                 if (game.enemyAllDead(arrayEnemy)===true){
-                    allDeadThisRound===true;
-                    
-                    setTimeout(game.nextRound,2000);
+                    allDeadThisRound===true;   
+                        setTimeout(game.nextRound,2000);
                 }
 
             } else {
@@ -1217,7 +1245,7 @@ class gameLogic {
 
         //if restart attack order is set to true call game characters first member
         if (restartAttackOrder===true){
-            game.characterOptions("kazuma"); 
+            game.characterOptions(characterOrder[num].name);
             restartAttackOrder=false;
         } else {
             if (num<=3){
@@ -1474,7 +1502,7 @@ class gameLogic {
             let leftMenuDotted = document.querySelector('.leftMenuDotted');
             let centerMenuClickX = document.querySelector('.centerMenuClickX');
             let centerMenuClick = document.querySelector('.centerMenuClick');
-            let centerMenuDotted = document.querySelector('.centerMenuDotted');
+            let centerMenuDotted = document.querySelectorAll('.centerMenuDotted');
             let rightMenuClickX = document.querySelector('.rightMenuClickX');
             let rightMenuClick = document.querySelector('.rightMenuClick');
             let rightMenuDotted = document.querySelector('.rightMenuDotted');
@@ -1515,7 +1543,9 @@ class gameLogic {
 
                 centerMenuClickX.setAttribute('src', './images/path/x.png');
                 centerMenuClickX.setAttribute('class', 'centerMenuClickX path');
-                centerMenuDotted.setAttribute('class', 'centerMenuDotted path');
+                for (let i = 0; i<centerMenuDotted.length;i++){
+                    centerMenuDotted[i].setAttribute('class', 'centerMenuDotted path');
+                }
                 centerMenuClickX.style.cursor = "pointer";
 
                 rightMenuClickX.setAttribute('src', './images/path/x.png');
