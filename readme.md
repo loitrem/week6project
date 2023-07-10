@@ -6,6 +6,10 @@ Konosuba Quest Adventure is a simple turn based and world based game.
 
 ***
 
+![Alt text](images/konosubascreenshot.jpg)
+
+***
+
 ### How To Play
 
 ***
