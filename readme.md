@@ -1,4 +1,4 @@
-# KONOSUBA QUEST ADVENTURE
+# <div align="center"> KONOSUBA QUEST ADVENTURE</div>
 
 ***
 
